@@ -54,8 +54,8 @@
             <visible>false</visible>
         </text>
         <image name="libConsoleLogo">
-            <pos>0.5 0.86</pos>
-            <maxSize>0.5 0.085</maxSize>
+            <pos>0.5 0.75</pos>
+            <maxSize>0.56 0.10</maxSize>
             <origin>0.5 0.5</origin>
             <path>./../art/console_logos/snes.png</path>
             <zIndex>60</zIndex>

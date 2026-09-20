@@ -182,24 +182,29 @@
         </helpsystem>
     </view>
 
-    <!-- Crystal gamelist: napkin-sketch skeleton (v5.0.0).
-         Layout per the user's sketch (disks in this example):
-           top-left   scraped marquee (the game logo / name art) with a
-                      blue/white filter wash; the game title text sits
-                      behind as the fallback when no marquee is scraped
-           top-right  game metadata block (description + facts + rating)
-           center     physical-media carousel — the selected disk large
-                      with a yellow outer glow behind the selected slot,
-                      neighbours smaller, running off both edges
-           bottom     console name, centered (per-system text override;
-                      the user supplies the final logo names)
+    <!-- Crystal gamelist v5.4.0 — measured against the user's example
+         ("what I wanted"): straight disk row, ONE big selected disk
+         with yellow outer glow, medium neighbours, partial disks
+         clipped at both screen edges, gentle rainbow arc (center high).
+           top-left   scraped marquee, BIG, tilted -18° counterclockwise
+                      (rises to the right, per the example), blue/white
+                      filter via saturation 0.12 + B9C9FF tint; the game
+                      title text sits behind as the fallback when no
+                      marquee is scraped
+           top-right  game metadata block (description + facts + rating),
+                      scaled up ~1.45x — nothing tiny
+           center     physical-media wheel — selected disk 0.40h with
+                      yellow outer glow, neighbours 0.19h, running off
+                      both edges
+           below disk console name/logo, centered, tucked under the row
          One generic background for all 21 consoles with the royal-blue
-         wash baked in (washed out but still visible, per the user).
-         Platform notes: carousel captions render ONLY for artless items,
-         so neighbour names under art are impossible stock; marquee art
-         is scraped per-game media (imageType marquee). -->
+         wash baked in. Platform notes: carousel captions render ONLY
+         for artless items, so neighbour names under art are impossible
+         stock; marquee art is scraped per-game media (imageType
+         marquee). ES-DE rotation: positive = clockwise, so the
+         example's counterclockwise tilt is rotation -18. -->
     <view name="gamelist">
-        <!-- Generic background, full-bleed (skeleton placeholder art). -->
+        <!-- Generic background, full-bleed. -->
         <image name="libBackground">
             <pos>0 0</pos>
             <size>1 1</size>
@@ -208,168 +213,168 @@
             <zIndex>1</zIndex>
         </image>
 
-        <!-- Marquee fallback: the game's name. Visible only when no
-             marquee art is scraped — the marquee image (z20) covers it
-             when art exists. -->
+        <!-- Marquee fallback: the game's name, BIG. Visible only when
+             no marquee art is scraped — the marquee image (z20) covers
+             it when art exists. -->
         <text name="libMarqueeTitle">
-            <pos>0.055 0.055</pos>
-            <size>0.30 0.15</size>
+            <pos>0.05 0.08</pos>
+            <size>0.38 0.22</size>
             <origin>0 0</origin>
             <metadata>name</metadata>
-            <fontSize>0.030</fontSize>
+            <fontSize>0.045</fontSize>
             <color>${crystalDeep}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>19</zIndex>
         </text>
 
-        <!-- Scraped marquee: the game logo / name art. -->
+        <!-- Scraped marquee: the game logo / name art. BIG, angled -18°,
+             blue/white filter (desaturate + light-blue multiply). The
+             separate wash overlay is gone — saturation+color IS the
+             filter now, applied to the art itself. -->
         <image name="libMarquee">
-            <pos>0.055 0.055</pos>
-            <size>0.30 0.15</size>
-            <origin>0 0</origin>
+            <pos>0.21 0.155</pos>
+            <maxSize>0.36 0.24</maxSize>
+            <origin>0.5 0.5</origin>
+            <rotation>-18</rotation>
+            <rotationOrigin>0.5 0.5</rotationOrigin>
             <imageType>marquee</imageType>
+            <saturation>0.12</saturation>
+            <color>B9C9FF</color>
             <zIndex>20</zIndex>
-        </image>
-
-        <!-- Blue/white filter wash over the marquee (napkin spec). -->
-        <image name="libMarqueeWash">
-            <pos>0.055 0.055</pos>
-            <size>0.30 0.15</size>
-            <origin>0 0</origin>
-            <path>./art/marquee_wash.png</path>
-            <zIndex>21</zIndex>
         </image>
 
         <!-- Soft white bed behind the metadata block: the generic
              background is busy top-right, so the text needs a calm
              patch to sit on. -->
         <image name="libMetaScrim">
-            <pos>0.645 0.045</pos>
-            <size>0.32 0.27</size>
+            <pos>0.635 0.04</pos>
+            <size>0.335 0.33</size>
             <origin>0 0</origin>
             <path>./art/meta_scrim.png</path>
             <zIndex>59</zIndex>
         </image>
 
-        <!-- Game metadata block, top-right. -->
+        <!-- Game metadata block, top-right. Scaled up ~1.45x (v5.4.0):
+             nothing tiny. -->
         <text name="libDesc">
-            <pos>0.655 0.055</pos>
-            <size>0.30 0.135</size>
+            <pos>0.648 0.052</pos>
+            <size>0.31 0.165</size>
             <origin>0 0</origin>
             <metadata>description</metadata>
-            <fontSize>0.0155</fontSize>
+            <fontSize>0.023</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>top</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <text name="libGenre">
-            <pos>0.655 0.203</pos>
-            <size>0.150 0.024</size>
+            <pos>0.648 0.230</pos>
+            <size>0.155 0.032</size>
             <origin>0 0.5</origin>
             <metadata>genre</metadata>
-            <fontSize>0.0165</fontSize>
+            <fontSize>0.024</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <text name="libSep1">
-            <pos>0.808 0.203</pos>
-            <size>0.02 0.024</size>
+            <pos>0.806 0.230</pos>
+            <size>0.02 0.032</size>
             <origin>0 0.5</origin>
             <text>•</text>
-            <fontSize>0.0165</fontSize>
+            <fontSize>0.024</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <datetime name="libYear">
-            <pos>0.826 0.203</pos>
-            <size>0.06 0.024</size>
+            <pos>0.826 0.230</pos>
+            <size>0.06 0.032</size>
             <origin>0 0.5</origin>
             <metadata>releasedate</metadata>
             <format>%Y</format>
-            <fontSize>0.0165</fontSize>
+            <fontSize>0.024</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </datetime>
         <text name="libDev">
-            <pos>0.655 0.231</pos>
-            <size>0.150 0.024</size>
+            <pos>0.648 0.266</pos>
+            <size>0.155 0.032</size>
             <origin>0 0.5</origin>
             <metadata>developer</metadata>
-            <fontSize>0.0165</fontSize>
+            <fontSize>0.024</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <text name="libSep2">
-            <pos>0.808 0.231</pos>
-            <size>0.02 0.024</size>
+            <pos>0.806 0.266</pos>
+            <size>0.02 0.032</size>
             <origin>0 0.5</origin>
             <text>•</text>
-            <fontSize>0.0165</fontSize>
+            <fontSize>0.024</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <text name="libPlayers">
-            <pos>0.826 0.231</pos>
-            <size>0.10 0.024</size>
+            <pos>0.826 0.266</pos>
+            <size>0.10 0.032</size>
             <origin>0 0.5</origin>
             <metadata>players</metadata>
-            <fontSize>0.0165</fontSize>
+            <fontSize>0.024</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <rating name="libRating">
-            <pos>0.655 0.264</pos>
-            <size>0.20 0.034</size>
+            <pos>0.648 0.312</pos>
+            <size>0.24 0.042</size>
             <origin>0 0.5</origin>
             <filledPath>./art/star_filled.png</filledPath>
             <unfilledPath>./art/star_unfilled.png</unfilledPath>
             <zIndex>60</zIndex>
         </rating>
 
-        <!-- Yellow outer glow behind the selected disk slot (napkin:
+        <!-- Yellow outer glow behind the selected disk slot (example:
              "Selected Disk (Outer GLow Yellow)"). Static: the selected
-             slot is always centered, so the glow never moves. -->
+             slot is always centered, so the glow never moves. Sized
+             circular for the 4:3 screen (0.345w x 0.46h = 442x442px)
+             around the 0.40h selected disk. -->
         <image name="libSelectedGlow">
-            <pos>0.5 0.52</pos>
-            <size>0.46 0.46</size>
+            <pos>0.5 0.48</pos>
+            <size>0.345 0.46</size>
             <origin>0.5 0.5</origin>
             <path>./art/lib_glow_yellow.png</path>
             <zIndex>48</zIndex>
         </image>
 
-        <!-- The primary: WHEEL physical-media carousel (napkin: selected
-             disk big and high in the center with yellow outer glow,
-             neighbours arcing down toward both edges, running off the
-             screen). horizontalWheel with 2 items each side; itemRotation
-             and itemRotationOrigin set for a pronounced rainbow arc.
-             NOTE: if the Nova renders the arc inverted (frown instead of
-             rainbow), flip itemRotation's sign. Left/right navigate. -->
+        <!-- The primary: physical-media WHEEL (example: one big selected
+             disk center-high with yellow outer glow, medium neighbours
+             each side, partial disks clipped at both edges, gentle
+             rainbow arc). itemSize 0.19 / itemScale 2.1 gives neighbours
+             at 0.19h and the selected disk at 0.40h — the ~2.1x ratio
+             measured from the user's example. Left/right navigate. -->
         <carousel name="gameCarousel">
             <type>horizontalWheel</type>
-            <pos>0.5 0.52</pos>
-            <size>1 0.5</size>
+            <pos>0.5 0.48</pos>
+            <size>1 0.52</size>
             <origin>0.5 0.5</origin>
             <color>00000000</color>
             <!-- Physical media ONLY (2-type limit per CarouselComponent.h):
                  disk/cart/3D box on every entry including neighbours. -->
             <imageType>physicalmedia 3dbox</imageType>
             <defaultImage>./media_fallbacks/${system.name}.png</defaultImage>
-            <itemSize>0.18 0.18</itemSize>
-            <itemScale>2.2</itemScale>
+            <itemSize>0.19 0.19</itemSize>
+            <itemScale>2.1</itemScale>
             <itemsBeforeCenter>2</itemsBeforeCenter>
             <itemsAfterCenter>2</itemsAfterCenter>
             <itemRotation>14</itemRotation>
@@ -385,28 +390,28 @@
             <zIndex>50</zIndex>
         </carousel>
 
-        <!-- Console name, bottom-center. Per-system text override; the
-             user supplies the final logo names for all 21 consoles. -->
+        <!-- Console name, tucked under the disk row per the example.
+             Per-system overrides supply the logo image (or keep this
+             text for the 5 systems without artwork yet). -->
         <text name="libConsoleName">
-            <pos>0.5 0.86</pos>
-            <size>0.70 0.05</size>
+            <pos>0.5 0.75</pos>
+            <size>0.70 0.06</size>
             <origin>0.5 0.5</origin>
-            <fontSize>0.034</fontSize>
+            <fontSize>0.044</fontSize>
             <color>FFFFFF</color>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
 
-        <!-- Footer hints, all consoles: the generic background has no
-             baked footer. Systems that define their own footBadgeA set
-             override these with identical content. -->
+        <!-- Footer hints, all consoles: scaled up ~1.3x (v5.4.0), kept
+             clear of the wider badges. -->
         <text name="footBadgeA">
-            <pos>0.047 0.955</pos>
-            <size>0.030 0.040</size>
+            <pos>0.040 0.955</pos>
+            <size>0.036 0.048</size>
             <origin>0.5 0.5</origin>
             <text>A</text>
-            <fontSize>0.020</fontSize>
+            <fontSize>0.026</fontSize>
             <color>0A2FA0</color>
             <backgroundColor>FFFFFFFF</backgroundColor>
             <backgroundCornerRadius>0.5</backgroundCornerRadius>
@@ -415,20 +420,20 @@
             <zIndex>60</zIndex>
         </text>
         <text name="footWordA">
-            <pos>0.072 0.955</pos>
+            <pos>0.066 0.955</pos>
             <origin>0 0.5</origin>
             <text>SELECT</text>
-            <fontSize>0.016</fontSize>
+            <fontSize>0.021</fontSize>
             <color>FFFFFFFF</color>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <text name="footBadgeB">
-            <pos>0.129 0.955</pos>
-            <size>0.030 0.040</size>
+            <pos>0.170 0.955</pos>
+            <size>0.036 0.048</size>
             <origin>0.5 0.5</origin>
             <text>B</text>
-            <fontSize>0.020</fontSize>
+            <fontSize>0.026</fontSize>
             <color>0A2FA0</color>
             <backgroundColor>FFFFFFFF</backgroundColor>
             <backgroundCornerRadius>0.5</backgroundCornerRadius>
@@ -437,20 +442,20 @@
             <zIndex>60</zIndex>
         </text>
         <text name="footWordB">
-            <pos>0.154 0.955</pos>
+            <pos>0.196 0.955</pos>
             <origin>0 0.5</origin>
             <text>BACK</text>
-            <fontSize>0.016</fontSize>
+            <fontSize>0.021</fontSize>
             <color>FFFFFFFF</color>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <text name="footBadgeY">
-            <pos>0.211 0.955</pos>
-            <size>0.030 0.040</size>
+            <pos>0.274 0.955</pos>
+            <size>0.036 0.048</size>
             <origin>0.5 0.5</origin>
             <text>Y</text>
-            <fontSize>0.020</fontSize>
+            <fontSize>0.026</fontSize>
             <color>0A2FA0</color>
             <backgroundColor>FFFFFFFF</backgroundColor>
             <backgroundCornerRadius>0.5</backgroundCornerRadius>
@@ -459,10 +464,10 @@
             <zIndex>60</zIndex>
         </text>
         <text name="footWordY">
-            <pos>0.236 0.955</pos>
+            <pos>0.300 0.955</pos>
             <origin>0 0.5</origin>
             <text>OPTIONS</text>
-            <fontSize>0.016</fontSize>
+            <fontSize>0.021</fontSize>
             <color>FFFFFFFF</color>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
