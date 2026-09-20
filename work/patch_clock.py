@@ -19,7 +19,10 @@ from scipy import ndimage, signal
 
 BGDIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                       "..", "theme-src", "crystal", "backgrounds"))
-# snes + gc have no clock (halftone-dot strips); generated bgs never had one
+# snes + gc have no clock (halftone-dot strips). The 6 generated bgs
+# (nes, psx, steam, windows, xbox360, _default) DO have the clock at
+# (1215, 20) - patched separately 2026-09-20 (wifi template differs from
+# the supplied heroes, so they are not in this SYSTEMS list).
 SYSTEMS = ["gb", "gbc", "gba", "nds", "n3ds", "n64", "psp", "ps2",
            "dreamcast", "genesis", "megadrive", "xbox", "wii", "wiiu"]
 

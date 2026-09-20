@@ -79,20 +79,9 @@
             <zIndex>50</zIndex>
         </text>
 
-        <!-- Crystal carousel stage: a glossy deep-blue floor that seats the
-             carousel. v3.6.0: rebuilt as a real stage — royal-blue to
-             deep-navy gradient, bright horizon highlight, halftone fading
-             with depth, and a baked horizontal edge falloff so the outer
-             cards recede.
-             v4.0.0: taller stage for the bigger cards; the baked spotlight
-             is recentered on the v4 selected slot (screen x 0.5, y 0.85). -->
-        <image name="carouselStage">
-            <pos>0 1</pos>
-            <size>1 0.340</size>
-            <origin>0 1</origin>
-            <path>./art/carousel_vignette.png</path>
-            <zIndex>40</zIndex>
-        </image>
+        <!-- Crystal v4.1.0: the glossy deep-blue carousel stage ("blue bar"
+             under the carousel) was removed at the user's request. The
+             carousel now floats directly over the system background. -->
 
         <!-- Crystal v4.0.0 carousel rebuild. v3.x lessons, learned the hard
              way on the Nova:
@@ -107,9 +96,13 @@
                selected overflow. Proof mocks now simulate the scissor rect.
              - 3.4.1's ImageComponent has no GIF/animation support and the
                carousel hard-creates ImageComponents (no itemTemplate), so
-               the strip cannot animate on this ES-DE version. v4 uses the
-               static trading cards; the animated posters are parked for a
-               future <animation>-element showcase.
+               the strip cannot animate on this ES-DE version. v4.1.0 uses
+               static cards: the 7 systems with user-supplied posters show
+               the vivid "on" poster (selected = vivid, neighbours dimmed
+               by unfocusedItemSaturation/unfocusedItemDimming: the same
+               on/off language, done per-frame); the other 14 keep the
+               v3.6.0 trading cards. The animated GIFs stay parked in
+               cards_anim/ for a future <animation>-element showcase.
              Geometry at 1280x960: item 166x206, selected 208x258, 10px
              lift, 7 items, reflections off (their 2x-height reservation
              would force a half-screen zone and eat the hero). Pop, lift,
@@ -120,9 +113,9 @@
             <pos>0 0.700</pos>
             <size>1 0.300</size>
             <origin>0 0</origin>
-            <!-- The carousel paints its own background rect with this color
-                 ABOVE the vignette stage (z45 > z40). Transparent lets the
-                 stage show through. -->
+            <!-- The carousel paints its own background rect with this color.
+                 Transparent so the system background shows through
+                 (v4.1.0: the old vignette stage under the carousel is gone). -->
             <color>00000000</color>
             <staticImage>./cards/${system.name}.png</staticImage>
             <defaultImage>./cards/_default.png</defaultImage>
