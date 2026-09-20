@@ -18,9 +18,6 @@ def f(size, bold=False):
         return ImageFont.load_default()
 
 img = Image.open(f'{ART}/gamelist_generic_bg.png').convert('RGBA')
-# royal-blue wash (lib_blue_tint)
-tint = Image.open(f'{ART}/lib_blue_tint.png').convert('RGBA').resize((W, H))
-img = Image.alpha_composite(img, tint)
 d = ImageDraw.Draw(img)
 INK = (58, 74, 115, 255); DEEP = (10, 47, 160, 255)
 
@@ -36,6 +33,14 @@ tmp = Image.alpha_composite(tmp, wash)
 img.paste(tmp, (mx, my))
 d = ImageDraw.Draw(img)
 d.text((mx, my+mh+6), 'marquee + blue/white filter', font=f(14), fill=INK)
+
+# --- metadata scrim (0.645,0.045 0.32x0.27)
+scrim = Image.open(f'{ART}/meta_scrim.png').convert('RGBA').resize((int(0.32*W), int(0.27*H)))
+img = Image.alpha_composite(img, Image.new('RGBA', img.size, (0,0,0,0)))
+layer = Image.new('RGBA', img.size, (0,0,0,0))
+layer.alpha_composite(scrim, (int(0.645*W), int(0.045*H)))
+img = Image.alpha_composite(img, layer)
+d = ImageDraw.Draw(img)
 
 # --- metadata block top-right
 bx = int(0.655*W)
@@ -73,9 +78,9 @@ disk(int(0.815*W), cy, r_nb, 'next')
 disk(int(0.98*W), cy, r_nb, 'next+2')
 
 # --- console name bottom-center
-d.text((W//2, int(0.925*H)), 'Nintendo 64', font=f(33, True), fill=DEEP, anchor='mm')
+d.text((W//2, int(0.925*H)), 'Nintendo 64', font=f(33, True), fill=(255,255,255,255), anchor='mm')
 # --- footer
-d.text((60, int(0.955*H)), 'A SELECT   B BACK   Y OPTIONS', font=f(18, True), fill=DEEP, anchor='lm')
+d.text((60, int(0.955*H)), 'A SELECT   B BACK   Y OPTIONS', font=f(18, True), fill=(255,255,255,255), anchor='lm')
 
 out = os.path.expanduser('~/workspace/crystal-esde-theme/work/proofs/proof_v50_skeleton.png')
 img.convert('RGB').save(out)

@@ -193,8 +193,8 @@
                       neighbours smaller, running off both edges
            bottom     console name, centered (per-system text override;
                       the user supplies the final logo names)
-         One generic background for all 21 consoles (skeleton art until
-         the user supplies his); the royal-blue wash stays on top (z2).
+         One generic background for all 21 consoles with the royal-blue
+         wash baked in (washed out but still visible, per the user).
          Platform notes: carousel captions render ONLY for artless items,
          so neighbour names under art are impossible stock; marquee art
          is scraped per-game media (imageType marquee). -->
@@ -206,15 +206,6 @@
             <origin>0 0</origin>
             <path>./art/gamelist_generic_bg.png</path>
             <zIndex>1</zIndex>
-        </image>
-
-        <!-- Royal-blue wash over the background, all 21 consoles. -->
-        <image name="libBlueTint">
-            <pos>0 0</pos>
-            <size>1 1</size>
-            <origin>0 0</origin>
-            <path>./art/lib_blue_tint.png</path>
-            <zIndex>2</zIndex>
         </image>
 
         <!-- Marquee fallback: the game's name. Visible only when no
@@ -248,6 +239,17 @@
             <origin>0 0</origin>
             <path>./art/marquee_wash.png</path>
             <zIndex>21</zIndex>
+        </image>
+
+        <!-- Soft white bed behind the metadata block: the generic
+             background is busy top-right, so the text needs a calm
+             patch to sit on. -->
+        <image name="libMetaScrim">
+            <pos>0.645 0.045</pos>
+            <size>0.32 0.27</size>
+            <origin>0 0</origin>
+            <path>./art/meta_scrim.png</path>
+            <zIndex>59</zIndex>
         </image>
 
         <!-- Game metadata block, top-right. -->
@@ -386,7 +388,7 @@
             <size>0.70 0.05</size>
             <origin>0.5 0.5</origin>
             <fontSize>0.034</fontSize>
-            <color>${crystalDeep}</color>
+            <color>FFFFFF</color>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
@@ -413,7 +415,7 @@
             <origin>0 0.5</origin>
             <text>SELECT</text>
             <fontSize>0.016</fontSize>
-            <color>${crystalDeep}</color>
+            <color>FFFFFFFF</color>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
@@ -435,7 +437,7 @@
             <origin>0 0.5</origin>
             <text>BACK</text>
             <fontSize>0.016</fontSize>
-            <color>${crystalDeep}</color>
+            <color>FFFFFFFF</color>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
@@ -457,7 +459,7 @@
             <origin>0 0.5</origin>
             <text>OPTIONS</text>
             <fontSize>0.016</fontSize>
-            <color>${crystalDeep}</color>
+            <color>FFFFFFFF</color>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
