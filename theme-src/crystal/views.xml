@@ -100,7 +100,14 @@
              reflection each, and a breathing gap opened around the selected
              card (selectedItemMargins). Scale, saturation, lift, dimming and
              gap all animate per-frame while scrolling, which is what makes
-             it feel physical. -->
+             it feel physical.
+             v3.8.0: cards are now animated GIFs (cards_anim/<system>.gif).
+             The 7 systems with user-supplied on/off poster pairs crossfade
+             slowly between the vivid "on" poster and the dim blueprint "off"
+             poster (~4s loop, per-system phase jitter so they don't pulse in
+             sync); the other 14 keep their trading cards with a subtle
+             breathing zoom. Frame 0 is always the vivid/full card so a
+             non-animating renderer still shows the right art. -->
         <carousel name="sysCarousel">
             <type>horizontal</type>
             <pos>0 0.648</pos>
@@ -111,7 +118,7 @@
                  opaque white box that buried the deep-blue floor on device.
                  Transparent lets the stage show through. -->
             <color>00000000</color>
-            <staticImage>./cards/${system.name}.png</staticImage>
+            <staticImage>./cards_anim/${system.name}.gif</staticImage>
             <defaultImage>./cards/_default.png</defaultImage>
             <itemSize>0.092 0.160</itemSize>
             <itemScale>1.33</itemScale>
