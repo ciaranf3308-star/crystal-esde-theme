@@ -9,10 +9,7 @@
         <text name="mfrBadge">
             <text>NINTENDO</text>
         </text>
-        <text name="sysName">
-            <!-- base single-line name hidden: two-line name below -->
-            <pos>-1 -1</pos>
-        </text>
+        <!-- sysName: two-line sysName1/2 below -->
         <text name="sysName1">
             <!-- two-line name mirrors the baked graffiti title -->
             <pos>0.030 0.226</pos>
@@ -33,15 +30,15 @@
             <text>ENTERTAINMENT SYSTEM</text>
         </text>
         <text name="sysDesc">
+            <pos>0.030 0.315</pos>
             <!-- panel threading: sits between this background's ruled lines -->
-            <pos>0.030 0.305</pos>
             <text>The gray box that saved gaming. 8-bit legends.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.375</pos>
+            <pos>0.030 0.410</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.440</pos>
+            <pos>0.030 0.488</pos>
             <text>8-BIT • 1985</text>
         </text>
     </view>

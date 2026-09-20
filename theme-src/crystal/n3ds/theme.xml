@@ -9,6 +9,11 @@
         <text name="mfrBadge">
             <text>NINTENDO</text>
         </text>
+        <text name="sysName">
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0400</fontSize>
+            <text>Nintendo 3DS</text>
+        </text>
         <text name="sysDesc">
             <text>Glasses-free 3D in your pocket. StreetPass fun.</text>
         </text>

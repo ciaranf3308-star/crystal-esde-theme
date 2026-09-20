@@ -9,6 +9,11 @@
         <text name="mfrBadge">
             <text>NINTENDO</text>
         </text>
+        <text name="sysName">
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0400</fontSize>
+            <text>Wii</text>
+        </text>
         <text name="sysDesc">
             <text>Motion gaming for all. Wii Bowling nights.</text>
         </text>

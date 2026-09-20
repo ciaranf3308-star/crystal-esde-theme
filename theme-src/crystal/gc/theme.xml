@@ -10,21 +10,17 @@
             <text>NINTENDO</text>
         </text>
         <text name="sysName">
-            <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
-            <fontSize>0.040</fontSize>
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0400</fontSize>
             <text>GameCube</text>
-
         </text>
         <text name="sysDesc">
             <!-- panel threading: sits between this background's ruled lines -->
-            <pos>0.030 0.275</pos>
             <text>Nintendo's cube of joy. Smash and Sunshine.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.350</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.411</pos>
             <text>128-BIT • 2001</text>
         </text>
         <!-- v4.4.0 "Select": the selected carousel card shows this

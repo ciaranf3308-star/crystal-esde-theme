@@ -18,13 +18,18 @@
             <zIndex>1</zIndex>
         </image>
 
-        <!-- v4.0.0: panel text rebuilt — bigger, real hierarchy. The v3 text
-             was small and clustered in the top half of the tall panel
-             (15px badge / 29px title / 15px dim description) and looked
-             lost on the Nova. Now: 17px badge, 38px title, 18px
-             description in white (was dim), 53px count, 16px yellow facts.
-             Per-system theme.xml files carry the measured name sizes
-             (DejaVu Sans Bold, 4:3 panel, box 0.24). -->
+        <!-- v6.0.2: panel rebuilt. Two fixes:
+             1. Removed <systemdata>fullname</systemdata> from sysName: the
+                engine binding unconditionally overwrote the per-system
+                static short names (SystemView.cpp), so every system showed
+                its truncated fullName ("Nintendo Game Boy C..."). The short
+                names now render as designed.
+             2. Rebuilt the vertical rhythm with measured clearance. The old
+                per-system "threading" positions let long descs (3 wrapped
+                lines) collide with countNum ("0 GAMES" over the desc text).
+                One layout for all systems: desc 0.280 (clears 3 lines),
+                countNum 0.373, factsLine 0.451. nes/snes keep their two-line
+                names, so their block sits lower (0.315/0.410/0.488). -->
         <text name="mfrBadge">
             <pos>0.030 0.195</pos>
             <size>0.16 0</size>
@@ -42,14 +47,13 @@
             <pos>0.030 0.230</pos>
             <size>0.24 0.055</size>
             <origin>0 0</origin>
-            <systemdata>fullname</systemdata>
             <fontSize>0.040</fontSize>
             <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
         </text>
         <text name="sysDesc">
-            <pos>0.030 0.281</pos>
+            <pos>0.030 0.280</pos>
             <size>0.20 0.140</size>
             <origin>0 0</origin>
             <fontSize>0.019</fontSize>
@@ -58,7 +62,7 @@
             <zIndex>50</zIndex>
         </text>
         <text name="countNum">
-            <pos>0.030 0.354</pos>
+            <pos>0.030 0.373</pos>
             <size>0.20 0.07</size>
             <origin>0 0</origin>
             <systemdata>gamecountGames</systemdata>
@@ -69,7 +73,7 @@
             <zIndex>50</zIndex>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.415</pos>
+            <pos>0.030 0.451</pos>
             <size>0.20 0.04</size>
             <origin>0 0</origin>
             <fontSize>0.017</fontSize>

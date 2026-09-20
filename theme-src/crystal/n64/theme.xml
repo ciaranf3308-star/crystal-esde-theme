@@ -9,6 +9,11 @@
         <text name="mfrBadge">
             <text>NINTENDO</text>
         </text>
+        <text name="sysName">
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0400</fontSize>
+            <text>Nintendo 64</text>
+        </text>
         <text name="sysDesc">
             <text>The 3D pioneer. Mario 64 changed everything.</text>
         </text>

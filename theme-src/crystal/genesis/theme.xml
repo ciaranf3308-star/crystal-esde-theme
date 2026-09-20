@@ -9,6 +9,11 @@
         <text name="mfrBadge">
             <text>SEGA</text>
         </text>
+        <text name="sysName">
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0400</fontSize>
+            <text>Genesis</text>
+        </text>
         <text name="sysDesc">
             <text>Blast-processing attitude. Sonic's 16-bit battleground.</text>
         </text>

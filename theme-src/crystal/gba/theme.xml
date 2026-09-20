@@ -10,10 +10,9 @@
             <text>NINTENDO</text>
         </text>
         <text name="sysName">
-            <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
-            <fontSize>0.030</fontSize>
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0288</fontSize>
             <text>Game Boy Advance</text>
-
         </text>
         <text name="sysDesc">
             <text>Nintendo's 32-bit handheld. A massive 2D library.</text>

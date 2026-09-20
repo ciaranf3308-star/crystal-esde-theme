@@ -9,6 +9,11 @@
         <text name="mfrBadge">
             <text>VALVE</text>
         </text>
+        <text name="sysName">
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0400</fontSize>
+            <text>Steam</text>
+        </text>
         <text name="sysDesc">
             <text>PC gaming's front door. Thousands of worlds await.</text>
         </text>

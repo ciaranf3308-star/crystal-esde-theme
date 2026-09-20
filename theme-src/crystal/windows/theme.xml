@@ -9,6 +9,11 @@
         <text name="mfrBadge">
             <text>PC</text>
         </text>
+        <text name="sysName">
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0400</fontSize>
+            <text>Windows</text>
+        </text>
         <text name="sysDesc">
             <text>PC classics, indie gems and emulation everything.</text>
         </text>

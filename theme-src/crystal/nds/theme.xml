@@ -9,16 +9,18 @@
         <text name="mfrBadge">
             <text>NINTENDO</text>
         </text>
+        <text name="sysName">
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0400</fontSize>
+            <text>Nintendo DS</text>
+        </text>
         <text name="sysDesc">
             <!-- panel threading: sits between this background's ruled lines -->
-            <pos>0.030 0.273</pos>
             <text>Two screens, one stylus, endless experiments.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.344</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.405</pos>
             <text>HANDHELD • 2004</text>
         </text>
     </view>

@@ -10,21 +10,17 @@
             <text>NINTENDO</text>
         </text>
         <text name="sysName">
-            <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
-            <fontSize>0.036</fontSize>
+            <!-- short name (base systemdata binding removed: it overrode this) -->
+            <fontSize>0.0348</fontSize>
             <text>Game Boy Color</text>
-
         </text>
         <text name="sysDesc">
             <!-- panel threading: sits between this background's ruled lines -->
-            <pos>0.030 0.302</pos>
             <text>Color came to the brick. A pocket rainbow of classics.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.358</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.431</pos>
             <text>8-BIT • HANDHELD • 1998</text>
         </text>
     </view>
