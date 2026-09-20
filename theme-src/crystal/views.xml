@@ -29,7 +29,7 @@
         </text>
         <text name="sysName">
             <pos>0.028 0.232</pos>
-            <size>0.16 0.05</size>
+            <size>0.22 0.05</size>
             <origin>0 0</origin>
             <systemdata>fullname</systemdata>
             <fontSize>0.030</fontSize>

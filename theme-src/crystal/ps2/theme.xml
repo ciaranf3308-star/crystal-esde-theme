@@ -7,6 +7,10 @@
         <text name="mfrBadge">
             <text>SONY</text>
         </text>
+        <text name="sysName">
+            <!-- long fullName: sized from real font metrics to fit the panel -->
+            <fontSize>0.028</fontSize>
+        </text>
         <text name="sysDesc">
             <text>The best-selling console ever. An endless library.</text>
         </text>

@@ -31,6 +31,7 @@
             <text>ENTERTAINMENT SYSTEM</text>
         </text>
         <text name="sysDesc">
+            <size>0.22 0.160</size>
             <text>The 16-bit golden age. Mode 7 magic and timeless RPGs.</text>
         </text>
         <text name="factsLine">

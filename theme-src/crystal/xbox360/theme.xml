@@ -7,6 +7,10 @@
         <text name="mfrBadge">
             <text>MICROSOFT</text>
         </text>
+        <text name="sysName">
+            <!-- long fullName: sized from real font metrics to fit the panel -->
+            <fontSize>0.027</fontSize>
+        </text>
         <text name="sysDesc">
             <text>HD-era pioneer. A legendary library.</text>
         </text>

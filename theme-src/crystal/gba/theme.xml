@@ -9,7 +9,7 @@
         </text>
         <text name="sysName">
             <!-- long fullName: smaller so it fits one line before the graffiti title -->
-            <fontSize>0.023</fontSize>
+            <fontSize>0.018</fontSize>
         </text>
         <text name="sysDesc">
             <text>Nintendo's 32-bit handheld brought iconic franchises and a massive 2D library to a new generation.</text>

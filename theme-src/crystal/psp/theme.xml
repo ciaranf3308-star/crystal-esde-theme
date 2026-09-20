@@ -9,7 +9,7 @@
         </text>
         <text name="sysName">
             <!-- long fullName: smaller so it fits one line before the graffiti title -->
-            <fontSize>0.025</fontSize>
+            <fontSize>0.020</fontSize>
         </text>
         <text name="sysDesc">
             <text>Console power in your pocket. UMD adventures.</text>

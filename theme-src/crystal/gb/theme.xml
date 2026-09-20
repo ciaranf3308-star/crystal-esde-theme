@@ -9,7 +9,7 @@
         </text>
         <text name="sysName">
             <!-- narrower panel: smaller name so fullName fits one line -->
-            <fontSize>0.024</fontSize>
+            <fontSize>0.027</fontSize>
         </text>
         <text name="sysDesc">
             <!-- supplied GB hero has a narrower panel: keep text inside it -->
