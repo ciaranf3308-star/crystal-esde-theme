@@ -182,29 +182,25 @@
         </helpsystem>
     </view>
 
-    <!-- Crystal gamelist v5.5.0 — measured against the user's example
-         ("what I wanted"), which is to scale: bottoms ALWAYS flush,
-         growth/scale moves UP, equal spacing. No wheel, no arc.
-           top-left   scraped marquee, BIG, tilted -18° counterclockwise
-                      (rises to the right, per the example), blue/white
-                      filter via saturation 0.12 + B9C9FF tint; the game
-                      title text sits behind as the fallback when no
-                      marquee is scraped
-           top-right  game metadata block (description + facts + rating),
-                      scaled up ~1.45x — nothing tiny
-           center     physical-media STRAIGHT row — selected disk 0.468h
-                      with yellow outer glow, neighbours 0.223h, bottoms
-                      flush at 0.81h, equal 0.40w spacing, centres at
-                      0.10 / 0.50 / 0.90
-           below disk console name/logo, centered, tucked under the row
-         One generic background for all 21 consoles with the royal-blue
-         wash baked in. Platform notes: carousel captions render ONLY
-         for artless items, so neighbour names under art are impossible
-         stock; marquee art is scraped per-game media (imageType
-         marquee). ES-DE rotation: positive = clockwise, so the
-         example's counterclockwise tilt is rotation -18. -->
     <view name="gamelist">
-        <!-- Generic background, full-bleed. -->
+        <!-- v6.0.0 production redesign: premium physical-media browser.
+             Verified against ES-DE v3.4.1 source (CarouselComponent.h,
+             HelpComponent.cpp, ThemeData.cpp element tables).
+
+             Composition (1280x960):
+               marquee ghost upper-left / metadata upper-right (no panel)
+               selected media 1.5x, lifted 19px, glow + contact shadow
+               neighbours 67% at 320px spacing, ±2 peeking at edges
+               game name + one-line summary under the media
+               system logo lower-centre, single helpsystem footer row.
+
+             Native-only: no keyframe/idle animation exists in the
+             theme engine (the <animation> element only plays animated
+             image files), so the float is scale + lift + shadow + glow.
+             selectedItemOffset lifts ONLY the selected item (verified
+             lines 943-946: offset scales with 1-|distance|). -->
+
+        <!-- 1. Supplied universal Nova library background, full-bleed. -->
         <image name="libBackground">
             <pos>0 0</pos>
             <size>1 1</size>
@@ -213,281 +209,240 @@
             <zIndex>1</zIndex>
         </image>
 
-        <!-- Marquee fallback: the game's name, BIG. Visible only when
-             no marquee art is scraped — the marquee image (z20) covers
-             it when art exists. -->
+        <!-- 2. Marquee fallback: the game title. Visible only when no
+             marquee art is scraped — libMarquee (z20) covers it. -->
         <text name="libMarqueeTitle">
-            <pos>0.05 0.08</pos>
-            <size>0.38 0.22</size>
+            <pos>0.06 0.10</pos>
+            <size>0.36 0.18</size>
             <origin>0 0</origin>
             <metadata>name</metadata>
-            <fontSize>0.045</fontSize>
+            <fontSize>0.040</fontSize>
             <color>${crystalDeep}</color>
+            <opacity>0.55</opacity>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>19</zIndex>
         </text>
 
-        <!-- Scraped marquee: the game logo / name art. BIG, angled -18°,
-             blue/white filter (desaturate + light-blue multiply). The
-             separate wash overlay is gone — saturation+color IS the
-             filter now, applied to the art itself. -->
+        <!-- 3. Marquee: scraped art, atmospheric. Large, gently tilted,
+             low opacity, blue/white filtered — print in the poster,
+             never competing with the physical media. -->
         <image name="libMarquee">
-            <pos>0.21 0.155</pos>
-            <maxSize>0.36 0.24</maxSize>
+            <pos>0.23 0.15</pos>
+            <maxSize>0.40 0.26</maxSize>
             <origin>0.5 0.5</origin>
-            <rotation>-18</rotation>
+            <rotation>-12</rotation>
             <rotationOrigin>0.5 0.5</rotationOrigin>
             <imageType>marquee</imageType>
-            <saturation>0.12</saturation>
+            <opacity>0.38</opacity>
+            <saturation>0.15</saturation>
             <color>B9C9FF</color>
             <zIndex>20</zIndex>
         </image>
 
-        <!-- Soft white bed behind the metadata block: the generic
-             background is busy top-right, so the text needs a calm
-             patch to sit on. -->
-        <image name="libMetaScrim">
-            <pos>0.635 0.04</pos>
-            <size>0.335 0.33</size>
-            <origin>0 0</origin>
-            <path>./art/meta_scrim.png</path>
-            <zIndex>59</zIndex>
-        </image>
-
-        <!-- Game metadata block, top-right. Scaled up ~1.45x (v5.4.0):
-             nothing tiny. -->
+        <!-- 4. Metadata, upper-right. Values only: no labels, no panel.
+             Empty fields render empty and collapse cleanly; rating
+             hides entirely when unrated (hideIfZero). -->
         <text name="libDesc">
-            <pos>0.648 0.052</pos>
-            <size>0.31 0.165</size>
+            <pos>0.66 0.07</pos>
+            <size>0.31 0.125</size>
             <origin>0 0</origin>
             <metadata>description</metadata>
-            <fontSize>0.023</fontSize>
+            <fontSize>0.020</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>top</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <text name="libGenre">
-            <pos>0.648 0.230</pos>
-            <size>0.155 0.032</size>
+            <pos>0.66 0.212</pos>
+            <size>0.17 0.032</size>
             <origin>0 0.5</origin>
             <metadata>genre</metadata>
-            <fontSize>0.024</fontSize>
-            <color>${crystalInkDim}</color>
+            <fontSize>0.022</fontSize>
+            <color>${crystalDeep}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
-        <text name="libSep1">
-            <pos>0.806 0.230</pos>
-            <size>0.02 0.032</size>
-            <origin>0 0.5</origin>
-            <text>•</text>
-            <fontSize>0.024</fontSize>
-            <color>${crystalInkDim}</color>
-            <horizontalAlignment>center</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
         <datetime name="libYear">
-            <pos>0.826 0.230</pos>
-            <size>0.06 0.032</size>
+            <pos>0.845 0.212</pos>
+            <size>0.125 0.032</size>
             <origin>0 0.5</origin>
             <metadata>releasedate</metadata>
             <format>%Y</format>
-            <fontSize>0.024</fontSize>
+            <fontSize>0.022</fontSize>
+            <color>${crystalDeep}</color>
+            <horizontalAlignment>right</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </datetime>
+        <text name="libDev">
+            <pos>0.66 0.248</pos>
+            <size>0.17 0.032</size>
+            <origin>0 0.5</origin>
+            <metadata>developer</metadata>
+            <fontSize>0.022</fontSize>
+            <color>${crystalDeep}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="libPlayers">
+            <pos>0.845 0.248</pos>
+            <size>0.125 0.032</size>
+            <origin>0 0.5</origin>
+            <metadata>players</metadata>
+            <fontSize>0.022</fontSize>
+            <color>${crystalDeep}</color>
+            <horizontalAlignment>right</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <rating name="libRating">
+            <pos>0.66 0.290</pos>
+            <size>0.15 0.032</size>
+            <origin>0 0.5</origin>
+            <filledPath>./art/star_filled.png</filledPath>
+            <unfilledPath>./art/star_unfilled.png</unfilledPath>
+            <hideIfZero>true</hideIfZero>
+            <zIndex>60</zIndex>
+        </rating>
+        <datetime name="libLastPlayed">
+            <pos>0.66 0.330</pos>
+            <size>0.31 0.028</size>
+            <origin>0 0.5</origin>
+            <metadata>lastplayed</metadata>
+            <format>%d %b %Y</format>
+            <fontSize>0.017</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </datetime>
-        <text name="libDev">
-            <pos>0.648 0.266</pos>
-            <size>0.155 0.032</size>
-            <origin>0 0.5</origin>
-            <metadata>developer</metadata>
-            <fontSize>0.024</fontSize>
-            <color>${crystalInkDim}</color>
-            <horizontalAlignment>left</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <text name="libSep2">
-            <pos>0.806 0.266</pos>
-            <size>0.02 0.032</size>
-            <origin>0 0.5</origin>
-            <text>•</text>
-            <fontSize>0.024</fontSize>
-            <color>${crystalInkDim}</color>
-            <horizontalAlignment>center</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <text name="libPlayers">
-            <pos>0.826 0.266</pos>
-            <size>0.10 0.032</size>
-            <origin>0 0.5</origin>
-            <metadata>players</metadata>
-            <fontSize>0.024</fontSize>
-            <color>${crystalInkDim}</color>
-            <horizontalAlignment>left</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <rating name="libRating">
-            <pos>0.648 0.312</pos>
-            <size>0.24 0.042</size>
-            <origin>0 0.5</origin>
-            <filledPath>./art/star_filled.png</filledPath>
-            <unfilledPath>./art/star_unfilled.png</unfilledPath>
-            <zIndex>60</zIndex>
-        </rating>
 
-        <!-- Yellow outer glow behind the selected disk slot (example:
-             "Selected Disk (Outer GLow Yellow)"). Static: the selected
-             slot is always centered, so the glow never moves. Circular
-             on the 4:3 screen (0.402w x 0.536h = ~515x515px) around the
-             0.468h selected disk, centered at (0.5, 0.576) = the
-             selected disk's center now the row sits bottom-flush. -->
+        <!-- 5. Selected-media atmosphere: restrained yellow glow plus a
+             soft dark contact shadow. Static — the selected slot is
+             always centred, so they never move. -->
         <image name="libSelectedGlow">
-            <pos>0.5 0.576</pos>
-            <size>0.402 0.536</size>
+            <pos>0.5 0.53</pos>
+            <size>0.31 0.413</size>
             <origin>0.5 0.5</origin>
             <path>./art/lib_glow_yellow.png</path>
             <zIndex>48</zIndex>
         </image>
+        <image name="libSelectedShadow">
+            <pos>0.5 0.708</pos>
+            <size>0.27 0.055</size>
+            <origin>0.5 0.5</origin>
+            <path>./art/lib_shadow_soft.png</path>
+            <opacity>0.55</opacity>
+            <zIndex>49</zIndex>
+        </image>
 
-        <!-- The primary: physical-media STRAIGHT row, exactly per the
-             user's example. The example is to scale: bottoms ALWAYS
-             flush, growth/scale moves UP, equal spacing.
-
-             How (verified against CarouselComponent.h @ v3.4.1):
-             type=horizontal lays items out on a straight line with
-             equal spacing (itemSpacing.x spreads maxItemCount items
-             across the box). itemVerticalAlignment=bottom anchors every
-             item by its BOTTOM-center: yOff = size.y - itemSize.y and
-             the item origin becomes (0.5, 1.0), so setScale() grows the
-             selected disk UPWARD while every bottom stays glued to the
-             box bottom. No wheel, no arc, no rotation.
-
-             Measured from the example (paper = screen):
-               neighbour disk diameter 0.223h -> itemSize 0.167 0.223
-                 (0.167*1280 = 0.223*960 = 214px, square box)
-               selected disk 0.468h -> itemScale 2.1 (449px)
-               bottoms flush at 0.81h -> box 1 x 0.52 @ 0.5 0.55
-                 (box spans 0.29-0.81, selected top at 0.342)
-               centres at 0.10 / 0.50 / 0.90 -> maxItemCount 2.5
-                 gives 512px = 0.40w equal spacing.
-             Left/right navigate. -->
+        <!-- 6. The media row. type=horizontal: straight line, equal
+             spacing from maxItemCount. itemVerticalAlignment=bottom
+             glues every item's bottom to the box bottom; itemScale 1.5
+             grows the selected item UP from there. selectedItemOffset
+             lifts only the selected item 19px above the neighbour
+             baseline. spacing = 320px: centres 0.25/0.50/0.75, the
+             ±2 items sit exactly at the screen edges, peeking. -->
         <carousel name="gameCarousel">
             <type>horizontal</type>
-            <pos>0.5 0.55</pos>
-            <size>1 0.52</size>
+            <pos>0.5 0.495</pos>
+            <size>1 0.44</size>
             <origin>0.5 0.5</origin>
-            <color>00000000</color>
-            <!-- Physical media ONLY (2-type limit per CarouselComponent.h):
-                 disk/cart/3D box on every entry including neighbours. -->
             <imageType>physicalmedia 3dbox</imageType>
             <defaultImage>./media_fallbacks/${system.name}.png</defaultImage>
-            <itemSize>0.167 0.223</itemSize>
-            <itemScale>2.1</itemScale>
-            <maxItemCount>2.5</maxItemCount>
+            <itemSize>0.166 0.222</itemSize>
+            <itemScale>1.5</itemScale>
+            <maxItemCount>4.0</maxItemCount>
             <itemVerticalAlignment>bottom</itemVerticalAlignment>
+            <selectedItemOffset>0 -0.015</selectedItemOffset>
             <reflections>false</reflections>
-            <imageCornerRadius>0.008</imageCornerRadius>
-            <unfocusedItemOpacity>0.9</unfocusedItemOpacity>
-            <unfocusedItemSaturation>0.85</unfocusedItemSaturation>
-            <unfocusedItemDimming>0.2</unfocusedItemDimming>
+            <unfocusedItemOpacity>0.75</unfocusedItemOpacity>
+            <unfocusedItemSaturation>0.8</unfocusedItemSaturation>
+            <unfocusedItemDimming>0.25</unfocusedItemDimming>
             <imageInterpolation>linear</imageInterpolation>
             <itemTransitions>animate</itemTransitions>
             <fastScrolling>true</fastScrolling>
             <zIndex>50</zIndex>
         </carousel>
 
-        <!-- Console name, tucked under the disk row per the example
-             (row bottoms flush at 0.81; name sits just below).
-             Per-system overrides supply the logo image (or keep this
-             text for the 5 systems without artwork yet). -->
-        <text name="libConsoleName">
-            <pos>0.5 0.865</pos>
-            <size>0.70 0.06</size>
+        <!-- 7. Game identity beneath the media: prominent name plus a
+             one-line summary (genre / year / players). No static
+             separators — empty fields collapse cleanly. -->
+        <text name="libGameName">
+            <pos>0.5 0.762</pos>
+            <size>0.74 0.08</size>
             <origin>0.5 0.5</origin>
-            <fontSize>0.044</fontSize>
+            <metadata>name</metadata>
+            <fontSize>0.032</fontSize>
+            <color>FFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="libSubGenre">
+            <pos>0.40 0.822</pos>
+            <size>0.15 0.03</size>
+            <origin>0.5 0.5</origin>
+            <metadata>genre</metadata>
+            <fontSize>0.019</fontSize>
+            <color>BFD4FF</color>
+            <horizontalAlignment>right</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <datetime name="libSubYear">
+            <pos>0.5 0.822</pos>
+            <size>0.06 0.03</size>
+            <origin>0.5 0.5</origin>
+            <metadata>releasedate</metadata>
+            <format>%Y</format>
+            <fontSize>0.019</fontSize>
+            <color>BFD4FF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </datetime>
+        <text name="libSubPlayers">
+            <pos>0.60 0.822</pos>
+            <size>0.15 0.03</size>
+            <origin>0.5 0.5</origin>
+            <metadata>players</metadata>
+            <fontSize>0.019</fontSize>
+            <color>BFD4FF</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+
+        <!-- 8. System logo, lower-centre, restrained. Per-system
+             overrides supply the artwork (16 systems) or the text name
+             (nes, psp, xbox360, steam, windows). -->
+        <text name="libConsoleName">
+            <pos>0.5 0.878</pos>
+            <size>0.70 0.055</size>
+            <origin>0.5 0.5</origin>
+            <fontSize>0.032</fontSize>
             <color>FFFFFF</color>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
 
-        <!-- Footer hints, all consoles: scaled up ~1.3x (v5.4.0), kept
-             clear of the wider badges. -->
-        <text name="footBadgeA">
-            <pos>0.040 0.955</pos>
-            <size>0.036 0.048</size>
+        <!-- 9. THE footer row: one styled helpsystem, centred. Its
+             presence replaces the engine's default help row at
+             (0.012, 0.9515) — no duplicates, no overlap. -->
+        <helpsystem name="libHelp">
+            <pos>0.5 0.955</pos>
             <origin>0.5 0.5</origin>
-            <text>A</text>
-            <fontSize>0.026</fontSize>
-            <color>0A2FA0</color>
-            <backgroundColor>FFFFFFFF</backgroundColor>
-            <backgroundCornerRadius>0.5</backgroundCornerRadius>
-            <horizontalAlignment>center</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <text name="footWordA">
-            <pos>0.066 0.955</pos>
-            <origin>0 0.5</origin>
-            <text>SELECT</text>
-            <fontSize>0.021</fontSize>
-            <color>FFFFFFFF</color>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <text name="footBadgeB">
-            <pos>0.170 0.955</pos>
-            <size>0.036 0.048</size>
-            <origin>0.5 0.5</origin>
-            <text>B</text>
-            <fontSize>0.026</fontSize>
-            <color>0A2FA0</color>
-            <backgroundColor>FFFFFFFF</backgroundColor>
-            <backgroundCornerRadius>0.5</backgroundCornerRadius>
-            <horizontalAlignment>center</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <text name="footWordB">
-            <pos>0.196 0.955</pos>
-            <origin>0 0.5</origin>
-            <text>BACK</text>
-            <fontSize>0.021</fontSize>
-            <color>FFFFFFFF</color>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <text name="footBadgeY">
-            <pos>0.274 0.955</pos>
-            <size>0.036 0.048</size>
-            <origin>0.5 0.5</origin>
-            <text>Y</text>
-            <fontSize>0.026</fontSize>
-            <color>0A2FA0</color>
-            <backgroundColor>FFFFFFFF</backgroundColor>
-            <backgroundCornerRadius>0.5</backgroundCornerRadius>
-            <horizontalAlignment>center</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <text name="footWordY">
-            <pos>0.300 0.955</pos>
-            <origin>0 0.5</origin>
-            <text>OPTIONS</text>
-            <fontSize>0.021</fontSize>
-            <color>FFFFFFFF</color>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
+            <fontSize>0.019</fontSize>
+            <textColor>FFFFFFFF</textColor>
+            <iconColor>FFFFFFFF</iconColor>
+            <entrySpacing>0.02</entrySpacing>
+        </helpsystem>
 
     </view>
 </theme>

@@ -37,8 +37,8 @@
             <visible>false</visible>
         </text>
         <image name="libConsoleLogo">
-            <pos>0.5 0.87</pos>
-            <maxSize>0.56 0.10</maxSize>
+            <pos>0.5 0.878</pos>
+            <maxSize>0.36 0.062</maxSize>
             <origin>0.5 0.5</origin>
             <path>./../art/console_logos/gbc.png</path>
             <zIndex>60</zIndex>
