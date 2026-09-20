@@ -7,6 +7,10 @@
         <text name="mfrBadge">
             <text>SONY</text>
         </text>
+        <text name="sysName">
+            <!-- long fullName: smaller so it fits one line before the graffiti title -->
+            <fontSize>0.025</fontSize>
+        </text>
         <text name="sysDesc">
             <text>Console power in your pocket. UMD adventures.</text>
         </text>

@@ -7,6 +7,10 @@
         <text name="mfrBadge">
             <text>NINTENDO</text>
         </text>
+        <text name="sysName">
+            <!-- long fullName: smaller so it fits one line before the graffiti title -->
+            <fontSize>0.023</fontSize>
+        </text>
         <text name="sysDesc">
             <text>Color came to the brick. A pocket rainbow of classics.</text>
         </text>

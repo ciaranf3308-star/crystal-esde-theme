@@ -7,6 +7,10 @@
         <text name="mfrBadge">
             <text>NINTENDO</text>
         </text>
+        <text name="sysName">
+            <!-- long fullName: smaller so it fits one line before the graffiti title -->
+            <fontSize>0.020</fontSize>
+        </text>
         <text name="sysDesc">
             <text>The gray box that saved gaming. 8-bit legends live here.</text>
         </text>

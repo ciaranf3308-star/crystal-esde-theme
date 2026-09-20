@@ -7,6 +7,29 @@
         <text name="mfrBadge">
             <text>NINTENDO</text>
         </text>
+        <text name="sysName">
+            <!-- base single-line name hidden: snes uses a two-line name below -->
+            <pos>-1 -1</pos>
+        </text>
+        <text name="sysName1">
+            <!-- two-line name mirrors the baked graffiti title; fits before it -->
+            <pos>0.028 0.228</pos>
+            <size>0.16 0.05</size>
+            <fontSize>0.030</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>50</zIndex>
+            <text>SUPER NINTENDO</text>
+        </text>
+        <text name="sysName2">
+            <pos>0.028 0.264</pos>
+            <size>0.16 0.04</size>
+            <fontSize>0.019</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>50</zIndex>
+            <text>ENTERTAINMENT SYSTEM</text>
+        </text>
         <text name="sysDesc">
             <text>The 16-bit golden age. Mode 7 magic and timeless RPGs.</text>
         </text>
