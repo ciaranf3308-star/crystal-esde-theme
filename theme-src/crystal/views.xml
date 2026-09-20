@@ -6,8 +6,8 @@
          - The 5 supplied heroes are rendered on their own, fullscreen.
          - Live text inside the panel: manufacturer badge, system name,
            description, game count, facts line.
-         - Horizontal carousel of per-system hardware cards across the
-           lower third (y 0.727..0.875). -->
+         - v4.0.0: horizontal carousel of per-system hardware cards across
+           the lower strip (y 0.70..1.00), much bigger cards, no clipping. -->
     <view name="system">
         <image name="sysBackground">
             <pos>0 0</pos>
@@ -18,14 +18,18 @@
             <zIndex>1</zIndex>
         </image>
 
-        <!-- v3.6.0: white pill badge — blue text on white, floating on the
-             blue panel. backgroundColor/backgroundCornerRadius/
-             backgroundMargins are real ES-DE 3.4.1 text props. -->
+        <!-- v4.0.0: panel text rebuilt — bigger, real hierarchy. The v3 text
+             was small and clustered in the top half of the tall panel
+             (15px badge / 29px title / 15px dim description) and looked
+             lost on the Nova. Now: 17px badge, 38px title, 18px
+             description in white (was dim), 53px count, 16px yellow facts.
+             Per-system theme.xml files carry the measured name sizes
+             (DejaVu Sans Bold, 4:3 panel, box 0.24). -->
         <text name="mfrBadge">
-            <pos>0.028 0.200</pos>
+            <pos>0.030 0.195</pos>
             <size>0.16 0</size>
             <origin>0 0</origin>
-            <fontSize>0.016</fontSize>
+            <fontSize>0.018</fontSize>
             <color>0A2FA0</color>
             <backgroundColor>FFFFFFFF</backgroundColor>
             <backgroundCornerRadius>0.007</backgroundCornerRadius>
@@ -35,40 +39,40 @@
             <zIndex>50</zIndex>
         </text>
         <text name="sysName">
-            <pos>0.028 0.232</pos>
-            <size>0.22 0.05</size>
+            <pos>0.030 0.230</pos>
+            <size>0.24 0.055</size>
             <origin>0 0</origin>
             <systemdata>fullname</systemdata>
-            <fontSize>0.030</fontSize>
+            <fontSize>0.040</fontSize>
             <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
         </text>
         <text name="sysDesc">
-            <pos>0.028 0.300</pos>
-            <size>0.155 0.160</size>
+            <pos>0.030 0.305</pos>
+            <size>0.20 0.140</size>
             <origin>0 0</origin>
-            <fontSize>0.0155</fontSize>
-            <color>${crystalDim}</color>
+            <fontSize>0.019</fontSize>
+            <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
         </text>
         <text name="countNum">
-            <pos>0.028 0.475</pos>
-            <size>0.16 0.06</size>
+            <pos>0.030 0.460</pos>
+            <size>0.20 0.07</size>
             <origin>0 0</origin>
             <systemdata>gamecountGames</systemdata>
-            <fontSize>0.042</fontSize>
+            <fontSize>0.055</fontSize>
             <color>${crystalText}</color>
             <letterCase>uppercase</letterCase>
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
         </text>
         <text name="factsLine">
-            <pos>0.028 0.545</pos>
-            <size>0.19 0.04</size>
+            <pos>0.030 0.535</pos>
+            <size>0.20 0.04</size>
             <origin>0 0</origin>
-            <fontSize>0.015</fontSize>
+            <fontSize>0.017</fontSize>
             <color>${crystalAccent}</color>
             <letterCase>uppercase</letterCase>
             <horizontalAlignment>left</horizontalAlignment>
@@ -76,59 +80,59 @@
         </text>
 
         <!-- Crystal carousel stage: a glossy deep-blue floor that seats the
-             carousel and gives the item reflections something to fade into.
-             v3.6.0: rebuilt as a real stage — royal-blue to deep-navy
-             gradient, bright horizon highlight, halftone fading with depth,
-             and a baked horizontal edge falloff so the outer cards recede. -->
+             carousel. v3.6.0: rebuilt as a real stage — royal-blue to
+             deep-navy gradient, bright horizon highlight, halftone fading
+             with depth, and a baked horizontal edge falloff so the outer
+             cards recede.
+             v4.0.0: taller stage for the bigger cards; the baked spotlight
+             is recentered on the v4 selected slot (screen x 0.5, y 0.85). -->
         <image name="carouselStage">
             <pos>0 1</pos>
-            <size>1 0.375</size>
+            <size>1 0.340</size>
             <origin>0 1</origin>
             <path>./art/carousel_vignette.png</path>
             <zIndex>40</zIndex>
         </image>
 
-        <!-- Crystal v3.1 showpiece carousel (v3.2.1: itemLinearScale removed —
-             it only exists in ES-DE builds newer than the Nova's 3.4.1 and its
-             presence made the whole theme fail to load there).
-             v3.6.0: bigger hero pop (1.33x), neighbours pushed back harder
-             with unfocusedItemDimming so the selected card owns the stage.
-             Horizontal, 7 cards: the selected card pops, lifts 19px and
-             renders in full vivid color under its spotlight halo while
-             neighbours sit back, desaturated to 0.55 and dimmed. Cards are
-             solid (no ghost fading) with rounded corners, a soft mirror
-             reflection each, and a breathing gap opened around the selected
-             card (selectedItemMargins). Scale, saturation, lift, dimming and
-             gap all animate per-frame while scrolling, which is what makes
-             it feel physical.
-             v3.8.0: cards are now animated GIFs (cards_anim/<system>.gif).
-             The 7 systems with user-supplied on/off poster pairs crossfade
-             slowly between the vivid "on" poster and the dim blueprint "off"
-             poster (~4s loop, per-system phase jitter so they don't pulse in
-             sync); the other 14 keep their trading cards with a subtle
-             breathing zoom. Frame 0 is always the vivid/full card so a
-             non-animating renderer still shows the right art. -->
+        <!-- Crystal v4.0.0 carousel rebuild. v3.x lessons, learned the hard
+             way on the Nova:
+             - The device renders the design faithfully: v3 cards were
+               118x154px because itemSize was 0.092x0.160. v4 cards are
+               166x206 (+41% unfocused, +32% selected).
+             - ES-DE 3.4.1 scissor-clips carousel children to the carousel
+               rect (CarouselComponent::render pushClipRect). The v3
+               selected card (1.33x + 19px lift) overflowed the top by ~36px
+               and was visibly sliced on device. v4 geometry is verified
+               against the engine's own layout math: yOff=41px >= 36px of
+               selected overflow. Proof mocks now simulate the scissor rect.
+             - 3.4.1's ImageComponent has no GIF/animation support and the
+               carousel hard-creates ImageComponents (no itemTemplate), so
+               the strip cannot animate on this ES-DE version. v4 uses the
+               static trading cards; the animated posters are parked for a
+               future <animation>-element showcase.
+             Geometry at 1280x960: item 166x206, selected 208x258, 10px
+             lift, 7 items, reflections off (their 2x-height reservation
+             would force a half-screen zone and eat the hero). Pop, lift,
+             saturation, dimming and margins still animate per-frame while
+             scrolling, which is what makes it feel physical. -->
         <carousel name="sysCarousel">
             <type>horizontal</type>
-            <pos>0 0.648</pos>
-            <size>1 0.335</size>
+            <pos>0 0.700</pos>
+            <size>1 0.300</size>
             <origin>0 0</origin>
-            <!-- v3.5.0: the carousel paints its own background rect with this
-                 color ABOVE the vignette stage (z45 > z40). FFFFFFFF was an
-                 opaque white box that buried the deep-blue floor on device.
-                 Transparent lets the stage show through. -->
+            <!-- The carousel paints its own background rect with this color
+                 ABOVE the vignette stage (z45 > z40). Transparent lets the
+                 stage show through. -->
             <color>00000000</color>
-            <staticImage>./cards_anim/${system.name}.gif</staticImage>
+            <staticImage>./cards/${system.name}.png</staticImage>
             <defaultImage>./cards/_default.png</defaultImage>
-            <itemSize>0.092 0.160</itemSize>
-            <itemScale>1.33</itemScale>
+            <itemSize>0.130 0.215</itemSize>
+            <itemScale>1.25</itemScale>
             <maxItemCount>7</maxItemCount>
             <itemStacking>ascendingRaised</itemStacking>
-            <selectedItemOffset>0 -0.018</selectedItemOffset>
+            <selectedItemOffset>0 -0.010</selectedItemOffset>
             <selectedItemMargins>0.010 0.010</selectedItemMargins>
-            <reflections>true</reflections>
-            <reflectionsOpacity>0.35</reflectionsOpacity>
-            <reflectionsFalloff>2.5</reflectionsFalloff>
+            <reflections>false</reflections>
             <imageCornerRadius>0.008</imageCornerRadius>
             <unfocusedItemOpacity>0.90</unfocusedItemOpacity>
             <unfocusedItemSaturation>0.55</unfocusedItemSaturation>

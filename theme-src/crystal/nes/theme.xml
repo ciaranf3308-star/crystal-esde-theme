@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v3 per-system text overrides for the info panel. -->
+    <!-- Crystal v4.0: 4:3 Nova layout. Text inherits the base panel
+         positions from views.xml; only content and the measured name size
+         are set here (DejaVu Sans Bold, title box 0.24). -->
     <include>./../variables.xml</include>
     <include>./../views.xml</include>
     <view name="system">
@@ -8,32 +10,38 @@
             <text>NINTENDO</text>
         </text>
         <text name="sysName">
-            <!-- base single-line name hidden: nes uses a two-line name below -->
+            <!-- base single-line name hidden: two-line name below -->
             <pos>-1 -1</pos>
         </text>
         <text name="sysName1">
-            <!-- two-line name mirrors the baked graffiti title; fits before it -->
-            <pos>0.028 0.228</pos>
-            <size>0.22 0.05</size>
-            <fontSize>0.030</fontSize>
+            <!-- two-line name mirrors the baked graffiti title -->
+            <pos>0.030 0.226</pos>
+            <size>0.24 0.05</size>
+            <fontSize>0.040</fontSize>
             <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
             <text>NINTENDO</text>
         </text>
         <text name="sysName2">
-            <pos>0.028 0.264</pos>
-            <size>0.22 0.04</size>
-            <fontSize>0.019</fontSize>
+            <pos>0.030 0.266</pos>
+            <size>0.24 0.036</size>
+            <fontSize>0.022</fontSize>
             <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
             <text>ENTERTAINMENT SYSTEM</text>
         </text>
         <text name="sysDesc">
-            <text>The gray box that saved gaming. 8-bit legends live here.</text>
+            <!-- panel threading: sits between this background's ruled lines -->
+            <pos>0.030 0.305</pos>
+            <text>The gray box that saved gaming. 8-bit legends.</text>
+        </text>
+        <text name="countNum">
+            <pos>0.030 0.460</pos>
         </text>
         <text name="factsLine">
+            <pos>0.030 0.535</pos>
             <text>8-BIT • 1985</text>
         </text>
     </view>
