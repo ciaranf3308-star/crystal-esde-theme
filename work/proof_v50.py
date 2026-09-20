@@ -51,34 +51,33 @@ for i in range(5):
     sx = bx + i*30
     d.text((sx, int(0.264*H)-14), '★' if i < 4 else '☆', font=f(26), fill=(255,190,10,255) if i < 4 else (160,170,200,255))
 
-# --- yellow glow behind selected slot (0.5,0.60 0.46)
+# --- yellow glow behind selected slot (0.5,0.52 0.46)
 glow = Image.open(f'{ART}/lib_glow_yellow.png').convert('RGBA')
 gs = int(0.46*W)
 glow = glow.resize((gs, gs))
 img = Image.alpha_composite(img, Image.new('RGBA', img.size, (0,0,0,0)))
 layer = Image.new('RGBA', img.size, (0,0,0,0))
-layer.alpha_composite(glow, (int(0.5*W-gs/2), int(0.60*H-gs/2)))
+layer.alpha_composite(glow, (int(0.5*W-gs/2), int(0.52*H-gs/2)))
 img = Image.alpha_composite(img, layer)
 d = ImageDraw.Draw(img)
 
-# --- disk carousel: 5 disks, selected 2.0x center
+# --- disk carousel: WHEEL, selected 2.2x high center, neighbours arcing down
 def disk(cx, cy, r, label, selected=False):
     d.ellipse([cx-r, cy-r, cx+r, cy+r], fill=(230,238,255,255), outline=(10,47,160,255) if selected else (120,140,190,255), width=4 if selected else 2)
     d.ellipse([cx-r*0.55, cy-r*0.55, cx+r*0.55, cy+r*0.55], outline=(10,47,160,120), width=2)
     d.ellipse([cx-r*0.16, cy-r*0.16, cx+r*0.16, cy+r*0.16], fill=(255,255,255,255), outline=(10,47,160,160), width=2)
     d.text((cx-28, cy-12), label, font=f(20, True), fill=DEEP)
 
-cy = int(0.60*H)
-r_sel = int(0.165*W*2.0/2)   # 211
-r_nb = int(0.165*W/2)        # 106
-disk(int(0.02*W), cy, r_nb, 'prev-2')
-disk(int(0.185*W), cy, r_nb, 'prev')
-disk(int(0.5*W), cy, r_sel, 'SELECTED', True)
-disk(int(0.815*W), cy, r_nb, 'next')
-disk(int(0.98*W), cy, r_nb, 'next+2')
+r_sel = int(0.18*W*2.2/2)    # 253
+r_nb = int(0.18*W/2)         # 115
+disk(int(0.005*W), int(0.72*H), r_nb, '')        # prev-2, clipped at edge
+disk(int(0.20*W), int(0.645*H), r_nb, 'prev')
+disk(int(0.5*W), int(0.52*H), r_sel, 'SELECTED', True)
+disk(int(0.80*W), int(0.645*H), r_nb, 'next')
+disk(int(0.995*W), int(0.72*H), r_nb, '')        # next+2, clipped at edge
 
 # --- console name bottom-center
-d.text((W//2, int(0.925*H)), 'Nintendo 64', font=f(33, True), fill=(255,255,255,255), anchor='mm')
+d.text((W//2, int(0.86*H)), 'Nintendo 64', font=f(33, True), fill=(255,255,255,255), anchor='mm')
 # --- footer
 d.text((60, int(0.955*H)), 'A SELECT   B BACK   Y OPTIONS', font=f(18, True), fill=(255,255,255,255), anchor='lm')
 

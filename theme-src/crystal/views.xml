@@ -344,32 +344,36 @@
              "Selected Disk (Outer GLow Yellow)"). Static: the selected
              slot is always centered, so the glow never moves. -->
         <image name="libSelectedGlow">
-            <pos>0.5 0.60</pos>
+            <pos>0.5 0.52</pos>
             <size>0.46 0.46</size>
             <origin>0.5 0.5</origin>
             <path>./art/lib_glow_yellow.png</path>
             <zIndex>48</zIndex>
         </image>
 
-        <!-- The primary: horizontal physical-media carousel (disks in
-             the napkin example — physicalmedia covers disks, carts and
-             3D boxes). Selected entry large in the center, neighbours
-             smaller, running off both edges. Left/right navigate. -->
+        <!-- The primary: WHEEL physical-media carousel (napkin: selected
+             disk big and high in the center with yellow outer glow,
+             neighbours arcing down toward both edges, running off the
+             screen). horizontalWheel with 2 items each side; itemRotation
+             and itemRotationOrigin set for a pronounced rainbow arc.
+             NOTE: if the Nova renders the arc inverted (frown instead of
+             rainbow), flip itemRotation's sign. Left/right navigate. -->
         <carousel name="gameCarousel">
-            <type>horizontal</type>
-            <pos>0.5 0.60</pos>
-            <size>1 0.42</size>
+            <type>horizontalWheel</type>
+            <pos>0.5 0.52</pos>
+            <size>1 0.5</size>
             <origin>0.5 0.5</origin>
             <color>00000000</color>
             <!-- Physical media ONLY (2-type limit per CarouselComponent.h):
                  disk/cart/3D box on every entry including neighbours. -->
             <imageType>physicalmedia 3dbox</imageType>
             <defaultImage>./media_fallbacks/${system.name}.png</defaultImage>
-            <itemSize>0.165 0.17</itemSize>
-            <itemScale>2.0</itemScale>
-            <maxItemCount>5</maxItemCount>
-            <itemStacking>ascendingRaised</itemStacking>
-            <selectedItemMargins>0.008 0.008</selectedItemMargins>
+            <itemSize>0.18 0.18</itemSize>
+            <itemScale>2.2</itemScale>
+            <itemsBeforeCenter>2</itemsBeforeCenter>
+            <itemsAfterCenter>2</itemsAfterCenter>
+            <itemRotation>14</itemRotation>
+            <itemRotationOrigin>-2 0.5</itemRotationOrigin>
             <reflections>false</reflections>
             <imageCornerRadius>0.008</imageCornerRadius>
             <unfocusedItemOpacity>0.9</unfocusedItemOpacity>
@@ -384,7 +388,7 @@
         <!-- Console name, bottom-center. Per-system text override; the
              user supplies the final logo names for all 21 consoles. -->
         <text name="libConsoleName">
-            <pos>0.5 0.925</pos>
+            <pos>0.5 0.86</pos>
             <size>0.70 0.05</size>
             <origin>0.5 0.5</origin>
             <fontSize>0.034</fontSize>
