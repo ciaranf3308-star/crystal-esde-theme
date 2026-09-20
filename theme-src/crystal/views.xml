@@ -145,127 +145,355 @@
         </helpsystem>
     </view>
 
-    <!-- Crystal v3 gamelist view: same comic canvas, deep-blue wash for
-         readability, console card top-right, metadata column. -->
+    <!-- Crystal gamelist: physical-media library view.
+         The bottom carousel IS the navigable gamelist (left/right, A launches).
+         Three dynamic slots with the defensive fallback chain:
+           marquee  -> marquee art, else Nova-styled title text
+           fanart   -> scraped fanart (Nova duotone wash), else screenshot,
+                       else the static per-system comic canvas
+           physical -> scraped physicalmedia, else 3dbox, else cover (hero) /
+                       physicalmedia, else 3dbox (carousel, 2-type engine cap),
+                       else per-system media silhouette -->
     <view name="gamelist">
+        <!-- v4.2.0 Nova library: the selected game owns the screen. Static
+             base is a purpose-built library canvas (NOT the system hero);
+             per-game fanart arrives duotoned through fanartWash. -->
         <image name="gameBackground">
             <pos>0 0</pos>
             <size>1 1</size>
             <origin>0 0</origin>
-            <path>./backgrounds/${system.name}.webp</path>
-            <default>./backgrounds/_default.webp</default>
-            <color>${crystalGameBg}</color>
+            <path>./art/gamelist_library.webp</path>
             <zIndex>1</zIndex>
         </image>
-        <image name="gameArt">
-            <pos>0.80 0.14</pos>
-            <size>0.30 0.335</size>
-            <origin>0.5 0.5</origin>
-            <path>./cards/${system.name}.png</path>
-            <default>./cards/_default.png</default>
-            <zIndex>20</zIndex>
+        <image name="fanartWash">
+            <pos>0.28 0</pos>
+            <size>0.72 0.66</size>
+            <origin>0 0</origin>
+            <imageType>fanart screenshot</imageType>
+            <saturation>0</saturation>
+            <color>7FB2FF</color>
+            <opacity>0.5</opacity>
+            <zIndex>2</zIndex>
         </image>
-        <text name="gameName">
-            <pos>0.06 0.055</pos>
-            <size>0.50 0.06</size>
+        <!-- Bottom-up gradient fade: the carousel sits over this, integrated.
+             Never a solid bar. -->
+        <image name="bottomFade">
+            <pos>0.2938 0.625</pos>
+            <size>0.7063 0.375</size>
+            <origin>0 0</origin>
+            <path>./art/gamelist_fade.png</path>
+            <zIndex>5</zIndex>
+        </image>
+
+        <!-- Left metadata slab: live text over the baked panel chrome. -->
+        <text name="panelSysPill">
+            <pos>0.0766 0.0729</pos>
+            <size>0.0781 0.0375</size>
+            <origin>0.5 0.5</origin>
+            <text>${system.name}</text>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.0208</fontSize>
+            <color>${crystalDeep}</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <text name="panelTitle">
+            <pos>0.0375 0.1083</pos>
+            <size>0.2271 0.075</size>
             <origin>0 0</origin>
             <metadata>name</metadata>
-            <fontSize>0.032</fontSize>
-            <color>${crystalAccent}</color>
-            <horizontalAlignment>left</horizontalAlignment>
-            <zIndex>30</zIndex>
-        </text>
-        <textlist name="gameList">
-            <pos>0.06 0.14</pos>
-            <size>0.44 0.72</size>
-            <origin>0 0</origin>
-            <primaryColor>${crystalText}</primaryColor>
-            <secondaryColor>${crystalDim}</secondaryColor>
-            <selectedColor>${crystalAccent}</selectedColor>
-            <selectorColor>${crystalSelect}</selectorColor>
-            <fontSize>0.024</fontSize>
-            <horizontalMargin>0.012</horizontalMargin>
-            <zIndex>30</zIndex>
-        </textlist>
-        <text name="devLabel">
-            <pos>0.62 0.36</pos>
-            <size>0.10 0.04</size>
-            <origin>0 0</origin>
-            <text>DEVELOPER</text>
-            <fontSize>0.016</fontSize>
-            <color>${crystalAccent}</color>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>left</horizontalAlignment>
-            <zIndex>30</zIndex>
-        </text>
-        <text name="devValue">
-            <pos>0.74 0.36</pos>
-            <size>0.22 0.04</size>
-            <origin>0 0</origin>
-            <metadata>developer</metadata>
-            <fontSize>0.016</fontSize>
+            <fontSize>0.0323</fontSize>
             <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
-            <zIndex>30</zIndex>
+            <zIndex>10</zIndex>
         </text>
-        <text name="genreLabel">
-            <pos>0.62 0.42</pos>
-            <size>0.10 0.04</size>
-            <origin>0 0</origin>
-            <text>GENRE</text>
-            <fontSize>0.016</fontSize>
-            <color>${crystalAccent}</color>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>left</horizontalAlignment>
-            <zIndex>30</zIndex>
-        </text>
-        <text name="genreValue">
-            <pos>0.74 0.42</pos>
-            <size>0.22 0.04</size>
-            <origin>0 0</origin>
-            <metadata>genre</metadata>
-            <fontSize>0.016</fontSize>
-            <color>${crystalText}</color>
-            <horizontalAlignment>left</horizontalAlignment>
-            <zIndex>30</zIndex>
-        </text>
-        <text name="playersLabel">
-            <pos>0.62 0.48</pos>
-            <size>0.10 0.04</size>
-            <origin>0 0</origin>
-            <text>PLAYERS</text>
-            <fontSize>0.016</fontSize>
-            <color>${crystalAccent}</color>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>left</horizontalAlignment>
-            <zIndex>30</zIndex>
-        </text>
-        <text name="playersValue">
-            <pos>0.74 0.48</pos>
-            <size>0.22 0.04</size>
-            <origin>0 0</origin>
-            <metadata>players</metadata>
-            <fontSize>0.016</fontSize>
-            <color>${crystalText}</color>
-            <horizontalAlignment>left</horizontalAlignment>
-            <zIndex>30</zIndex>
-        </text>
-        <text name="gameDesc">
-            <pos>0.62 0.56</pos>
-            <size>0.32 0.28</size>
+        <text name="panelDesc">
+            <pos>0.0375 0.2188</pos>
+            <size>0.2271 0.085</size>
             <origin>0 0</origin>
             <metadata>description</metadata>
-            <fontSize>0.015</fontSize>
+            <fontSize>0.0156</fontSize>
             <color>${crystalDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
-            <zIndex>30</zIndex>
+            <zIndex>10</zIndex>
         </text>
-        <helpsystem name="help">
-            <pos>0.5 0.982</pos>
+
+        <text name="playedLabel">
+            <pos>0.0375 0.3396</pos>
+            <size>0.09 0.024</size>
+            <origin>0 0</origin>
+            <text>LAST PLAYED</text>
+            <fontSize>0.0115</fontSize>
+            <color>${crystalDim}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <datetime name="playedValue">
+            <pos>0.2563 0.3396</pos>
+            <size>0.1263 0.024</size>
+            <origin>1 0</origin>
+            <metadata>lastplayed</metadata>
+            <format>%d %b %Y</format>
+            <fontSize>0.0188</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>right</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </datetime>
+        <text name="timeLabel">
+            <pos>0.0375 0.3875</pos>
+            <size>0.09 0.024</size>
+            <origin>0 0</origin>
+            <text>PLAY TIME</text>
+            <fontSize>0.0115</fontSize>
+            <color>${crystalDim}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <text name="timeValue">
+            <pos>0.2563 0.3875</pos>
+            <size>0.1263 0.024</size>
+            <origin>1 0</origin>
+            <metadata>playtime</metadata>
+            <fontSize>0.0188</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>right</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <text name="playersLabel">
+            <pos>0.0375 0.4354</pos>
+            <size>0.09 0.024</size>
+            <origin>0 0</origin>
+            <text>PLAYERS</text>
+            <fontSize>0.0115</fontSize>
+            <color>${crystalDim}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <text name="playersValue">
+            <pos>0.2563 0.4354</pos>
+            <size>0.1263 0.024</size>
+            <origin>1 0</origin>
+            <metadata>players</metadata>
+            <fontSize>0.0188</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>right</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <text name="genreLabel">
+            <pos>0.0375 0.4833</pos>
+            <size>0.09 0.024</size>
+            <origin>0 0</origin>
+            <text>GENRE</text>
+            <fontSize>0.0115</fontSize>
+            <color>${crystalDim}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <text name="genreValue">
+            <pos>0.2563 0.4833</pos>
+            <size>0.1263 0.024</size>
+            <origin>1 0</origin>
+            <metadata>genre</metadata>
+            <fontSize>0.0188</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>right</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <text name="releaseLabel">
+            <pos>0.0375 0.5313</pos>
+            <size>0.09 0.024</size>
+            <origin>0 0</origin>
+            <text>RELEASED</text>
+            <fontSize>0.0115</fontSize>
+            <color>${crystalDim}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <datetime name="releaseValue">
+            <pos>0.2563 0.5313</pos>
+            <size>0.1263 0.024</size>
+            <origin>1 0</origin>
+            <metadata>releasedate</metadata>
+            <format>%Y</format>
+            <fontSize>0.0188</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>right</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </datetime>
+        <text name="devLabel">
+            <pos>0.0375 0.5792</pos>
+            <size>0.09 0.024</size>
+            <origin>0 0</origin>
+            <text>DEVELOPER</text>
+            <fontSize>0.0115</fontSize>
+            <color>${crystalDim}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <text name="devValue">
+            <pos>0.2563 0.5792</pos>
+            <size>0.1263 0.024</size>
+            <origin>1 0</origin>
+            <metadata>developer</metadata>
+            <fontSize>0.0188</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>right</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+
+        <text name="ratingLabel">
+            <pos>0.0375 0.6542</pos>
+            <size>0.09 0.024</size>
+            <origin>0 0</origin>
+            <text>RATING</text>
+            <fontSize>0.0115</fontSize>
+            <color>${crystalDim}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <rating name="panelRating">
+            <pos>0.0375 0.6833</pos>
+            <size>0.14 0.04</size>
+            <origin>0 0</origin>
+            <filledPath>./art/star_filled.png</filledPath>
+            <unfilledPath>./art/star_unfilled.png</unfilledPath>
+            <zIndex>10</zIndex>
+        </rating>
+
+        <text name="panelCount">
+            <pos>0.0375 0.7521</pos>
+            <size>0.15 0.07</size>
+            <origin>0 0</origin>
+            <systemdata>gamecountGamesNoText</systemdata>
+            <fontSize>0.0583</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+        <text name="panelCountLabel">
+            <pos>0.0375 0.8208</pos>
+            <size>0.15 0.024</size>
+            <origin>0 0</origin>
+            <text>GAMES IN LIBRARY</text>
+            <fontSize>0.0125</fontSize>
+            <color>${crystalAccent}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>10</zIndex>
+        </text>
+
+        <!-- Marquee: scraped logo art over a smaller styled title fallback
+             (fallback stays smaller than typical marquee art: no ghosting). -->
+        <text name="marqueeFallback">
+            <pos>0.3281 0.09</pos>
+            <size>0.4375 0.226</size>
+            <origin>0 0</origin>
+            <metadata>name</metadata>
+            <fontSize>0.036</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <zIndex>20</zIndex>
+        </text>
+        <image name="marqueeImg">
+            <pos>0.5469 0.20</pos>
+            <maxSize>0.42 0.20</maxSize>
             <origin>0.5 0.5</origin>
-            <textColor>${crystalDim}</textColor>
-            <iconColor>${crystalAccent}</iconColor>
-            <fontSize>0.0145</fontSize>
-        </helpsystem>
+            <imageType>marquee</imageType>
+            <zIndex>21</zIndex>
+        </image>
+
+        <!-- Physical-media hero: the collectible object, angled. -->
+        <image name="mediaHero">
+            <pos>0.8164 0.4635</pos>
+            <maxSize>0.28 0.36</maxSize>
+            <origin>0.5 0.5</origin>
+            <imageType>physicalmedia 3dbox cover</imageType>
+            <default>./media_fallbacks/${system.name}.png</default>
+            <rotation>-8</rotation>
+            <zIndex>25</zIndex>
+        </image>
+
+        <!-- The primary: physical media of every game, horizontal carousel.
+             Selected item renders larger and vivid; neighbours dim and
+             desaturate per-frame (same on/off language as the system view).
+             Note: stock ES-DE 3.4.1 draws carousel captions only when an
+             item has no image, so per-neighbour titles under media are not
+             available; the selected title lives in the panel and marquee. -->
+        <carousel name="gameCarousel">
+            <type>horizontal</type>
+            <pos>0.2938 0.675</pos>
+            <size>0.7063 0.2917</size>
+            <origin>0 0</origin>
+            <imageType>physicalmedia 3dbox</imageType>
+            <defaultImage>./media_fallbacks/${system.name}.png</defaultImage>
+            <itemSize>0.095 0.11</itemSize>
+            <itemScale>1.35</itemScale>
+            <maxItemCount>7</maxItemCount>
+            <unfocusedItemDimming>0.35</unfocusedItemDimming>
+            <unfocusedItemSaturation>0.5</unfocusedItemSaturation>
+            <unfocusedItemOpacity>0.9</unfocusedItemOpacity>
+            <textColor>${crystalText}</textColor>
+            <textSelectedColor>${crystalAccent}</textSelectedColor>
+            <textBackgroundColor>0A2FA0E6</textBackgroundColor>
+            <fastScrolling>true</fastScrolling>
+            <zIndex>50</zIndex>
+        </carousel>
+
+        <!-- Footer prompt row, lightweight and integrated. -->
+        <text name="footKeyA">
+            <pos>0.7914 0.9688</pos>
+            <origin>0 0.5</origin>
+            <text>A</text>
+            <fontSize>0.0146</fontSize>
+            <color>${crystalAccent}</color>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="footWordA">
+            <pos>0.8063 0.9688</pos>
+            <origin>0 0.5</origin>
+            <text>Select</text>
+            <fontSize>0.0146</fontSize>
+            <color>${crystalDim}</color>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="footKeyB">
+            <pos>0.8641 0.9688</pos>
+            <origin>0 0.5</origin>
+            <text>B</text>
+            <fontSize>0.0146</fontSize>
+            <color>${crystalAccent}</color>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="footWordB">
+            <pos>0.8789 0.9688</pos>
+            <origin>0 0.5</origin>
+            <text>Back</text>
+            <fontSize>0.0146</fontSize>
+            <color>${crystalDim}</color>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="footKeyY">
+            <pos>0.9258 0.9688</pos>
+            <origin>0 0.5</origin>
+            <text>Y</text>
+            <fontSize>0.0146</fontSize>
+            <color>${crystalAccent}</color>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="footWordY">
+            <pos>0.9406 0.9688</pos>
+            <origin>0 0.5</origin>
+            <text>Options</text>
+            <fontSize>0.0146</fontSize>
+            <color>${crystalDim}</color>
+            <zIndex>60</zIndex>
+        </text>
     </view>
 </theme>
