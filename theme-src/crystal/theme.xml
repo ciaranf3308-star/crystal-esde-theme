@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <!-- Crystal v1 root theme: palette variables + shared view layout. -->
+    <include>./variables.xml</include>
+    <include>./views.xml</include>
+</theme>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <!-- Crystal v1 palette: deep blue/black, cyan accents, small yellow
+         focus accents only. Never purple. -->
+    <variables>
+        <variable name="crystalText" value="EAF2FF"/>
+        <variable name="crystalDim" value="8FA3C8"/>
+        <variable name="crystalCyan" value="22D3EE"/>
+        <variable name="crystalYellow" value="FFD60A"/>
+        <variable name="crystalDesc" value="B9C7E4"/>
+    </variables>
+</theme>

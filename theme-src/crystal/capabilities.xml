@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <!-- Crystal v1 for ES-DE (new theme engine, ES-DE 2.0+).
+         Dark variant. 16:9 layout, tuned for 1920x1080. -->
+    <themeName>Crystal</themeName>
+    <aspectRatios>
+        <aspectRatio>16:9</aspectRatio>
+    </aspectRatios>
+</theme>
