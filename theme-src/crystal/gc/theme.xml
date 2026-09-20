@@ -25,5 +25,21 @@
             <pos>0.030 0.411</pos>
             <text>128-BIT • 2001</text>
         </text>
+        <!-- v4.4.0 "Select": the selected carousel card shows this
+             system's vivid supplied poster, pixel-aligned over the 2x
+             selected slot (center 0.5 0.812, size 0.19 0.338 = 243x324
+             at 1280x960). ES-DE renders one texture per carousel entry,
+             so the selected-state art lives here as a per-system image
+             element (z55, above the z45 carousel) that follows the
+             selected system. Unselected entries keep the generic black
+             marquee cards from the carousel's staticImage. -->
+        <image name="selectedPoster">
+            <pos>0.5 0.812</pos>
+            <size>0.19 0.338</size>
+            <origin>0.5 0.5</origin>
+            <path>./../art/poster_on/gc.png</path>
+            <cornerRadius>0.008</cornerRadius>
+            <zIndex>55</zIndex>
+        </image>
     </view>
 </theme>

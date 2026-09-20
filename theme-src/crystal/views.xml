@@ -131,6 +131,14 @@
             <path>./art/carousel_glow.png</path>
             <zIndex>40</zIndex>
         </image>
+        <!-- v4.4.0 "Select": the 7 systems with user-supplied posters
+             (genesis, ps2, dreamcast, psx, megadrive, n64, gc) show the
+             vivid supplied poster on the SELECTED card via a per-system
+             <image name="selectedPoster"> overlay (z55, pixel-aligned to
+             the 2x selected slot at 0.5 0.812). ES-DE 3.4.1 renders one
+             texture per carousel entry, so selected-state art cannot live
+             in the carousel itself. Unselected entries keep the generic
+             black marquee cards below. -->
         <carousel name="sysCarousel">
             <type>horizontal</type>
             <pos>0 0.640</pos>
