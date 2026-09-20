@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
     <!-- Crystal v1 palette: deep blue/black, cyan accents, small yellow
-         focus accents only. Never purple. -->
+         focus accents only. Never purple.
+         NOTE: ES-DE variable syntax is <name>value</name> (tag name is the
+         variable name, text content is the value). The <variable name=""
+         value=""/> form is NOT supported and leaves every ${...} reference
+         resolving to empty, which fatally fails color parsing. -->
     <variables>
-        <variable name="crystalText" value="EAF2FF"/>
-        <variable name="crystalDim" value="8FA3C8"/>
-        <variable name="crystalCyan" value="22D3EE"/>
-        <variable name="crystalYellow" value="FFD60A"/>
-        <variable name="crystalDesc" value="B9C7E4"/>
+        <crystalText>EAF2FF</crystalText>
+        <crystalDim>8FA3C8</crystalDim>
+        <crystalCyan>22D3EE</crystalCyan>
+        <crystalYellow>FFD60A</crystalYellow>
+        <crystalDesc>B9C7E4</crystalDesc>
     </variables>
 </theme>
