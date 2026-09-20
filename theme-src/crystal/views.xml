@@ -68,21 +68,48 @@
             <zIndex>50</zIndex>
         </text>
 
+        <!-- Crystal carousel stage: a deep-blue floor vignette that seats the
+             carousel and gives the item reflections something to fade into. -->
+        <image name="carouselStage">
+            <pos>0 1</pos>
+            <origin>0 1</origin>
+            <path>./art/carousel_vignette.png</path>
+            <zIndex>40</zIndex>
+        </image>
+
+        <!-- Crystal v3.1 showpiece carousel.
+             Horizontal, 7 cards: the selected card pops to 1.28x, lifts 19px
+             and renders in full vivid color while neighbours recede along a
+             progressive depth curve (itemLinearScale), desaturated to 0.55.
+             Cards are solid (no ghost fading) with rounded corners, a soft
+             mirror reflection each, and a breathing gap opened around the
+             selected card (selectedItemMargins). Every one of these values
+             animates smoothly per-frame while scrolling (scale, saturation,
+             lift, gap), which is what makes it feel physical. -->
         <carousel name="sysCarousel">
             <type>horizontal</type>
-            <pos>0 0.727</pos>
-            <size>1 0.148</size>
+            <pos>0 0.648</pos>
+            <size>1 0.335</size>
             <origin>0 0</origin>
             <color>FFFFFFFF</color>
             <staticImage>./cards/${system.name}.png</staticImage>
             <defaultImage>./cards/_default.png</defaultImage>
-            <itemSize>0.075 0.140</itemSize>
-            <itemScale>1.18</itemScale>
-            <maxItemCount>8</maxItemCount>
-            <unfocusedItemOpacity>0.55</unfocusedItemOpacity>
+            <itemSize>0.092 0.160</itemSize>
+            <itemScale>1.28</itemScale>
+            <itemLinearScale>-0.08 -0.08</itemLinearScale>
+            <maxItemCount>7</maxItemCount>
+            <itemStacking>ascendingRaised</itemStacking>
+            <selectedItemOffset>0 -0.018</selectedItemOffset>
+            <selectedItemMargins>0.010 0.010</selectedItemMargins>
+            <reflections>true</reflections>
+            <reflectionsOpacity>0.35</reflectionsOpacity>
+            <reflectionsFalloff>2.5</reflectionsFalloff>
+            <imageCornerRadius>0.008</imageCornerRadius>
+            <unfocusedItemOpacity>0.90</unfocusedItemOpacity>
             <unfocusedItemSaturation>0.55</unfocusedItemSaturation>
-            <fastScrolling>true</fastScrolling>
             <imageInterpolation>linear</imageInterpolation>
+            <itemTransitions>animate</itemTransitions>
+            <fastScrolling>true</fastScrolling>
             <zIndex>45</zIndex>
         </carousel>
 
