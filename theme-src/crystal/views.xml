@@ -18,12 +18,18 @@
             <zIndex>1</zIndex>
         </image>
 
+        <!-- v3.6.0: white pill badge — blue text on white, floating on the
+             blue panel. backgroundColor/backgroundCornerRadius/
+             backgroundMargins are real ES-DE 3.4.1 text props. -->
         <text name="mfrBadge">
-            <pos>0.028 0.205</pos>
+            <pos>0.028 0.200</pos>
             <size>0.16 0</size>
             <origin>0 0</origin>
             <fontSize>0.016</fontSize>
-            <color>${crystalDim}</color>
+            <color>0A2FA0</color>
+            <backgroundColor>FFFFFFFF</backgroundColor>
+            <backgroundCornerRadius>0.007</backgroundCornerRadius>
+            <backgroundMargins>0.010 0.005</backgroundMargins>
             <letterCase>uppercase</letterCase>
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
@@ -69,8 +75,11 @@
             <zIndex>50</zIndex>
         </text>
 
-        <!-- Crystal carousel stage: a deep-blue floor vignette that seats the
-             carousel and gives the item reflections something to fade into. -->
+        <!-- Crystal carousel stage: a glossy deep-blue floor that seats the
+             carousel and gives the item reflections something to fade into.
+             v3.6.0: rebuilt as a real stage — royal-blue to deep-navy
+             gradient, bright horizon highlight, halftone fading with depth,
+             and a baked horizontal edge falloff so the outer cards recede. -->
         <image name="carouselStage">
             <pos>0 1</pos>
             <size>1 0.375</size>
@@ -82,13 +91,16 @@
         <!-- Crystal v3.1 showpiece carousel (v3.2.1: itemLinearScale removed —
              it only exists in ES-DE builds newer than the Nova's 3.4.1 and its
              presence made the whole theme fail to load there).
-             Horizontal, 7 cards: the selected card pops to 1.28x, lifts 19px
-             and renders in full vivid color while neighbours sit back,
-             desaturated to 0.55. Cards are solid (no ghost fading) with
-             rounded corners, a soft mirror reflection each, and a breathing
-             gap opened around the selected card (selectedItemMargins).
-             Scale, saturation, lift and gap all animate per-frame while
-             scrolling, which is what makes it feel physical. -->
+             v3.6.0: bigger hero pop (1.33x), neighbours pushed back harder
+             with unfocusedItemDimming so the selected card owns the stage.
+             Horizontal, 7 cards: the selected card pops, lifts 19px and
+             renders in full vivid color under its spotlight halo while
+             neighbours sit back, desaturated to 0.55 and dimmed. Cards are
+             solid (no ghost fading) with rounded corners, a soft mirror
+             reflection each, and a breathing gap opened around the selected
+             card (selectedItemMargins). Scale, saturation, lift, dimming and
+             gap all animate per-frame while scrolling, which is what makes
+             it feel physical. -->
         <carousel name="sysCarousel">
             <type>horizontal</type>
             <pos>0 0.648</pos>
@@ -102,7 +114,7 @@
             <staticImage>./cards/${system.name}.png</staticImage>
             <defaultImage>./cards/_default.png</defaultImage>
             <itemSize>0.092 0.160</itemSize>
-            <itemScale>1.28</itemScale>
+            <itemScale>1.33</itemScale>
             <maxItemCount>7</maxItemCount>
             <itemStacking>ascendingRaised</itemStacking>
             <selectedItemOffset>0 -0.018</selectedItemOffset>
@@ -113,6 +125,7 @@
             <imageCornerRadius>0.008</imageCornerRadius>
             <unfocusedItemOpacity>0.90</unfocusedItemOpacity>
             <unfocusedItemSaturation>0.55</unfocusedItemSaturation>
+            <unfocusedItemDimming>0.18</unfocusedItemDimming>
             <imageInterpolation>linear</imageInterpolation>
             <itemTransitions>animate</itemTransitions>
             <fastScrolling>true</fastScrolling>
