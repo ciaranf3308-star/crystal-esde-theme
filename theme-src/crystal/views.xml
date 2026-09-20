@@ -182,13 +182,18 @@
         </helpsystem>
     </view>
 
-    <!-- Crystal gamelist: library hero view (v4.7.0).
+    <!-- Crystal gamelist: library hero view (v4.9.0).
          The mockup: system hero background full-bleed (titles baked into
          the art), game carousel centered with the selected game large,
          marker-script title + metadata line below, A/B/Y footer.
-         Artwork hero when scraped: imageType "cover physicalmedia" —
-         scraped boxart wins, else the 3D physical-media render, else the
-         per-system silhouette. 2-type carousel limit (CarouselComponent.h).
+         v4.9.0: the carousel is physical media ONLY (physicalmedia/3dbox
+         — disk/cart/3D box, never box art). The selected game's scraped
+         cover renders as a separate hero overlay (selectedArtwork, z52)
+         pixel-aligned to the selected slot; with no scraped art it draws
+         nothing and the selected disk shows through. 2-type carousel
+         limit (CarouselComponent.h). Royal-blue wash (libBlueTint, z2)
+         over the background on all 21 consoles; the game hero (carousel,
+         artwork overlay, title) renders above it, untinted.
          Platform notes: carousel captions render ONLY for artless items,
          so neighbour names under art are impossible stock (the selected
          game's name lives in the hero title); no page-indicator element
@@ -233,7 +238,11 @@
             <size>1 0.42</size>
             <origin>0.5 0.5</origin>
             <color>00000000</color>
-            <imageType>cover physicalmedia</imageType>
+            <!-- v4.9.0: physical media ONLY in the carousel (disk/cart/3D
+                 box) — never box art. The selected game's scraped cover
+                 renders as a separate hero overlay above (selectedArtwork);
+                 neighbours always stay physical media. -->
+            <imageType>physicalmedia 3dbox</imageType>
             <defaultImage>./media_fallbacks/${system.name}.png</defaultImage>
             <itemSize>0.18 0.185</itemSize>
             <itemScale>1.9</itemScale>
@@ -250,6 +259,22 @@
             <fastScrolling>true</fastScrolling>
             <zIndex>50</zIndex>
         </carousel>
+
+        <!-- v4.9.0: selected-game artwork hero. Per-game <image> with a
+             non-empty imageType resolves the SELECTED game's media
+             (GamelistView::setGameImage); on a miss it draws nothing, so
+             the selected physical-media entry shows through untouched.
+             Pixel-aligned to the 1.9x selected slot (0.342 x 0.3515 at
+             0.5, 0.465, cornerRadius 0.008) so the cover swaps cleanly
+             into the slot the disk occupied. -->
+        <image name="selectedArtwork">
+            <pos>0.5 0.465</pos>
+            <size>0.342 0.3515</size>
+            <origin>0.5 0.5</origin>
+            <imageType>cover</imageType>
+            <cornerRadius>0.008</cornerRadius>
+            <zIndex>52</zIndex>
+        </image>
 
         <!-- Chevron arrows at the carousel edges. -->
         <text name="chevLeft">
