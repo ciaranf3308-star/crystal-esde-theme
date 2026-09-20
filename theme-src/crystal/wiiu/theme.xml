@@ -12,6 +12,7 @@
         <text name="sysName">
             <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
             <fontSize>0.038</fontSize>
+
         </text>
         <text name="sysDesc">
             <text>The GamePad experiment. Hidden gems await.</text>

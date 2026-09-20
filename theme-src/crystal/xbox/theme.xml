@@ -11,7 +11,9 @@
         </text>
         <text name="sysName">
             <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
-            <fontSize>0.038</fontSize>
+            <fontSize>0.040</fontSize>
+            <text>Xbox</text>
+
         </text>
         <text name="sysDesc">
             <text>The green giant's first shot. Halo defined a generation.</text>

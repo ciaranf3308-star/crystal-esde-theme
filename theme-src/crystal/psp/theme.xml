@@ -13,6 +13,7 @@
             <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
             <fontSize>0.040</fontSize>
             <text>PSP</text>
+
         </text>
         <text name="sysDesc">
             <text>Console power in your pocket. UMD adventures.</text>

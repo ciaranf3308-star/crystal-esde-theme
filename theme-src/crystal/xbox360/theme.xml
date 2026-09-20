@@ -11,7 +11,9 @@
         </text>
         <text name="sysName">
             <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
-            <fontSize>0.030</fontSize>
+            <fontSize>0.040</fontSize>
+            <text>Xbox 360</text>
+
         </text>
         <text name="sysDesc">
             <text>HD-era pioneer. A legendary library.</text>

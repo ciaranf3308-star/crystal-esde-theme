@@ -13,6 +13,7 @@
             <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
             <fontSize>0.036</fontSize>
             <text>Game Boy Color</text>
+
         </text>
         <text name="sysDesc">
             <!-- panel threading: sits between this background's ruled lines -->
