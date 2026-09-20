@@ -204,6 +204,17 @@
             <zIndex>1</zIndex>
         </image>
 
+        <!-- v4.8.0: royal-blue wash over the per-system background, all
+             21 consoles. Transparent blue only — the game hero (carousel,
+             chevrons, title, metadata) renders above it, untinted. -->
+        <image name="libBlueTint">
+            <pos>0 0</pos>
+            <size>1 1</size>
+            <origin>0 0</origin>
+            <path>./art/lib_blue_tint.png</path>
+            <zIndex>2</zIndex>
+        </image>
+
         <!-- Soft white glow behind the title block: the marker title is
              navy (mockup), so it needs a light bed on every system. -->
         <image name="libScrim">
