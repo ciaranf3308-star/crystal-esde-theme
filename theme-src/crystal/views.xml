@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v3 system view: the hero composition.
-         - Baked comic background with the blue info panel at
-           x 0.010..0.200, y 0.172..0.707 (measured on the 1920x1080 canvas).
+    <!-- Crystal v3.3 system view: 4:3 hero composition for the Nova (1280x960).
+         - Baked 4:3 comic background with the blue info panel at
+           x 0.013..0.28, y 0.17..0.97 (fractions of the 4:3 frame).
+         - The 5 supplied heroes are rendered on their own, fullscreen.
          - Live text inside the panel: manufacturer badge, system name,
            description, game count, facts line.
          - Horizontal carousel of per-system hardware cards across the
@@ -59,7 +60,7 @@
         </text>
         <text name="factsLine">
             <pos>0.028 0.545</pos>
-            <size>0.16 0.04</size>
+            <size>0.19 0.04</size>
             <origin>0 0</origin>
             <fontSize>0.015</fontSize>
             <color>${crystalAccent}</color>
@@ -72,6 +73,7 @@
              carousel and gives the item reflections something to fade into. -->
         <image name="carouselStage">
             <pos>0 1</pos>
+            <size>1 0.375</size>
             <origin>0 1</origin>
             <path>./art/carousel_vignette.png</path>
             <zIndex>40</zIndex>

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v3 per-system text overrides for the info panel. -->
+    <!-- Crystal v3.3: 4:3 Nova layout. Text inherits the base panel positions
+         from views.xml; only content and the measured name size are set here. -->
     <include>./../variables.xml</include>
     <include>./../views.xml</include>
     <view name="system">
         <text name="mfrBadge">
             <text>SEGA</text>
+        </text>
+        <text name="sysName">
+            <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
+            <fontSize>0.028</fontSize>
         </text>
         <text name="sysDesc">
             <text>Sega's 128-bit swan song. Arcade soul with VMU dreams.</text>

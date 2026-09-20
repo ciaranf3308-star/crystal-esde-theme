@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <themeCapabilities>
-    <!-- Crystal v3: one definitive theme for the Nova. No variants. -->
+    <!-- Crystal v3.3: one definitive theme for the Nova (1280x960, 4:3). No variants. -->
     <themeName>Crystal</themeName>
-    <aspectRatio>16:9</aspectRatio>
+    <aspectRatio>4:3</aspectRatio>
 </themeCapabilities>
