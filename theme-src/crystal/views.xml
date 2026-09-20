@@ -182,10 +182,9 @@
         </helpsystem>
     </view>
 
-    <!-- Crystal gamelist v5.4.0 — measured against the user's example
-         ("what I wanted"): straight disk row, ONE big selected disk
-         with yellow outer glow, medium neighbours, partial disks
-         clipped at both screen edges, gentle rainbow arc (center high).
+    <!-- Crystal gamelist v5.5.0 — measured against the user's example
+         ("what I wanted"), which is to scale: bottoms ALWAYS flush,
+         growth/scale moves UP, equal spacing. No wheel, no arc.
            top-left   scraped marquee, BIG, tilted -18° counterclockwise
                       (rises to the right, per the example), blue/white
                       filter via saturation 0.12 + B9C9FF tint; the game
@@ -193,9 +192,10 @@
                       marquee is scraped
            top-right  game metadata block (description + facts + rating),
                       scaled up ~1.45x — nothing tiny
-           center     physical-media wheel — selected disk 0.40h with
-                      yellow outer glow, neighbours 0.19h, running off
-                      both edges
+           center     physical-media STRAIGHT row — selected disk 0.468h
+                      with yellow outer glow, neighbours 0.223h, bottoms
+                      flush at 0.81h, equal 0.40w spacing, centres at
+                      0.10 / 0.50 / 0.90
            below disk console name/logo, centered, tucked under the row
          One generic background for all 21 consoles with the royal-blue
          wash baked in. Platform notes: carousel captions render ONLY
@@ -346,26 +346,43 @@
 
         <!-- Yellow outer glow behind the selected disk slot (example:
              "Selected Disk (Outer GLow Yellow)"). Static: the selected
-             slot is always centered, so the glow never moves. Sized
-             circular for the 4:3 screen (0.345w x 0.46h = 442x442px)
-             around the 0.40h selected disk. -->
+             slot is always centered, so the glow never moves. Circular
+             on the 4:3 screen (0.402w x 0.536h = ~515x515px) around the
+             0.468h selected disk, centered at (0.5, 0.576) = the
+             selected disk's center now the row sits bottom-flush. -->
         <image name="libSelectedGlow">
-            <pos>0.5 0.48</pos>
-            <size>0.345 0.46</size>
+            <pos>0.5 0.576</pos>
+            <size>0.402 0.536</size>
             <origin>0.5 0.5</origin>
             <path>./art/lib_glow_yellow.png</path>
             <zIndex>48</zIndex>
         </image>
 
-        <!-- The primary: physical-media WHEEL (example: one big selected
-             disk center-high with yellow outer glow, medium neighbours
-             each side, partial disks clipped at both edges, gentle
-             rainbow arc). itemSize 0.19 / itemScale 2.1 gives neighbours
-             at 0.19h and the selected disk at 0.40h — the ~2.1x ratio
-             measured from the user's example. Left/right navigate. -->
+        <!-- The primary: physical-media STRAIGHT row, exactly per the
+             user's example. The example is to scale: bottoms ALWAYS
+             flush, growth/scale moves UP, equal spacing.
+
+             How (verified against CarouselComponent.h @ v3.4.1):
+             type=horizontal lays items out on a straight line with
+             equal spacing (itemSpacing.x spreads maxItemCount items
+             across the box). itemVerticalAlignment=bottom anchors every
+             item by its BOTTOM-center: yOff = size.y - itemSize.y and
+             the item origin becomes (0.5, 1.0), so setScale() grows the
+             selected disk UPWARD while every bottom stays glued to the
+             box bottom. No wheel, no arc, no rotation.
+
+             Measured from the example (paper = screen):
+               neighbour disk diameter 0.223h -> itemSize 0.167 0.223
+                 (0.167*1280 = 0.223*960 = 214px, square box)
+               selected disk 0.468h -> itemScale 2.1 (449px)
+               bottoms flush at 0.81h -> box 1 x 0.52 @ 0.5 0.55
+                 (box spans 0.29-0.81, selected top at 0.342)
+               centres at 0.10 / 0.50 / 0.90 -> maxItemCount 2.5
+                 gives 512px = 0.40w equal spacing.
+             Left/right navigate. -->
         <carousel name="gameCarousel">
-            <type>horizontalWheel</type>
-            <pos>0.5 0.48</pos>
+            <type>horizontal</type>
+            <pos>0.5 0.55</pos>
             <size>1 0.52</size>
             <origin>0.5 0.5</origin>
             <color>00000000</color>
@@ -373,12 +390,10 @@
                  disk/cart/3D box on every entry including neighbours. -->
             <imageType>physicalmedia 3dbox</imageType>
             <defaultImage>./media_fallbacks/${system.name}.png</defaultImage>
-            <itemSize>0.19 0.19</itemSize>
+            <itemSize>0.167 0.223</itemSize>
             <itemScale>2.1</itemScale>
-            <itemsBeforeCenter>2</itemsBeforeCenter>
-            <itemsAfterCenter>2</itemsAfterCenter>
-            <itemRotation>14</itemRotation>
-            <itemRotationOrigin>-2 0.5</itemRotationOrigin>
+            <maxItemCount>2.5</maxItemCount>
+            <itemVerticalAlignment>bottom</itemVerticalAlignment>
             <reflections>false</reflections>
             <imageCornerRadius>0.008</imageCornerRadius>
             <unfocusedItemOpacity>0.9</unfocusedItemOpacity>
@@ -390,11 +405,12 @@
             <zIndex>50</zIndex>
         </carousel>
 
-        <!-- Console name, tucked under the disk row per the example.
+        <!-- Console name, tucked under the disk row per the example
+             (row bottoms flush at 0.81; name sits just below).
              Per-system overrides supply the logo image (or keep this
              text for the 5 systems without artwork yet). -->
         <text name="libConsoleName">
-            <pos>0.5 0.75</pos>
+            <pos>0.5 0.865</pos>
             <size>0.70 0.06</size>
             <origin>0.5 0.5</origin>
             <fontSize>0.044</fontSize>
