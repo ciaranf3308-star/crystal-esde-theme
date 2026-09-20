@@ -188,13 +188,14 @@ def paste_hero(base, fg, cx, cy, max_w, max_h, angle=-8):
     base.alpha_composite(fg, (int(cx - fw/2), int(cy - fh/2)))
 
 
-print('building base canvas...')
-tpl = Image.open(os.path.join(
-    WORK, 'media-generation-blue-template-clean-0-4bfe272b-0cae-4202-a08b-c2d3308d5678.png')).convert('RGB')
-tw, th = tpl.size
-sc = 1080 / th
-nw = int(tw * sc)
-scaled = tpl.resize((nw, 1080), Image.LANCZOS)
+def main():
+    print('building base canvas...')
+    tpl = Image.open(os.path.join(
+        WORK, 'media-generation-blue-template-clean-0-4bfe272b-0cae-4202-a08b-c2d3308d5678.png')).convert('RGB')
+    tw, th = tpl.size
+    sc = 1080 / th
+    nw = int(tw * sc)
+    scaled = tpl.resize((nw, 1080), Image.LANCZOS)
 def comic_fill(w, h):
     """Procedural blue/white comic fill for the canvas extension (no mirrored text)."""
     import random
@@ -217,61 +218,66 @@ def comic_fill(w, h):
     return img
 
 
-base = Image.new('RGB', (1920, 1080), (255, 255, 255))
-base.paste(scaled, (0, 0))
-if nw < 1920:
-    # procedural comic extension with soft seam blend (no mirrored artifacts)
-    need = 1920 - nw
-    fill = comic_fill(need, 1080)
-    bw = min(90, need)
-    mask = Image.new('L', (need, 1080), 255)
-    mp = mask.load()
-    for x in range(bw):
-        v = int(255 * x / bw)
-        for y in range(1080):
-            mp[x, y] = v
-    base.paste(fill.convert('RGB'), (nw, 0), mask)
-base_rgba = base.convert('RGBA')
-base_rgba.save(os.path.join(WORK, 'base_1920.png'))
-print('base saved', base_rgba.size)
+    base = Image.new('RGB', (1920, 1080), (255, 255, 255))
+    base.paste(scaled, (0, 0))
+    if nw < 1920:
+        # procedural comic extension with soft seam blend (no mirrored artifacts)
+        need = 1920 - nw
+        fill = comic_fill(need, 1080)
+        bw = min(90, need)
+        mask = Image.new('L', (need, 1080), 255)
+        mp = mask.load()
+        for x in range(bw):
+            v = int(255 * x / bw)
+            for y in range(1080):
+                mp[x, y] = v
+        base.paste(fill.convert('RGB'), (nw, 0), mask)
+    base_rgba = base.convert('RGBA')
+    base_rgba.save(os.path.join(WORK, 'base_1920.png'))
+    print('base saved', base_rgba.size)
 
-print('compositing backgrounds...')
-for sys, meta in SYSTEMS.items():
-    cv = base_rgba.copy()
-    draw_title(cv, meta['title'], 470, 130, 780, size=150)
-    fg = load_fg(meta['fg'])
-    paste_hero(cv, fg, 1230, 545, 1020, 600)
-    cv.convert('RGB').save(os.path.join(OUT_BG, f'{sys}.webp'), 'WEBP', quality=82, method=6)
-    print(' bg', sys)
+    print('compositing backgrounds...')
+    for sys, meta in SYSTEMS.items():
+        cv = base_rgba.copy()
+        draw_title(cv, meta['title'], 470, 130, 780, size=150)
+        fg = load_fg(meta['fg'])
+        paste_hero(cv, fg, 1230, 545, 1020, 600)
+        cv.convert('RGB').save(os.path.join(OUT_BG, f'{sys}.webp'), 'WEBP', quality=82, method=6)
+        print(' bg', sys)
 
-# _default: clean base, no title/console
-base_rgba.convert('RGB').save(os.path.join(OUT_BG, '_default.webp'), 'WEBP', quality=82, method=6)
-print(' bg _default')
+    # _default: clean base, no title/console
+    base_rgba.convert('RGB').save(os.path.join(OUT_BG, '_default.webp'), 'WEBP', quality=82, method=6)
+    print(' bg _default')
 
-print('compositing cards...')
-# card backdrop: comic crop from base
-cardbg_src = base_rgba.crop((700, 150, 1150, 700)).resize((400, 424), Image.LANCZOS)
-for sys, meta in SYSTEMS.items():
-    card = cardbg_src.copy()
-    d = ImageDraw.Draw(card, 'RGBA')
-    d.rectangle([0, 0, 399, 423], outline=(255, 255, 255, 255), width=10)
-    # name plate
-    f = ImageFont.truetype(FONT_BOLD, 40)
-    name = meta['card']
-    while f.getlength(name) > 330 and f.size > 18:
-        f = ImageFont.truetype(FONT_BOLD, f.size - 2)
-    twd = f.getlength(name)
-    d.text((200 - twd/2 + 3, 18 + 3), name, font=f, fill=BLUE + (255,))
-    d.text((200 - twd/2, 18), name, font=f, fill=(255, 255, 255, 255))
-    # hardware
-    fg = load_fg(meta['fg'])
-    w, h = fg.size
-    s = min(320 / w, 250 / h)
-    fg = fg.resize((int(w*s), int(h*s)), Image.LANCZOS)
-    card.alpha_composite(fg, (int(200 - fg.size[0]/2), int(300 - fg.size[1]/2)))
-    # selected-glow edge (subtle inner)
-    card.save(os.path.join(OUT_CARD, f'{sys}.png'))
-    print(' card', sys)
+    print('compositing cards...')
+    # card backdrop: comic crop from base
+    cardbg_src = base_rgba.crop((700, 150, 1150, 700)).resize((400, 424), Image.LANCZOS)
+    for sys, meta in SYSTEMS.items():
+        card = cardbg_src.copy()
+        d = ImageDraw.Draw(card, 'RGBA')
+        d.rectangle([0, 0, 399, 423], outline=(255, 255, 255, 255), width=10)
+        # name plate
+        f = ImageFont.truetype(FONT_BOLD, 40)
+        name = meta['card']
+        while f.getlength(name) > 330 and f.size > 18:
+            f = ImageFont.truetype(FONT_BOLD, f.size - 2)
+        twd = f.getlength(name)
+        d.text((200 - twd/2 + 3, 18 + 3), name, font=f, fill=BLUE + (255,))
+        d.text((200 - twd/2, 18), name, font=f, fill=(255, 255, 255, 255))
+        # hardware
+        fg = load_fg(meta['fg'])
+        w, h = fg.size
+        s = min(320 / w, 250 / h)
+        fg = fg.resize((int(w*s), int(h*s)), Image.LANCZOS)
+        card.alpha_composite(fg, (int(200 - fg.size[0]/2), int(300 - fg.size[1]/2)))
+        # selected-glow edge (subtle inner)
+        card.save(os.path.join(OUT_CARD, f'{sys}.png'))
+        print(' card', sys)
 
-cardbg_src.save(os.path.join(OUT_CARD, '_default.png'))
-print('DONE')
+    cardbg_src.save(os.path.join(OUT_CARD, '_default.png'))
+    print('DONE')
+
+
+
+if __name__ == '__main__':
+    main()
