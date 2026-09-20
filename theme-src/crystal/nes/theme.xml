@@ -38,10 +38,10 @@
             <text>The gray box that saved gaming. 8-bit legends.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.460</pos>
+            <pos>0.030 0.375</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.535</pos>
+            <pos>0.030 0.440</pos>
             <text>8-BIT • 1985</text>
         </text>
     </view>

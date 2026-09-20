@@ -10,15 +10,11 @@
             <text>NINTENDO</text>
         </text>
         <text name="sysDesc">
-            <!-- panel threading: sits between this background's ruled lines -->
-            <pos>0.030 0.281</pos>
             <text>Glasses-free 3D in your pocket. StreetPass fun.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.354</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.415</pos>
             <text>HANDHELD • 2011</text>
         </text>
     </view>

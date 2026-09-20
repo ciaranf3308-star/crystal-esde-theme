@@ -11,8 +11,7 @@
         </text>
         <text name="sysName">
             <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
-            <size>0.228 0.055</size>
-            <fontSize>0.027</fontSize>
+            <fontSize>0.029</fontSize>
         </text>
         <text name="sysDesc">
             <text>The brick that built handhelds. Tetris forever.</text>
@@ -24,8 +23,6 @@
             <size>0.228 0.140</size>
         </text>
         <text name="countNum">
-            <fontSize>0.042</fontSize>
-            <size>0.228 0.07</size>
         </text>
     </view>
 </theme>

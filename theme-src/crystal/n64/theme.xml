@@ -10,15 +10,11 @@
             <text>NINTENDO</text>
         </text>
         <text name="sysDesc">
-            <!-- panel threading: sits between this background's ruled lines -->
-            <pos>0.030 0.281</pos>
             <text>The 3D pioneer. Mario 64 changed everything.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.354</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.415</pos>
             <text>64-BIT • 1996</text>
         </text>
         <!-- v4.4.0 "Select": the selected carousel card shows this

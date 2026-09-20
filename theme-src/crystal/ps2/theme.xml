@@ -14,15 +14,11 @@
             <fontSize>0.030</fontSize>
         </text>
         <text name="sysDesc">
-            <!-- panel threading: sits between this background's ruled lines -->
-            <pos>0.030 0.281</pos>
             <text>The best-selling console ever. An endless library.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.354</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.415</pos>
             <text>128-BIT • 2000</text>
         </text>
         <!-- v4.4.0 "Select": the selected carousel card shows this

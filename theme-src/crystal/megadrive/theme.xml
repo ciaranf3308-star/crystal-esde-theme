@@ -11,18 +11,14 @@
         </text>
         <text name="sysName">
             <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
-            <fontSize>0.033</fontSize>
+            <fontSize>0.034</fontSize>
         </text>
         <text name="sysDesc">
-            <!-- panel threading: sits between this background's ruled lines -->
-            <pos>0.030 0.281</pos>
             <text>Europe's name for Sega's 16-bit speed machine.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.354</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.415</pos>
             <text>16-BIT • 1990</text>
         </text>
         <!-- v4.4.0 "Select": the selected carousel card shows this

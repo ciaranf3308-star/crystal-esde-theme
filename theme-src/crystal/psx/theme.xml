@@ -11,7 +11,7 @@
         </text>
         <text name="sysName">
             <!-- measured with DejaVu Sans Bold: fullName fits one line on the 4:3 panel -->
-            <fontSize>0.033</fontSize>
+            <fontSize>0.034</fontSize>
         </text>
         <text name="sysDesc">
             <text>Where 3D grew up. Crash, Spyro, Final Fantasy VII.</text>
