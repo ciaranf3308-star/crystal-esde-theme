@@ -308,18 +308,6 @@
             <hideIfZero>true</hideIfZero>
             <zIndex>60</zIndex>
         </rating>
-        <datetime name="libLastPlayed">
-            <pos>0.66 0.330</pos>
-            <size>0.31 0.028</size>
-            <origin>0 0.5</origin>
-            <metadata>lastplayed</metadata>
-            <format>%d %b %Y</format>
-            <fontSize>0.017</fontSize>
-            <color>${crystalInkDim}</color>
-            <horizontalAlignment>left</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </datetime>
 
         <!-- 5. Selected-media atmosphere: restrained yellow glow plus a
              soft dark contact shadow. Static — the selected slot is
@@ -349,6 +337,7 @@
              ±2 items sit exactly at the screen edges, peeking. -->
         <carousel name="gameCarousel">
             <type>horizontal</type>
+            <color>00000000</color>
             <pos>0.5 0.495</pos>
             <size>1 0.44</size>
             <origin>0.5 0.5</origin>
