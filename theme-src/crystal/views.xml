@@ -77,15 +77,16 @@
             <zIndex>40</zIndex>
         </image>
 
-        <!-- Crystal v3.1 showpiece carousel.
+        <!-- Crystal v3.1 showpiece carousel (v3.2.1: itemLinearScale removed —
+             it only exists in ES-DE builds newer than the Nova's 3.4.1 and its
+             presence made the whole theme fail to load there).
              Horizontal, 7 cards: the selected card pops to 1.28x, lifts 19px
-             and renders in full vivid color while neighbours recede along a
-             progressive depth curve (itemLinearScale), desaturated to 0.55.
-             Cards are solid (no ghost fading) with rounded corners, a soft
-             mirror reflection each, and a breathing gap opened around the
-             selected card (selectedItemMargins). Every one of these values
-             animates smoothly per-frame while scrolling (scale, saturation,
-             lift, gap), which is what makes it feel physical. -->
+             and renders in full vivid color while neighbours sit back,
+             desaturated to 0.55. Cards are solid (no ghost fading) with
+             rounded corners, a soft mirror reflection each, and a breathing
+             gap opened around the selected card (selectedItemMargins).
+             Scale, saturation, lift and gap all animate per-frame while
+             scrolling, which is what makes it feel physical. -->
         <carousel name="sysCarousel">
             <type>horizontal</type>
             <pos>0 0.648</pos>
@@ -96,7 +97,6 @@
             <defaultImage>./cards/_default.png</defaultImage>
             <itemSize>0.092 0.160</itemSize>
             <itemScale>1.28</itemScale>
-            <itemLinearScale>-0.08 -0.08</itemLinearScale>
             <maxItemCount>7</maxItemCount>
             <itemStacking>ascendingRaised</itemStacking>
             <selectedItemOffset>0 -0.018</selectedItemOffset>

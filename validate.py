@@ -2,7 +2,8 @@
 """ES-DE ThemeData.cpp-faithful validator for the Crystal theme.
 
 Replicates the parsing behavior that matters for correctness, checked
-against the real ES-DE source (es-core/src/ThemeData.cpp, master):
+against the real ES-DE source (es-core/src/ThemeData.cpp, PINNED to the
+version on the Nova — currently v3.4.1 — never master, see gen_tables.py):
 - <include> processed inline, in document order (max depth 24)
 - variables: name = TAG NAME, value = text content.
   The <variable name="" value=""/> form defines NOTHING (this was the v1.0.1 bug).
