@@ -1,0 +1,10 @@
+Fonts bundled with the Crystal ES-DE theme
+==========================================
+
+PermanentMarker-Regular.ttf
+  "Permanent Marker" by Font Diner, Inc.
+  Copyright (c) 2010 by Font Diner, Inc. All rights reserved.
+  Source: Google Fonts (https://fonts.google.com/specimen/Permanent+Marker)
+  License: SIL Open Font License, Version 1.1
+  (https://scripts.sil.org/OFL)
+  Used for the game-library hero title.
