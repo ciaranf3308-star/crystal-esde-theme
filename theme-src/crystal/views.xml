@@ -94,7 +94,11 @@
             <pos>0 0.648</pos>
             <size>1 0.335</size>
             <origin>0 0</origin>
-            <color>FFFFFFFF</color>
+            <!-- v3.5.0: the carousel paints its own background rect with this
+                 color ABOVE the vignette stage (z45 > z40). FFFFFFFF was an
+                 opaque white box that buried the deep-blue floor on device.
+                 Transparent lets the stage show through. -->
+            <color>00000000</color>
             <staticImage>./cards/${system.name}.png</staticImage>
             <defaultImage>./cards/_default.png</defaultImage>
             <itemSize>0.092 0.160</itemSize>
