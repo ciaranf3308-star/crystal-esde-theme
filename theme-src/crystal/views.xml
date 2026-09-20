@@ -17,7 +17,7 @@
             <zIndex>1</zIndex>
         </image>
 
-        <text name="mfrBadge" extra="true">
+        <text name="mfrBadge">
             <pos>0.028 0.205</pos>
             <size>0.16 0</size>
             <origin>0 0</origin>
@@ -27,17 +27,17 @@
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
         </text>
-        <text name="sysName" extra="true">
+        <text name="sysName">
             <pos>0.028 0.232</pos>
             <size>0.16 0.05</size>
             <origin>0 0</origin>
-            <systemdata>fullName</systemdata>
+            <systemdata>fullname</systemdata>
             <fontSize>0.030</fontSize>
             <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
         </text>
-        <text name="sysDesc" extra="true">
+        <text name="sysDesc">
             <pos>0.028 0.300</pos>
             <size>0.155 0.160</size>
             <origin>0 0</origin>
@@ -46,7 +46,7 @@
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
         </text>
-        <text name="countNum" extra="true">
+        <text name="countNum">
             <pos>0.028 0.475</pos>
             <size>0.16 0.06</size>
             <origin>0 0</origin>
@@ -57,7 +57,7 @@
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
         </text>
-        <text name="factsLine" extra="true">
+        <text name="factsLine">
             <pos>0.028 0.545</pos>
             <size>0.16 0.04</size>
             <origin>0 0</origin>
@@ -97,7 +97,7 @@
 
     <!-- Crystal v3 gamelist view: same comic canvas, deep-blue wash for
          readability, console card top-right, metadata column. -->
-    <view name="detailed">
+    <view name="gamelist">
         <image name="gameBackground">
             <pos>0 0</pos>
             <size>1 1</size>
@@ -107,7 +107,7 @@
             <color>${crystalGameBg}</color>
             <zIndex>1</zIndex>
         </image>
-        <image name="gameArt" extra="true">
+        <image name="gameArt">
             <pos>0.80 0.14</pos>
             <size>0.30 0.335</size>
             <origin>0.5 0.5</origin>
@@ -115,7 +115,7 @@
             <default>./cards/_default.png</default>
             <zIndex>20</zIndex>
         </image>
-        <text name="gameName" extra="true">
+        <text name="gameName">
             <pos>0.06 0.055</pos>
             <size>0.50 0.06</size>
             <origin>0 0</origin>
@@ -137,7 +137,7 @@
             <horizontalMargin>0.012</horizontalMargin>
             <zIndex>30</zIndex>
         </textlist>
-        <text name="devLabel" extra="true">
+        <text name="devLabel">
             <pos>0.62 0.36</pos>
             <size>0.10 0.04</size>
             <origin>0 0</origin>
@@ -148,7 +148,7 @@
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>30</zIndex>
         </text>
-        <text name="devValue" extra="true">
+        <text name="devValue">
             <pos>0.74 0.36</pos>
             <size>0.22 0.04</size>
             <origin>0 0</origin>
@@ -158,7 +158,7 @@
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>30</zIndex>
         </text>
-        <text name="genreLabel" extra="true">
+        <text name="genreLabel">
             <pos>0.62 0.42</pos>
             <size>0.10 0.04</size>
             <origin>0 0</origin>
@@ -169,7 +169,7 @@
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>30</zIndex>
         </text>
-        <text name="genreValue" extra="true">
+        <text name="genreValue">
             <pos>0.74 0.42</pos>
             <size>0.22 0.04</size>
             <origin>0 0</origin>
@@ -179,7 +179,7 @@
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>30</zIndex>
         </text>
-        <text name="playersLabel" extra="true">
+        <text name="playersLabel">
             <pos>0.62 0.48</pos>
             <size>0.10 0.04</size>
             <origin>0 0</origin>
@@ -190,7 +190,7 @@
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>30</zIndex>
         </text>
-        <text name="playersValue" extra="true">
+        <text name="playersValue">
             <pos>0.74 0.48</pos>
             <size>0.22 0.04</size>
             <origin>0 0</origin>
@@ -200,7 +200,7 @@
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>30</zIndex>
         </text>
-        <text name="gameDesc" extra="true">
+        <text name="gameDesc">
             <pos>0.62 0.56</pos>
             <size>0.32 0.28</size>
             <origin>0 0</origin>

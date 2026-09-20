@@ -5,7 +5,7 @@
     <include>./../views.xml</include>
     <view name="system">
         <text name="mfrBadge">
-            <text></text>
+            <text>PC</text>
         </text>
         <text name="sysDesc">
             <text>PC classics, indie gems and emulation everything.</text>
