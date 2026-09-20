@@ -46,6 +46,11 @@
         </text>
     </view>
     <view name="gamelist">
+        <!-- v5.0.0 skeleton: console name for the gamelist
+             bottom-center slot (user supplies final logo names). -->
+        <text name="libConsoleName">
+            <text>Nintendo Entertainment System</text>
+        </text>
         <!-- This system's background has no baked footer; live hints. -->
         <text name="footBadgeA">
             <pos>0.047 0.955</pos>

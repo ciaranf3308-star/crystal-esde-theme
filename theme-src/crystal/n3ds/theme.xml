@@ -18,4 +18,11 @@
             <text>HANDHELD • 2011</text>
         </text>
     </view>
+    <view name="gamelist">
+        <!-- v5.0.0 skeleton: console name for the gamelist
+             bottom-center slot (user supplies final logo names). -->
+        <text name="libConsoleName">
+            <text>Nintendo 3DS</text>
+        </text>
+    </view>
 </theme>

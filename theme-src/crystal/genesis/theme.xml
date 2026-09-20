@@ -34,4 +34,11 @@
             <zIndex>55</zIndex>
         </image>
     </view>
+    <view name="gamelist">
+        <!-- v5.0.0 skeleton: console name for the gamelist
+             bottom-center slot (user supplies final logo names). -->
+        <text name="libConsoleName">
+            <text>Genesis</text>
+        </text>
+    </view>
 </theme>

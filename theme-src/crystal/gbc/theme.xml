@@ -28,4 +28,11 @@
             <text>8-BIT • HANDHELD • 1998</text>
         </text>
     </view>
+    <view name="gamelist">
+        <!-- v5.0.0 skeleton: console name for the gamelist
+             bottom-center slot (user supplies final logo names). -->
+        <text name="libConsoleName">
+            <text>Game Boy Color</text>
+        </text>
+    </view>
 </theme>

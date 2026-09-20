@@ -24,4 +24,11 @@
             <text>2001</text>
         </text>
     </view>
+    <view name="gamelist">
+        <!-- v5.0.0 skeleton: console name for the gamelist
+             bottom-center slot (user supplies final logo names). -->
+        <text name="libConsoleName">
+            <text>Xbox</text>
+        </text>
+    </view>
 </theme>
