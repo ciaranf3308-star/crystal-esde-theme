@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v2 per-system overrides for wiiu: explicit asset paths.
-         Element names match views.xml so these merge cleanly over the shared
-         layout; the includes keep this file standalone-safe. -->
+    <!-- Crystal v3 per-system text overrides for the info panel. -->
     <include>./../variables.xml</include>
     <include>./../views.xml</include>
     <view name="system">
-        <image name="sysBackground">
-            <path>./../${crystalBgDir}/wiiu.webp</path>
-        </image>
-        <image name="sysLogo">
-            <path>./../${crystalLogoDir}/wiiu.png</path>
-        </image>
-    </view>
-    <view name="gamelist">
-        <image name="gameBackground">
-            <path>./../${crystalBgDir}/wiiu.webp</path>
-        </image>
-        <image name="gameArt">
-            <default>./../${crystalLogoDir}/wiiu.png</default>
-        </image>
+        <text name="mfrBadge">
+            <text>NINTENDO</text>
+        </text>
+        <text name="sysDesc">
+            <text>The GamePad experiment. Hidden gems await.</text>
+        </text>
+        <text name="factsLine">
+            <text>2012</text>
+        </text>
     </view>
 </theme>

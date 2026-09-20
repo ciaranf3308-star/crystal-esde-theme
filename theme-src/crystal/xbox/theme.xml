@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v2 per-system overrides for xbox: explicit asset paths.
-         Element names match views.xml so these merge cleanly over the shared
-         layout; the includes keep this file standalone-safe. -->
+    <!-- Crystal v3 per-system text overrides for the info panel. -->
     <include>./../variables.xml</include>
     <include>./../views.xml</include>
     <view name="system">
-        <image name="sysBackground">
-            <path>./../${crystalBgDir}/xbox.webp</path>
-        </image>
-        <image name="sysLogo">
-            <path>./../${crystalLogoDir}/xbox.png</path>
-        </image>
-    </view>
-    <view name="gamelist">
-        <image name="gameBackground">
-            <path>./../${crystalBgDir}/xbox.webp</path>
-        </image>
-        <image name="gameArt">
-            <default>./../${crystalLogoDir}/xbox.png</default>
-        </image>
+        <text name="mfrBadge">
+            <text>MICROSOFT</text>
+        </text>
+        <text name="sysDesc">
+            <text>The green giant's first shot. Halo defined a generation.</text>
+        </text>
+        <text name="factsLine">
+            <text>2001</text>
+        </text>
     </view>
 </theme>

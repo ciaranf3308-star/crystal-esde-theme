@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <themeCapabilities>
-    <!-- Crystal v2 for ES-DE (new theme engine, ES-DE 2.0+).
-         Two selectable variants, ES-DE 3.x native <variant> mechanism.
-         The FIRST declared variant is ES-DE's default (confirmed against
-         ThemeData.cpp: mSelectedVariant = mVariants.front()), so dark stays
-         first: existing installs keep the v1 look with zero action.
-         16:9 layout, tuned for 1920x1080. -->
+    <!-- Crystal v3: one definitive theme for the Nova. No variants. -->
     <themeName>Crystal</themeName>
     <aspectRatio>16:9</aspectRatio>
-    <variant name="dark">
-        <label>Dark</label>
-    </variant>
-    <variant name="light">
-        <label>Light</label>
-    </variant>
 </themeCapabilities>

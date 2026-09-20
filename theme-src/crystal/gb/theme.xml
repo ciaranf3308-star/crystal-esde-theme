@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v2 per-system overrides for gb: explicit asset paths.
-         Element names match views.xml so these merge cleanly over the shared
-         layout; the includes keep this file standalone-safe. -->
+    <!-- Crystal v3 per-system text overrides for the info panel. -->
     <include>./../variables.xml</include>
     <include>./../views.xml</include>
     <view name="system">
-        <image name="sysBackground">
-            <path>./../${crystalBgDir}/gb.webp</path>
-        </image>
-        <image name="sysLogo">
-            <path>./../${crystalLogoDir}/gb.png</path>
-        </image>
-    </view>
-    <view name="gamelist">
-        <image name="gameBackground">
-            <path>./../${crystalBgDir}/gb.webp</path>
-        </image>
-        <image name="gameArt">
-            <default>./../${crystalLogoDir}/gb.png</default>
-        </image>
+        <text name="mfrBadge">
+            <text>NINTENDO</text>
+        </text>
+        <text name="sysDesc">
+            <text>The brick that built handheld gaming. Tetris forever.</text>
+        </text>
+        <text name="factsLine">
+            <text>8-BIT • HANDHELD • 1989</text>
+        </text>
     </view>
 </theme>

@@ -1,200 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v1 shared view layout (new ES-DE theme engine: system + gamelist views).
-         Per-system asset paths resolve via ${system.name}; missing files fall back
-         gracefully (debug log only) to the <default> artwork. -->
-
-    <!-- ================= SYSTEM VIEW ================= -->
+    <!-- Crystal v3 system view: the hero composition.
+         - Baked comic background with the blue info panel at
+           x 0.010..0.200, y 0.172..0.707 (measured on the 1920x1080 canvas).
+         - Live text inside the panel: manufacturer badge, system name,
+           description, game count, facts line.
+         - Horizontal carousel of per-system hardware cards across the
+           lower third (y 0.727..0.875). -->
     <view name="system">
         <image name="sysBackground">
             <pos>0 0</pos>
             <size>1 1</size>
-            <path>./${crystalBgDir}/${system.name}.webp</path>
-            <default>./${crystalBgDir}/_default.webp</default>
+            <origin>0 0</origin>
+            <path>./backgrounds/${system.name}.webp</path>
+            <default>./backgrounds/_default.webp</default>
             <zIndex>1</zIndex>
         </image>
 
-        <image name="sysLogo">
-            <pos>0.5 0.06</pos>
-            <origin>0.5 0</origin>
-            <maxSize>0.5 0.3</maxSize>
-            <path>./${crystalLogoDir}/${system.name}.png</path>
-            <zIndex>20</zIndex>
-        </image>
-
-        <text name="sysName">
-            <pos>0.5 0.39</pos>
-            <origin>0.5 0</origin>
-            <size>0.9 0</size>
-            <systemdata>fullname</systemdata>
-            <fontSize>0.04</fontSize>
-            <color>${crystalText}</color>
-            <horizontalAlignment>center</horizontalAlignment>
-            <zIndex>40</zIndex>
-        </text>
-
-        <text name="sysCount">
-            <pos>0.5 0.525</pos>
-            <origin>0.5 0</origin>
-            <size>0.9 0</size>
-            <systemdata>gamecountGames</systemdata>
-            <fontSize>0.022</fontSize>
+        <text name="mfrBadge" extra="true">
+            <pos>0.028 0.205</pos>
+            <size>0.16 0</size>
+            <origin>0 0</origin>
+            <fontSize>0.016</fontSize>
             <color>${crystalDim}</color>
-            <horizontalAlignment>center</horizontalAlignment>
-            <zIndex>40</zIndex>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>50</zIndex>
+        </text>
+        <text name="sysName" extra="true">
+            <pos>0.028 0.232</pos>
+            <size>0.16 0.05</size>
+            <origin>0 0</origin>
+            <systemdata>fullName</systemdata>
+            <fontSize>0.030</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>50</zIndex>
+        </text>
+        <text name="sysDesc" extra="true">
+            <pos>0.028 0.300</pos>
+            <size>0.155 0.160</size>
+            <origin>0 0</origin>
+            <fontSize>0.0155</fontSize>
+            <color>${crystalDim}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>50</zIndex>
+        </text>
+        <text name="countNum" extra="true">
+            <pos>0.028 0.475</pos>
+            <size>0.16 0.06</size>
+            <origin>0 0</origin>
+            <systemdata>gamecountGames</systemdata>
+            <fontSize>0.042</fontSize>
+            <color>${crystalText}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>50</zIndex>
+        </text>
+        <text name="factsLine" extra="true">
+            <pos>0.028 0.545</pos>
+            <size>0.16 0.04</size>
+            <origin>0 0</origin>
+            <fontSize>0.015</fontSize>
+            <color>${crystalAccent}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>50</zIndex>
         </text>
 
         <carousel name="sysCarousel">
-            <pos>0 0.58</pos>
-            <size>1 0.3</size>
             <type>horizontal</type>
-            <staticImage>./carousel-icons/${system.name}.webp</staticImage>
-            <defaultImage>./carousel-icons/auto-allgames.webp</defaultImage>
-            <maxItemCount>5</maxItemCount>
-            <itemSize>0.16 0.16</itemSize>
-            <itemScale>1.45</itemScale>
-            <imageFit>contain</imageFit>
-            <color>00000000</color>
-            <unfocusedItemOpacity>0.45</unfocusedItemOpacity>
-            <unfocusedItemSaturation>0.7</unfocusedItemSaturation>
+            <pos>0 0.727</pos>
+            <size>1 0.148</size>
+            <origin>0 0</origin>
+            <color>FFFFFFFF</color>
+            <staticImage>./cards/${system.name}.png</staticImage>
+            <defaultImage>./cards/_default.png</defaultImage>
+            <itemSize>0.075 0.140</itemSize>
+            <itemScale>1.18</itemScale>
+            <maxItemCount>8</maxItemCount>
+            <unfocusedItemOpacity>0.55</unfocusedItemOpacity>
+            <unfocusedItemSaturation>0.55</unfocusedItemSaturation>
             <fastScrolling>true</fastScrolling>
-            <zIndex>50</zIndex>
+            <imageInterpolation>linear</imageInterpolation>
+            <zIndex>45</zIndex>
         </carousel>
-
-        <!-- Small yellow focus accent under the carousel's selected item. -->
-        <image name="focusBar">
-            <pos>0.5 0.915</pos>
-            <origin>0.5 0.5</origin>
-            <size>0.09 0.006</size>
-            <path>./ui/focus-bar.png</path>
-            <zIndex>55</zIndex>
-        </image>
 
         <helpsystem name="sysHelp">
             <pos>0.5 0.982</pos>
-            <origin>0.5 1</origin>
-            <fontSize>0.02</fontSize>
+            <origin>0.5 0.5</origin>
             <textColor>${crystalDim}</textColor>
-            <iconColor>${crystalCyan}</iconColor>
+            <iconColor>${crystalAccent}</iconColor>
+            <fontSize>0.0145</fontSize>
         </helpsystem>
     </view>
 
-    <!-- ================= GAMELIST VIEW ================= -->
-    <view name="gamelist">
+    <!-- Crystal v3 gamelist view: same comic canvas, deep-blue wash for
+         readability, console card top-right, metadata column. -->
+    <view name="detailed">
         <image name="gameBackground">
             <pos>0 0</pos>
             <size>1 1</size>
-            <path>./${crystalBgDir}/${system.name}.webp</path>
-            <default>./${crystalBgDir}/_default.webp</default>
-            <color>AAAAAAFF</color>
+            <origin>0 0</origin>
+            <path>./backgrounds/${system.name}.webp</path>
+            <default>./backgrounds/_default.webp</default>
+            <color>${crystalGameBg}</color>
             <zIndex>1</zIndex>
         </image>
-
-        <textlist name="gamelist">
-            <pos>0.045 0.13</pos>
-            <size>0.4 0.78</size>
-            <fontSize>0.03</fontSize>
-            <lineSpacing>1.4</lineSpacing>
+        <image name="gameArt" extra="true">
+            <pos>0.80 0.14</pos>
+            <size>0.30 0.335</size>
+            <origin>0.5 0.5</origin>
+            <path>./cards/${system.name}.png</path>
+            <default>./cards/_default.png</default>
+            <zIndex>20</zIndex>
+        </image>
+        <text name="gameName" extra="true">
+            <pos>0.06 0.055</pos>
+            <size>0.50 0.06</size>
+            <origin>0 0</origin>
+            <metadata>name</metadata>
+            <fontSize>0.032</fontSize>
+            <color>${crystalAccent}</color>
             <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>30</zIndex>
+        </text>
+        <textlist name="gameList">
+            <pos>0.06 0.14</pos>
+            <size>0.44 0.72</size>
+            <origin>0 0</origin>
             <primaryColor>${crystalText}</primaryColor>
             <secondaryColor>${crystalDim}</secondaryColor>
-            <selectedColor>${crystalYellow}</selectedColor>
+            <selectedColor>${crystalAccent}</selectedColor>
             <selectorColor>${crystalSelect}</selectorColor>
-            <textHorizontalScrolling>true</textHorizontalScrolling>
-            <zIndex>50</zIndex>
-        </textlist>
-
-        <text name="gameName">
-            <pos>0.51 0.13</pos>
-            <size>0.445 0</size>
-            <metadata>name</metadata>
-            <fontSize>0.038</fontSize>
-            <color>${crystalYellow}</color>
-            <horizontalAlignment>left</horizontalAlignment>
-            <zIndex>40</zIndex>
-        </text>
-
-        <image name="gameArt">
-            <pos>0.51 0.2</pos>
-            <maxSize>0.445 0.3</maxSize>
-            <imageType>miximage</imageType>
-            <default>./${crystalLogoDir}/${system.name}.png</default>
-            <cornerRadius>0.004</cornerRadius>
+            <fontSize>0.024</fontSize>
+            <horizontalMargin>0.012</horizontalMargin>
             <zIndex>30</zIndex>
-        </image>
-
-        <text name="lblDeveloper">
-            <pos>0.51 0.525</pos>
-            <size>0.445 0</size>
-            <text>Developer</text>
+        </textlist>
+        <text name="devLabel" extra="true">
+            <pos>0.62 0.36</pos>
+            <size>0.10 0.04</size>
+            <origin>0 0</origin>
+            <text>DEVELOPER</text>
             <fontSize>0.016</fontSize>
-            <color>${crystalCyan}</color>
+            <color>${crystalAccent}</color>
             <letterCase>uppercase</letterCase>
-            <zIndex>40</zIndex>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>30</zIndex>
         </text>
-        <text name="valDeveloper">
-            <pos>0.51 0.548</pos>
-            <size>0.445 0</size>
+        <text name="devValue" extra="true">
+            <pos>0.74 0.36</pos>
+            <size>0.22 0.04</size>
+            <origin>0 0</origin>
             <metadata>developer</metadata>
-            <defaultValue>:space:</defaultValue>
-            <fontSize>0.022</fontSize>
-            <color>${crystalText}</color>
-            <zIndex>40</zIndex>
-        </text>
-
-        <text name="lblGenre">
-            <pos>0.51 0.585</pos>
-            <size>0.445 0</size>
-            <text>Genre</text>
             <fontSize>0.016</fontSize>
-            <color>${crystalCyan}</color>
-            <letterCase>uppercase</letterCase>
-            <zIndex>40</zIndex>
+            <color>${crystalText}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>30</zIndex>
         </text>
-        <text name="valGenre">
-            <pos>0.51 0.608</pos>
-            <size>0.445 0</size>
+        <text name="genreLabel" extra="true">
+            <pos>0.62 0.42</pos>
+            <size>0.10 0.04</size>
+            <origin>0 0</origin>
+            <text>GENRE</text>
+            <fontSize>0.016</fontSize>
+            <color>${crystalAccent}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>30</zIndex>
+        </text>
+        <text name="genreValue" extra="true">
+            <pos>0.74 0.42</pos>
+            <size>0.22 0.04</size>
+            <origin>0 0</origin>
             <metadata>genre</metadata>
-            <defaultValue>:space:</defaultValue>
-            <fontSize>0.022</fontSize>
-            <color>${crystalText}</color>
-            <zIndex>40</zIndex>
-        </text>
-
-        <text name="lblPlayers">
-            <pos>0.51 0.645</pos>
-            <size>0.445 0</size>
-            <text>Players</text>
             <fontSize>0.016</fontSize>
-            <color>${crystalCyan}</color>
-            <letterCase>uppercase</letterCase>
-            <zIndex>40</zIndex>
-        </text>
-        <text name="valPlayers">
-            <pos>0.51 0.668</pos>
-            <size>0.445 0</size>
-            <metadata>players</metadata>
-            <defaultValue>:space:</defaultValue>
-            <fontSize>0.022</fontSize>
             <color>${crystalText}</color>
-            <zIndex>40</zIndex>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>30</zIndex>
         </text>
-
-        <text name="gameDesc">
-            <pos>0.51 0.705</pos>
-            <size>0.445 0.2</size>
+        <text name="playersLabel" extra="true">
+            <pos>0.62 0.48</pos>
+            <size>0.10 0.04</size>
+            <origin>0 0</origin>
+            <text>PLAYERS</text>
+            <fontSize>0.016</fontSize>
+            <color>${crystalAccent}</color>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>30</zIndex>
+        </text>
+        <text name="playersValue" extra="true">
+            <pos>0.74 0.48</pos>
+            <size>0.22 0.04</size>
+            <origin>0 0</origin>
+            <metadata>players</metadata>
+            <fontSize>0.016</fontSize>
+            <color>${crystalText}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>30</zIndex>
+        </text>
+        <text name="gameDesc" extra="true">
+            <pos>0.62 0.56</pos>
+            <size>0.32 0.28</size>
+            <origin>0 0</origin>
             <metadata>description</metadata>
-            <fontSize>0.02</fontSize>
-            <color>${crystalDesc}</color>
-            <zIndex>40</zIndex>
+            <fontSize>0.015</fontSize>
+            <color>${crystalDim}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <zIndex>30</zIndex>
         </text>
-
-        <helpsystem name="gameHelp">
+        <helpsystem name="help">
             <pos>0.5 0.982</pos>
-            <origin>0.5 1</origin>
-            <fontSize>0.02</fontSize>
+            <origin>0.5 0.5</origin>
             <textColor>${crystalDim}</textColor>
-            <iconColor>${crystalCyan}</iconColor>
+            <iconColor>${crystalAccent}</iconColor>
+            <fontSize>0.0145</fontSize>
         </helpsystem>
     </view>
 </theme>

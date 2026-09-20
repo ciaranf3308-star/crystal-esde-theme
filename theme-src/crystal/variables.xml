@@ -1,53 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v2 palette + asset directories.
-         Base (no variant selected) = Dark: the v1 look, unchanged, so existing
-         installs keep working with zero action.
-         NOTE: ES-DE variable syntax is <name>value</name> (tag name is the
-         variable name, text content is the value). The <variable name=""
-         value=""/> form is NOT supported and leaves every ${...} reference
-         resolving to empty, which fatally fails color parsing. -->
+    <!-- Crystal v3 single palette: blue comic + white, small yellow accents.
+         IMPORTANT: ES-DE reads the variable name from the TAG NAME and the
+         value from the TEXT CONTENT (<name>value</name>). The
+         <variable name="" value=""/> form defines NOTHING. -->
     <variables>
-        <crystalText>EAF2FF</crystalText>
-        <crystalDim>8FA3C8</crystalDim>
-        <crystalCyan>22D3EE</crystalCyan>
-        <crystalYellow>FFD60A</crystalYellow>
-        <crystalDesc>B9C7E4</crystalDesc>
-        <crystalSelect>22D3EE2E</crystalSelect>
-        <crystalBgDir>backgrounds/dark</crystalBgDir>
-        <crystalLogoDir>logos/dark</crystalLogoDir>
+        <crystalText>FFFFFF</crystalText>
+        <crystalDim>BFD4FF</crystalDim>
+        <crystalAccent>FFD60A</crystalAccent>
+        <crystalDeep>0A2FA0</crystalDeep>
+        <crystalSelect>FFD60A2E</crystalSelect>
+        <crystalGameBg>0A2FA0CC</crystalGameBg>
     </variables>
-
-    <!-- Light variant: faithful port of the Crystal Frontend light theme.
-         Cool white / pale grey, dark navy text, deeper blue accents
-         (the frontend used #2a5fdc in light mode), readable amber for
-         selections. Declared in capabilities.xml so ES-DE lists it under
-         UI Settings -> Theme Variant. -->
-    <variant name="light">
-        <variables>
-            <crystalText>16213E</crystalText>
-            <crystalDim>5A6B8C</crystalDim>
-            <crystalCyan>2A5FDC</crystalCyan>
-            <crystalYellow>D97706</crystalYellow>
-            <crystalDesc>3E4C6B</crystalDesc>
-            <crystalSelect>2A5FDC2E</crystalSelect>
-            <crystalBgDir>backgrounds/light</crystalBgDir>
-            <crystalLogoDir>logos/light</crystalLogoDir>
-        </variables>
-
-        <!-- True drop-shadow behind the system logo: the frontend's light
-             theme drew its (white) logos with a CSS drop-shadow for
-             readability on the bright photo backgrounds. ES-DE has no
-             filters, so each light logo gets a pre-rendered blurred shadow
-             (ui/shadows/light/) placed just under it. zIndex 15 < logo 20. -->
-        <view name="system">
-            <image name="logoShadow">
-                <pos>0.5 0.062</pos>
-                <origin>0.5 0</origin>
-                <maxSize>0.52 0.32</maxSize>
-                <path>./ui/shadows/light/${system.name}.png</path>
-                <zIndex>15</zIndex>
-            </image>
-        </view>
-    </variant>
 </theme>
