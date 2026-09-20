@@ -7,11 +7,21 @@
         <text name="mfrBadge">
             <text>NINTENDO</text>
         </text>
+        <text name="sysName">
+            <!-- narrower panel: smaller name so fullName fits one line -->
+            <fontSize>0.024</fontSize>
+        </text>
         <text name="sysDesc">
+            <!-- supplied GB hero has a narrower panel: keep text inside it -->
+            <size>0.135 0.160</size>
             <text>The brick that built handheld gaming. Tetris forever.</text>
         </text>
         <text name="factsLine">
             <text>8-BIT • HANDHELD • 1989</text>
+        </text>
+        <text name="countNum">
+            <!-- narrower panel: smaller count so it stays inside -->
+            <fontSize>0.038</fontSize>
         </text>
     </view>
 </theme>
