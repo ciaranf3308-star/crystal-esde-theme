@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v3 per-system text overrides for the info panel. -->
+    <!-- Crystal v3.2: supplied 4:3 hero shown WHOLE (pillarboxed, nothing cut).
+     The blue cutout panel is at x 0.136-0.3375 on screen;
+     all live text below sits inside it. -->
     <include>./../variables.xml</include>
     <include>./../views.xml</include>
     <view name="system">
         <text name="mfrBadge">
+            <pos>0.143 0.195</pos>
+            <size>0.185 0</size>
             <text>NINTENDO</text>
         </text>
         <text name="sysName">
@@ -12,9 +16,9 @@
             <pos>-1 -1</pos>
         </text>
         <text name="sysName1">
+            <pos>0.143 0.228</pos>
+            <size>0.185 0.05</size>
             <!-- two-line name mirrors the baked graffiti title; fits before it -->
-            <pos>0.028 0.228</pos>
-            <size>0.16 0.05</size>
             <fontSize>0.030</fontSize>
             <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
@@ -22,8 +26,8 @@
             <text>SUPER NINTENDO</text>
         </text>
         <text name="sysName2">
-            <pos>0.028 0.264</pos>
-            <size>0.16 0.04</size>
+            <pos>0.143 0.264</pos>
+            <size>0.185 0.04</size>
             <fontSize>0.019</fontSize>
             <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
@@ -31,11 +35,18 @@
             <text>ENTERTAINMENT SYSTEM</text>
         </text>
         <text name="sysDesc">
-            <size>0.22 0.160</size>
+            <pos>0.143 0.300</pos>
+            <size>0.185 0.160</size>
             <text>The 16-bit golden age. Mode 7 magic and timeless RPGs.</text>
         </text>
         <text name="factsLine">
+            <pos>0.143 0.545</pos>
+            <size>0.185 0.04</size>
             <text>16-BIT • 1991</text>
+        </text>
+        <text name="countNum">
+            <pos>0.143 0.475</pos>
+            <size>0.185 0.06</size>
         </text>
     </view>
 </theme>

@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v3 per-system text overrides for the info panel. -->
+    <!-- Crystal v3.2: supplied 4:3 hero shown WHOLE (pillarboxed, nothing cut).
+     The blue cutout panel is at x 0.136-0.3375 on screen;
+     all live text below sits inside it. -->
     <include>./../variables.xml</include>
     <include>./../views.xml</include>
     <view name="system">
         <text name="mfrBadge">
+            <pos>0.143 0.195</pos>
+            <size>0.185 0</size>
             <text>NINTENDO</text>
         </text>
         <text name="sysDesc">
-            <size>0.22 0.160</size>
+            <pos>0.143 0.300</pos>
+            <size>0.185 0.160</size>
             <text>Nintendo's cube of joy. Smash, Sunshine and Wind Waker.</text>
         </text>
         <text name="factsLine">
+            <pos>0.143 0.545</pos>
+            <size>0.185 0.04</size>
             <text>128-BIT • 2001</text>
+        </text>
+        <text name="countNum">
+            <pos>0.143 0.475</pos>
+            <size>0.185 0.06</size>
+        </text>
+        <text name="sysName">
+            <pos>0.143 0.232</pos>
+            <size>0.185 0.05</size>
+            <fontSize>0.028</fontSize>
         </text>
     </view>
 </theme>
