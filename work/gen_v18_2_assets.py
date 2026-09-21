@@ -103,32 +103,42 @@ def gen_panel():
     d.rectangle([(36, 292), (42, 296)], fill=YELLOW + (200,))
 
     # the ONE structural rule: between description and facts.
-    d.line([(36, 425), (434, 425)], fill=ROYAL + (90,), width=1)
+    # v18.4.4: 425 -> 390 - the metadata stack moved up for the 4:3
+    # media stage; the rule still sits between desc bottom (local 380)
+    # and the year value (local 400).
+    d.line([(36, 390), (434, 390)], fill=ROYAL + (90,), width=1)
 
     # baked kickers
-    for text, xy in [("RELEASED", (42, 446)), ("RATING", (290, 446)),
-                     ("GENRE", (42, 546)), ("PLAYERS", (42, 610)),
-                     ("DEVELOPER", (234, 610)), ("SCREENSHOT", (42, 694))]:
+    # v18.4.4: shifted up with the metadata stack (uniform 12px above
+    # each value top). x positions unchanged.
+    for text, xy in [("RELEASED", (42, 388)), ("RATING", (290, 388)),
+                     ("GENRE", (42, 479)), ("PLAYERS", (42, 526)),
+                     ("DEVELOPER", (234, 526)), ("SCREENSHOT", (42, 590))]:
         k = tracked_text_img(text, 9, SLATE, 4, alpha=130)
         body.alpha_composite(k, xy)
 
-    # ---- SCREENSHOT slot: local (42,722)-(438,892) ----
+    # ---- SCREENSHOT slot: local (42,609)-(413,888) ----
+    # v18.4.4: rebuilt for the true-4:3 maxSize stage (was the
+    # (42,722)-(438,892) 2.33:1 strip). Shadow/hairline/corner track
+    # the new region, same treatment as before.
     fsh = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(fsh).rectangle([44, 726, 440, 894], fill=(6, 14, 44, 30))
+    ImageDraw.Draw(fsh).rectangle([44, 613, 415, 892], fill=(6, 14, 44, 30))
     body = Image.alpha_composite(body, fsh.filter(ImageFilter.GaussianBlur(3)))
     d = ImageDraw.Draw(body, "RGBA")
-    d.line([(42, 892), (438, 892)], fill=ROYAL + (110,), width=1)
-    d.line([(430, 714), (430, 728)], fill=YELLOW + (220,), width=2)
-    d.line([(430, 714), (444, 714)], fill=YELLOW + (220,), width=2)
+    d.line([(42, 888), (413, 888)], fill=ROYAL + (110,), width=1)
+    d.line([(405, 601), (405, 615)], fill=YELLOW + (220,), width=2)
+    d.line([(405, 601), (419, 601)], fill=YELLOW + (220,), width=2)
 
     # ---- gesture B: registration / blueprint motif ----
     # three registration crosses on one column: masthead (30,64),
-    # description (30,348), screenshot top-right corner (446,720).
+    # description (30,348), screenshot top-right corner (421,607).
+    # v18.4.4: the screenshot corner moved with the 4:3 stage
+    # (was (446,720) for the old strip).
     # Then a quiet blueprint fragment in the right margin spanning
     # the description and screenshot sections.
     reg = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     rd = ImageDraw.Draw(reg, "RGBA")
-    for cx, cy in [(30, 64), (30, 348), (446, 720)]:
+    for cx, cy in [(30, 64), (30, 348), (421, 607)]:
         reg_mark(rd, cx, cy, arm=7, color=ROYAL + (64,))
     # blueprint fragment: fine hairlines + ticks, right margin
     rd.line([(452, 330), (452, 884)], fill=DEEP + (16,), width=1)
