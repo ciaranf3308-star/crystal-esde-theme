@@ -25,8 +25,9 @@ W, H = 1280, 960
 FB = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 FR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 
-SYSTEMS = ("gba", "nds", "psx", "gb", "snes", "n64", "nes")
+SYSTEMS = ("xbox", "gba", "nds", "psx", "gb", "snes", "n64", "nes")
 NEIGHBORS = {
+    "xbox": ["nds", "n64", "n3ds", "xbox", "psp", "ps2", "psx"],
     "gba": ["gb", "gbc", "nds", "gba", "snes", "n64", "psx"],
     "nds": ["gb", "gba", "gbc", "nds", "n3ds", "snes", "n64"],
     "psx": ["ps2", "n64", "snes", "psx", "gc", "gba", "wii"],
@@ -35,7 +36,7 @@ NEIGHBORS = {
     "n64": ["snes", "gc", "psx", "n64", "ps2", "gba", "nds"],
     "nes": ["snes", "gb", "gbc", "nes", "psx", "gba", "n64"],
 }
-COUNTS = {"gba": "25 GAMES", "nds": "13 GAMES", "psx": "128 GAMES", "gb": "96 GAMES",
+COUNTS = {"xbox": "4 GAMES", "gba": "25 GAMES", "nds": "13 GAMES", "psx": "128 GAMES", "gb": "96 GAMES",
           "snes": "42 GAMES", "n64": "35 GAMES", "nes": "58 GAMES"}
 
 TEXT_ELEMS = ["mfrBadge", "sysName", "sysName1", "sysName2",

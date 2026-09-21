@@ -43,22 +43,49 @@
              positive = visually clockwise (y-down screen space, same as
              CSS/canvas convention), so rotation -7 gives the right-side-up
              lean. rotationOrigin pinned at center (0.5 0.5) for a
-             deterministic pivot. Tilted bbox math (7 deg): tallest logo
-             (gba, 2.795:1) renders 0.1717 high -> rotated bbox
-             0.497 x 0.229, spanning x 0.3915..0.8885 (141px clear of the
-             panel, 142px inside the screen edge) and y 0.1855..0.4145
-             (well above the glow top 0.5725 and carousel 0.640).
-             y 0.285 -> 0.30 recenters the larger logo optically in the
-             stage between the screen top and the carousel zone.
+             deterministic pivot. The user confirmed the lean direction on the
+             Nova (xbox photo) and asked for MORE of everything: hero size,
+             4x the angle, sitting lower.
+             v18.4.3: maxSize 0.58 0.29 (the stage-limited maximum at 28 deg
+             tilt; see bbox math below), rotation -28, pos 0.64 0.39 (the
+             optical middle of the stage between the screen top and the
+             carousel zone, lower than v18.4.2's 0.30). Tilted bbox math
+             (28 deg; cos=0.8830, sin=0.4695) on the 4:3 frame: rendered
+             width w is a fraction of screen WIDTH, rendered height h a
+             fraction of screen HEIGHT, so h = w*(4/3)/aspect; rotated
+             bbox W = w*cos + h*sin, H = w*sin*(4/3)... precisely:
+             W_n = w*(cos + (4/3)*sin/a), H_n = w*(4/3)*(sin + cos/a).
+             All logos are width-limited at 0.58 (min aspect 2.76 > 2.0, so
+             w=0.58 for all). Measured VISIBLE-ink spans (alpha>0, PIL
+             expand-rotate, centered at 0.64 0.39):
+             - tallest gbc (2.760:1): ink x 0.392..0.885, y 0.110..0.633
+             - user's xbox (3.185:1): ink x 0.410..0.888, y 0.112..0.673
+             - widest psx (5.260:1):  ink x 0.376..0.898, y 0.179..0.630
+             Left edge ~0.14 clear of the info panel (0.28); right edge
+             inside the screen. KNOWN TRADE (accepted per the user's
+             explicit HERO directive): the bottom spike tip of the
+             taller logos (xbox/gba/gbc) reaches y ~0.63..0.68, dipping
+             into the carousel element's transparent zone (0.640+) and
+             tucking BEHIND the selected card's top edge (card z45 >
+             logo z30, card top y=0.651) by ~0.02-0.03. The spike is a
+             thin blue flourish; the tuck reads as intentional depth,
+             stable across carousel positions (selected card is always
+             centered). A literal 2x width (0.96) cannot fit the stage
+             at 28 deg tilt, so 0.58 is the largest maxSize with real
+             margins: 1.21x the linear width but ~2.5x the on-screen
+             tilted footprint vs v18.4.2 (xbox ink area) plus 4x the
+             angle - the HERO jump the user asked for, as close to 2x
+             as the stage allows.
+             y 0.285 -> 0.30 (v18.4.2) -> 0.39 recenters the larger logo
              The 5 systems with no logo asset (nes, psp, steam, windows,
              xbox360) resolve to a missing file and paint nothing - the
              same mechanism as the gamelist's missing-marquee case. No
              invented art. -->
         <image name="sysHeroLogo">
-            <pos>0.64 0.30</pos>
-            <maxSize>0.48 0.24</maxSize>
+            <pos>0.64 0.39</pos>
+            <maxSize>0.58 0.29</maxSize>
             <origin>0.5 0.5</origin>
-            <rotation>-7</rotation>
+            <rotation>-28</rotation>
             <rotationOrigin>0.5 0.5</rotationOrigin>
             <path>./art/console_logos/${system.name}.png</path>
             <zIndex>30</zIndex>
