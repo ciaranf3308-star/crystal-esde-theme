@@ -9,8 +9,13 @@ version on the Nova — currently v3.4.1 — never master, see gen_tables.py):
   The <variable name="" value=""/> form defines NOTHING (this was the v1.0.1 bug).
 - <variant name="X">: children processed iff X == selected or X == "all"
   (the "all" special case is unique to the variant axis in real ES-DE).
-- default selection = FIRST <variant> declared in capabilities.xml
-  (real rule: mSelectedVariant = mVariants.front()).
+- <colorScheme name="A, B">: children processed iff the selected color
+  scheme is listed in the comma/whitespace-separated name list
+  (THEMES.md: color schemes carry ONLY <variables>; the selected scheme
+  is the one chosen in ES-DE's UI Settings > Theme configuration).
+- default selection = FIRST <variant> / <colorScheme> declared in
+  capabilities.xml (real rule: mSelectedVariant = mVariants.front(),
+  same for color schemes).
 - placeholder substitution: unknown variables resolve to "" (real
   resolvePlaceholders uses mVariables[replace] which inserts "").
 - view names: only "all", "system", "gamelist" (anything else THROWS).
@@ -23,7 +28,7 @@ version on the Nova — currently v3.4.1 — never master, see gen_tables.py):
 - color properties must be 6 or 8 hex digits after substitution.
 - <path>/<default> must resolve to an existing file after substitution.
 
-Usage: validate.py [theme.xml] [--variant light|dark]
+Usage: validate.py [theme.xml] [--variant NAME] [--colorscheme light|dark]
 Exit 0 = clean, 1 = errors.
 """
 import os
@@ -57,9 +62,10 @@ def substitute(raw, variables, unknown):
     return raw[:m.start()] + repl + substitute(raw[m.end():], variables, unknown)
 
 class Ctx:
-    def __init__(self, theme_dir, selected_variant):
+    def __init__(self, theme_dir, selected_variant, selected_colorscheme):
         self.theme_dir = theme_dir
         self.selected_variant = selected_variant
+        self.selected_colorscheme = selected_colorscheme
         self.variables = {}
         self.unknown_vars = set()
         self.errors = []
@@ -95,6 +101,12 @@ def parse_node(elem, ctx, base_dir, depth, file_label):
             name = child.get("name")
             if ctx.selected_variant is not None and (
                     name == ctx.selected_variant or name == "all"):
+                parse_node(child, ctx, base_dir, depth, file_label)
+            # else: skipped, exactly like real ES-DE
+        elif tag == "colorScheme":
+            names = [p for p in re.split(r"[,\s]+", child.get("name") or "") if p]
+            if ctx.selected_colorscheme is not None and \
+                    ctx.selected_colorscheme in names:
                 parse_node(child, ctx, base_dir, depth, file_label)
             # else: skipped, exactly like real ES-DE
         elif tag == "view":
@@ -169,8 +181,20 @@ def read_capability_variants(theme_dir):
             variants.append(elem.get("name"))
     return variants
 
-def validate_theme_file(path, theme_dir, selected_variant):
-    ctx = Ctx(theme_dir, selected_variant)
+def read_capability_colorschemes(theme_dir):
+    cap = os.path.join(theme_dir, "capabilities.xml")
+    schemes = []
+    if not os.path.isfile(cap):
+        return schemes
+    for _, elem in ET.iterparse(cap, events=("start",)):
+        if elem.tag == "colorScheme" and elem.get("name"):
+            for part in re.split(r"[,\s]+", elem.get("name")):
+                if part and part not in schemes:
+                    schemes.append(part)
+    return schemes
+
+def validate_theme_file(path, theme_dir, selected_variant, selected_colorscheme):
+    ctx = Ctx(theme_dir, selected_variant, selected_colorscheme)
     # Seed the documented ES-DE system variables (THEMES.md), as the real
     # parser does via sysDataMap in ThemeData::loadFile(). The collection
     # variants resolve to backspace for non-applicable systems (faithful).
@@ -190,14 +214,22 @@ def validate_theme_file(path, theme_dir, selected_variant):
     return ctx
 
 def main():
-    theme_file = sys.argv[1] if len(sys.argv) > 1 else "theme-src/crystal/theme.xml"
+    positionals = [a for a in sys.argv[1:]
+                   if a not in ("--variant", "--colorscheme")
+                   and sys.argv[max(0, sys.argv.index(a) - 1)] not in ("--variant", "--colorscheme")]
+    theme_file = positionals[0] if positionals else "theme-src/crystal/theme.xml"
     theme_dir = os.path.dirname(os.path.abspath(theme_file))
     variants = read_capability_variants(theme_dir)
     print(f"capabilities variants (in order): {variants}")
+    schemes = read_capability_colorschemes(theme_dir)
+    print(f"capabilities colorSchemes (in order): {schemes}")
 
-    forced = None
+    forced_v = None
     if "--variant" in sys.argv:
-        forced = sys.argv[sys.argv.index("--variant") + 1]
+        forced_v = sys.argv[sys.argv.index("--variant") + 1]
+    forced_s = None
+    if "--colorscheme" in sys.argv:
+        forced_s = sys.argv[sys.argv.index("--colorscheme") + 1]
 
     # root + every per-system theme.xml
     files = [theme_file]
@@ -207,12 +239,19 @@ def main():
             files.append(sub)
 
     ok = True
-    for sel in ([forced] if forced else [None, "light"]):
-        selected = sel if sel is not None else (variants[0] if variants else None)
-        tag = f"variant={selected!r}" if sel else f"default(first declared)={selected!r}"
+    if forced_v or forced_s:
+        combos = [(forced_v, forced_s)]
+    else:
+        combos = [(None, None)]
+        if "dark" in schemes:
+            combos.append((None, "dark"))
+    for fvar, fscheme in combos:
+        selected = fvar if fvar is not None else (variants[0] if variants else None)
+        selected_s = fscheme if fscheme is not None else (schemes[0] if schemes else None)
+        tag = (f"variant={selected!r} colorscheme={selected_s!r}")
         print(f"\n=== selection: {tag} ===")
         for f in files:
-            ctx = validate_theme_file(f, theme_dir, selected)
+            ctx = validate_theme_file(f, theme_dir, selected, selected_s)
             name = os.path.relpath(f, theme_dir)
             status = "OK " if not ctx.errors else "FAIL"
             if ctx.errors:

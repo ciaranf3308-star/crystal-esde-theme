@@ -4,6 +4,10 @@
          positions from views.xml; only content and the measured name size
          are set here (DejaVu Sans Bold, title box 0.24). -->
     <include>./../variables.xml</include>
+    <!-- v18.3.0: Light/Dark color schemes (palette variables for the
+         selected scheme; re-applied here so per-system views resolve
+         the scheme palette however the root/system parses order). -->
+    <include>./../colorschemes.xml</include>
     <include>./../views.xml</include>
     <view name="system">
         <text name="mfrBadge">

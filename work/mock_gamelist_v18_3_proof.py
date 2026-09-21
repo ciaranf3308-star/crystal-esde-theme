@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Crystal v18.0.0 VISUAL PROOF HARNESS (VM-ONLY, NEVER SHIPS).
+"""Crystal v18.3.0 SCHEME-AWARE VISUAL PROOF HARNESS (VM-ONLY, NEVER SHIPS).
 
 The v17.9 mock drew empty slots, so the screens all looked identical and
 no real art-direction review was possible. This harness composites
@@ -15,7 +15,7 @@ Output: work/proofs/v18_proof_{ps2,n64,3ds}.png (1280x960 PIL renders,
 never ES-DE screenshots).
 """
 import os, sys, math, re
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
 
 REPO = os.path.expanduser("~/workspace/crystal-esde-theme")
 sys.path.insert(0, os.path.join(REPO, "work"))
@@ -47,6 +47,41 @@ def _inkdim():
 
 INKDIM = _inkdim()  # XML-driven: follows crystalInkDim (v18.2.1 darkened)
 
+# --- v18.3.0: color-scheme support -------------------------------------
+def palette(scheme):
+    """Resolve the full palette the way the engine does: variables.xml
+    base, then the selected <colorScheme> block's <variables> overrides."""
+    pal = {}
+    xml = open(os.path.join(REPO, "theme-src/crystal/variables.xml"),
+               encoding="utf-8").read()
+    for m in re.finditer(r"<([a-zA-Z]+)>([0-9A-Fa-f.]+)</\1>", xml):
+        pal[m.group(1)] = m.group(2).strip()
+    xml = open(os.path.join(REPO, "theme-src/crystal/colorschemes.xml"),
+               encoding="utf-8").read()
+    blk = re.search(r'<colorScheme name="%s">\s*<variables>(.*?)</variables>\s*</colorScheme>'
+                    % scheme, xml, re.S).group(1)
+    for m in re.finditer(r"<([a-zA-Z]+)>([0-9A-Fa-f.]+)</\1>", blk):
+        pal[m.group(1)] = m.group(2).strip()
+    return pal
+
+def HX(h):
+    h = h.strip()
+    return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
+
+def HXA(h):
+    h = h.strip()
+    return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16), int(h[6:8], 16))
+
+def tint(im, hex6):
+    """ES-DE image <color> multiply tint (RGBA-safe)."""
+    t = HX(hex6)
+    if t == (255, 255, 255):
+        return im.convert("RGBA")
+    im = im.convert("RGBA")
+    out = ImageChops.multiply(im, Image.new("RGBA", im.size, t + (255,)))
+    out.putalpha(im.split()[3])
+    return out
+
 def cover_into(im, box):
     """Crop-to-fill `box` (x0,y0,x1,y1) with the image."""
     x0, y0, x1, y1 = [int(round(q)) for q in box]
@@ -71,18 +106,19 @@ def hero_footprint(kind, cy=448):
     # centred on the carousel's selected slot (XML-driven at call site)
     return (900 - 270, cy - 270, 900 + 270, cy + 270)
 
-def render(v):
+def render(v, scheme="light"):
     xml = open(VIEWS, encoding="utf-8").read()
     view = parse_view(xml, "gamelist")
-    base = Image.open(os.path.join(ART, "gamelist_generic_bg.png")).convert("RGBA").resize((W, H))
+    pal = palette(scheme)
+    base = tint(Image.open(os.path.join(ART, "gamelist_generic_bg.png")), pal["libBgTint"]).resize((W, H))
     grad = Image.open(os.path.join(ART, "lib_bottom_gradient.png")).convert("RGBA")
     g = el_box(view, 'image name="libBottomGradient"')
     gx, gy = [float(x) for x in el_val(g, "pos").split()]
     gw, gh = [float(x) for x in el_val(g, "size").split()]
     base.alpha_composite(grad.resize((int(px(gw)), int(sz(gh)))),
                          (int(px(gx)), int(sz(gy))))
-    base.alpha_composite(Image.open(os.path.join(ART, "lib_panel_main.png")).convert("RGBA"), (6, 10))
-    base.alpha_composite(Image.open(os.path.join(ART, "rails", f"{v['system']}.png")).convert("RGBA"), (486, 24))
+    base.alpha_composite(tint(Image.open(os.path.join(ART, "lib_panel_main.png")), pal["panelTint"]), (6, 10))
+    base.alpha_composite(tint(Image.open(os.path.join(ART, "rails", f"{v['system']}.png")), pal["railTint"]), (486, 24))
 
     # fallback masthead title (z19, BELOW the marquee art): opaque white
     # backing + Anton mock masthead, centred exactly on the art zone.
@@ -94,7 +130,7 @@ def render(v):
     fbw, fbh = [float(x) for x in el_val(fb, "size").split()]
     frect = (int(px(fbx)), int(sz(fby)),
              int(px(fbx) + px(fbw)), int(sz(fby) + sz(fbh)))
-    d.rectangle(frect, fill=(255, 255, 255, 255))
+    d.rectangle(frect, fill=HX(pal["mockBg"]) + (255,))
     fz_fb = float(el_val(fb, "fontSize"))
     fb_fp = os.path.join(REPO, "theme-src/crystal",
                          el_val(fb, "fontPath").lstrip("./"))
@@ -110,7 +146,7 @@ def render(v):
     fb_cy = (frect[1] + frect[3]) / 2
     for i, ln in enumerate(fb_lines):
         d.text((frect[0], fb_cy + (i - (len(fb_lines) - 1) / 2) * lh),
-               ln, font=f_fb, fill=DEEP + (255,), anchor="lm")
+               ln, font=f_fb, fill=HX(pal["mockInk"]) + (255,), anchor="lm")
 
     # marquee: proxy asset fitted (contain) into the invisible region.
     # ENGINE TRUTH: maxSize-fit, left edge at the zone's left (origin
@@ -133,7 +169,7 @@ def render(v):
         # conditional visibility: transparent art pixels would reveal the
         # z19 fallback behind them - a known engine limitation, not a
         # theme bug. Opaque art covers text+backing completely.)
-        white = Image.new("RGBA", mq_r.size, (255, 255, 255, 255))
+        white = Image.new("RGBA", mq_r.size, HX(pal["mockBg"]) + (255,))
         white.alpha_composite(mq_r)
         base.alpha_composite(white, mq_xy)
 
@@ -149,11 +185,11 @@ def render(v):
     max_lines = max(1, int(sz(dh) // desc_step))
     y = int(sz(dy))
     for line in wrap(v["desc"], f_desc, px(dw))[:max_lines]:
-        d.text((int(px(dx)), y), line, font=f_desc, fill=INKDIM + (255,))
+        d.text((int(px(dx)), y), line, font=f_desc, fill=HX(pal["crystalInkDim"]) + (255,))
         y += desc_step
     fz_year = float(el_val(el_box(view, 'datetime name="libYear"'), "fontSize"))
     d.text((48, 468), v["year"], font=ImageFont.truetype(BOLD, int(round(fs(fz_year)))),
-           fill=NAVY + (255,))
+           fill=HX(pal["crystalDeep"]) + (255,))
     rb = el_box(view, 'rating name="libRating"')
     rrx, rry = [float(q) for q in el_val(rb, "pos").split()]
     for i in range(5):
@@ -163,12 +199,12 @@ def render(v):
             r = 11 if k % 2 == 0 else 4.6
             a = -math.pi / 2 + k * math.pi / 5
             pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
-        d.polygon(pts, fill=ROYAL + (255,) if i < v["stars"] else (255, 255, 255, 140),
+        d.polygon(pts, fill=(18, 58, 178, 255) if i < v["stars"] else (10, 47, 160, 90),
                   outline=NAVY + (255,))
     b = el_box(view, 'text name="libGenre"')
     gx, gy = [float(q) for q in el_val(b, "pos").split()]
     d.text((px(gx), sz(gy)), v["genre"].upper(),
-           font=ImageFont.truetype(BOLD, int(round(fs(0.022)))), fill=NAVY + (255,))
+           font=ImageFont.truetype(BOLD, int(round(fs(0.022)))), fill=HX(pal["crystalDeep"]) + (255,))
     pb = el_box(view, 'text name="libPlayers"')
     fz_micro = float(el_val(pb, "fontSize"))
     f_micro = ImageFont.truetype(_xml_font('text name="libPlayers"', view, REG),
@@ -176,10 +212,10 @@ def render(v):
     px0, py0 = [float(q) for q in el_val(pb, "pos").split()]
     db = el_box(view, 'text name="libDev"')
     dx0, dy0 = [float(q) for q in el_val(db, "pos").split()]
-    d.text((px(px0), sz(py0)), v["players"].upper(), font=f_micro, fill=INKDIM + (255,))
+    d.text((px(px0), sz(py0)), v["players"].upper(), font=f_micro, fill=HX(pal["crystalInkDim"]) + (255,))
     dev_w = float(el_val(db, "size").split()[0]) * W
     for i, ln in enumerate(wrap(v["dev"].upper(), f_micro, dev_w)[:2]):
-        d.text((px(dx0), sz(dy0) + i * 26), ln, font=f_micro, fill=INKDIM + (255,))
+        d.text((px(dx0), sz(dy0) + i * 26), ln, font=f_micro, fill=HX(pal["crystalInkDim"]) + (255,))
 
     # screenshot: proof asset cover-cropped into the slot
     s = el_box(view, 'image name="libScreenshot"')
@@ -195,7 +231,7 @@ def render(v):
     px0, py0 = [float(x) for x in el_val(pl, "pos").split()]
     pw, ph = [float(x) for x in el_val(pl, "size").split()]
     porg = el_val(pl, "origin").split()
-    plane = Image.open(os.path.join(ART, "lib_plane_hero.png")).convert("RGBA") \
+    plane = tint(Image.open(os.path.join(ART, "lib_plane_hero.png")), pal["planeTint"]) \
         .resize((int(px(pw)), int(sz(ph))), Image.LANCZOS)
     base.alpha_composite(plane,
                          (int(px(px0) - (px(pw) / 2 if porg[0] == "0.5" else 0)),
@@ -203,7 +239,7 @@ def render(v):
     hw = el_box(view, 'image name="libHeroWash"')
     hx, hy = [float(x) for x in el_val(hw, "pos").split()]
     hww, hwh = [float(x) for x in el_val(hw, "size").split()]
-    base.alpha_composite(Image.open(os.path.join(ART, "lib_hero_wash.png")).convert("RGBA")
+    base.alpha_composite(tint(Image.open(os.path.join(ART, "lib_hero_wash.png")), pal["heroWashTint"])
                          .resize((int(px(hww)), int(sz(hwh)))),
                          (int(px(hx) - px(hww) / 2), int(sz(hy) - sz(hwh) / 2)))
     gl = el_box(view, 'image name="libSelectedGlowBlue"')
@@ -211,7 +247,7 @@ def render(v):
     gw2, gh2 = [float(x) for x in el_val(gl, "size").split()]
     glow = Image.open(os.path.join(ART, "lib_glow_blue.png")).convert("RGBA") \
         .resize((int(px(gw2)), int(sz(gh2))))
-    glow.putalpha(glow.split()[3].point(lambda a: int(a * 0.22)))
+    glow.putalpha(glow.split()[3].point(lambda a: int(a * float(pal["glowOpacity"]))))
     base.alpha_composite(glow, (int(px(gx2) - px(gw2) / 2), int(sz(gy2) - sz(gh2) / 2)))
     sh2 = el_box(view, 'image name="libSelectedShadow"')
     qx, qy = [float(x) for x in el_val(sh2, "pos").split()]
@@ -269,12 +305,12 @@ def render(v):
     f_title = ImageFont.truetype(BOLD, int(round(fs(fz_title))))
     title = v["title"].upper()
     if f_title.getlength(title) <= px(tw):
-        d.text((px(tx), sz(ty)), title, font=f_title, fill=(255, 255, 255, 255),
+        d.text((px(tx), sz(ty)), title, font=f_title, fill=HX(pal["titleInk"]) + (255,),
                anchor="mm")
     else:
         for i, ln in enumerate(wrap(title, f_title, px(tw))[:2]):
             d.text((px(tx), sz(ty) + (i - 0.5) * int(round(fs(fz_title))) * 1.15),
-                   ln, font=f_title, fill=(255, 255, 255, 255), anchor="mm")
+                   ln, font=f_title, fill=HX(pal["titleInk"]) + (255,), anchor="mm")
     f_rail = ImageFont.truetype(REG, int(round(fs(0.0145))))
     rail = [("libMetaGenre", v["genre"].upper()), ("libMetaSep1", "\u2022"),
             ("libMetaYear", v["year"]), ("libMetaSep2", "\u2022"),
@@ -283,9 +319,9 @@ def render(v):
         tag = "datetime" if "Year" in ename else "text"
         b = el_box(view, f'{tag} name="{ename}"')
         bx, by = [float(x) for x in el_val(b, "pos").split()]
-        d.text((px(bx), sz(by)), txt, font=f_rail, fill=(255, 255, 255, 140), anchor="mm")
+        d.text((px(bx), sz(by)), txt, font=f_rail, fill=HXA(pal["railInk"]), anchor="mm")
     f_foot = ImageFont.truetype(REG, int(round(fs(0.0135))))
-    d.text((640, 915), "A PLAY \u2022 B BACK", font=f_foot, fill=(255, 255, 255, 128), anchor="mm")
+    d.text((640, 915), "A PLAY \u2022 B BACK", font=f_foot, fill=HXA(pal["footerInk"]), anchor="mm")
     return base.convert("RGB")
 
 VARIANTS = {
@@ -318,7 +354,13 @@ VARIANTS = {
 if __name__ == "__main__":
     os.makedirs(PROOFS, exist_ok=True)
     for name, v in VARIANTS.items():
-        img = render(v)
-        p = os.path.join(PROOFS, f"v18_proof_{name}.png")
-        img.save(p)
-        print("saved", p)
+        li = render(v, "light")
+        dk = render(v, "dark")
+        pl = os.path.join(PROOFS, f"v18_3_proof_{name}_light.png")
+        pd = os.path.join(PROOFS, f"v18_3_proof_{name}_dark.png")
+        li.save(pl); dk.save(pd)
+        sbs = Image.new("RGB", (W * 2, H), (0, 0, 0))
+        sbs.paste(li, (0, 0)); sbs.paste(dk, (W, 0))
+        ps = os.path.join(PROOFS, f"v18_3_proof_{name}_sbs.png")
+        sbs.save(ps)
+        print("saved", pl, pd, ps)

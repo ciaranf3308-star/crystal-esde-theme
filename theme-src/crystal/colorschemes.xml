@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <!-- Crystal v18.3.0: Light / Dark color schemes (ES-DE colorScheme
+         mechanism, THEMES.md). Each scheme declares the COMPLETE palette
+         as variables; views.xml references ONLY variables for every
+         scheme-dependent color/tint/opacity, so both schemes share the
+         exact same geometry, element names and asset paths. No layout
+         fork, no new images.
+
+         Light = the v18.2.1 production look, pixel-identical.
+         Dark = "Nova after midnight": white editorial surfaces become
+         deep navy/blue-black, body text becomes off-white/pale blue,
+         royal blue stays structural (spine rail art, baked Nova
+         graphics), yellow accents untouched, dynamic game media
+         (marquee / physicalmedia / screenshot) untinted so it stays
+         the vivid focal point.
+
+         Baked white artwork (universal background, editorial page) is
+         darkened via image tint multiplication: white pixels take
+         the tint color, so the art reads as printed on dark navy stock
+         while its own tonal variation survives subtly.
+
+         Declared in capabilities.xml (light first = default). Included
+         from the root theme.xml AND every per-system theme.xml, right
+         after variables.xml and before views.xml, so the selected
+         scheme's variables are in effect however ES-DE orders the
+         root/system parses. -->
+    <colorScheme name="light">
+        <variables>
+            <!-- base palette (v18.2.1 values, unchanged) -->
+            <crystalText>FFFFFF</crystalText>
+            <crystalDim>BFD4FF</crystalDim>
+            <crystalAccent>FFD60A</crystalAccent>
+            <crystalDeep>0A2FA0</crystalDeep>
+            <crystalSelect>FFD60A2E</crystalSelect>
+            <crystalGameBg>0A2FA0CC</crystalGameBg>
+            <crystalInkDim>2C3A5E</crystalInkDim>
+            <!-- gamelist text -->
+            <titleInk>FFFFFF</titleInk>
+            <railInk>8CFFFFFF</railInk>
+            <footerInk>80FFFFFF</footerInk>
+            <!-- marquee mock masthead (z19 layered fallback) -->
+            <mockInk>0A2FA0</mockInk>
+            <mockBg>FFFFFF</mockBg>
+            <!-- system view badge -->
+            <badgeInk>0A2FA0</badgeInk>
+            <badgeBg>FFFFFF</badgeBg>
+            <!-- baked-art tints (FFFFFF = no tint) -->
+            <libBgTint>FFFFFF</libBgTint>
+            <panelTint>FFFFFF</panelTint>
+            <railTint>FFFFFF</railTint>
+            <sysBgTint>FFFFFF</sysBgTint>
+            <heroWashTint>FFFFFF</heroWashTint>
+            <planeTint>FFFFFF</planeTint>
+            <!-- hero glow strength -->
+            <glowOpacity>0.22</glowOpacity>
+        </variables>
+    </colorScheme>
+
+    <colorScheme name="dark">
+        <variables>
+            <!-- base palette: dark-blue ink -> off-white, royal kept for
+                 structure via the baked art, yellow untouched -->
+            <crystalText>F4F7FF</crystalText>
+            <crystalDim>BFD4FF</crystalDim>
+            <crystalAccent>FFD60A</crystalAccent>
+            <crystalDeep>F4F7FF</crystalDeep>
+            <crystalSelect>FFD60A2E</crystalSelect>
+            <crystalGameBg>0A2FA0CC</crystalGameBg>
+            <crystalInkDim>D6DDED</crystalInkDim>
+            <!-- gamelist text: near-white title, muted blue-grey micro -->
+            <titleInk>F4F7FF</titleInk>
+            <railInk>8C8392B3</railInk>
+            <footerInk>808392B3</footerInk>
+            <!-- marquee mock masthead: backing matches the darkened page
+                 (invisible seam, like light's white-on-white), Anton in
+                 off-white. Still opaque, still covered by real art. -->
+            <mockInk>F4F7FF</mockInk>
+            <mockBg>1A2748</mockBg>
+            <!-- system view badge: navy pill, off-white text -->
+            <badgeInk>F4F7FF</badgeInk>
+            <badgeBg>16223B</badgeBg>
+            <!-- baked-art tints: white -> deep navy / dark cobalt -->
+            <libBgTint>2E3D66</libBgTint>
+            <panelTint>1A2748</panelTint>
+            <railTint>D8DEEE</railTint>
+            <!-- system-view collage: the per-system collages are much
+                 brighter (white paper) than the gamelist backdrop, so
+                 this tint runs darker to land in the same deep-navy zone -->
+            <sysBgTint>222E4C</sysBgTint>
+            <heroWashTint>33456E</heroWashTint>
+            <planeTint>2A3A5E</planeTint>
+            <!-- hero glow: a touch more presence against the dark stage -->
+            <glowOpacity>0.34</glowOpacity>
+        </variables>
+    </colorScheme>
+</theme>

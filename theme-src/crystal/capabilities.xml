@@ -3,4 +3,13 @@
     <!-- Crystal v3.3: one definitive theme for the Nova (1280x960, 4:3). No variants. -->
     <themeName>Crystal</themeName>
     <aspectRatio>4:3</aspectRatio>
+    <!-- v18.3.0: Light / Dark color schemes (THEMES.md). Declared light
+         first so Light is the default; both always appear in ES-DE's
+         UI Settings > Theme configuration. -->
+    <colorScheme name="light">
+        <label>Light</label>
+    </colorScheme>
+    <colorScheme name="dark">
+        <label>Dark</label>
+    </colorScheme>
 </themeCapabilities>

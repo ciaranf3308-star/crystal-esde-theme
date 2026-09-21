@@ -3,5 +3,9 @@
     <!-- Crystal v2 root theme: palette variables (dark base + light
          <variant>) + shared view layout. -->
     <include>./variables.xml</include>
+    <!-- v18.3.0: Light/Dark color schemes. Included after the base
+         variables and before views so the selected scheme's palette is
+         in effect when the views are parsed. -->
+    <include>./colorschemes.xml</include>
     <include>./views.xml</include>
 </theme>
