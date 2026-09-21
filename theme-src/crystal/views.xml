@@ -20,6 +20,28 @@
             <zIndex>1</zIndex>
         </image>
 
+        <!-- v18.4.0: console hero logo. The commissioned per-system logo
+             (art/console_logos/${system.name}.png) layered LARGE over the
+             collage, which now reads as the background: the collage is
+             darkened per scheme (sysBgTint) so the crisp logo is the
+             undisputed hero. maxSize preserves each logo's native aspect
+             (they range ~2.8:1 to ~5.3:1); origin 0.5 0.5 centers it in
+             the hero zone: left edge clears the info text column
+             (x 0.285 > 0.27 box edge), bottom clears the carousel
+             (above y 0.64), z30 above the background but below all live
+             text (z50).
+             The 5 systems with no logo asset (nes, psp, steam, windows,
+             xbox360) resolve to a missing file and paint nothing - the
+             same mechanism as the gamelist's missing-marquee case. No
+             invented art. -->
+        <image name="sysHeroLogo">
+            <pos>0.485 0.285</pos>
+            <maxSize>0.40 0.20</maxSize>
+            <origin>0.5 0.5</origin>
+            <path>./art/console_logos/${system.name}.png</path>
+            <zIndex>30</zIndex>
+        </image>
+
         <!-- v6.0.3: console-by-console polish sweep. The v6.0.2 uniform
              positions put desc text ON the baked white divider lines on
              15 of 21 backgrounds (each background rules its dividers

@@ -86,8 +86,11 @@
             <railTint>D8DEEE</railTint>
             <!-- system-view collage: the per-system collages are much
                  brighter (white paper) than the gamelist backdrop, so
-                 this tint runs darker to land in the same deep-navy zone -->
-            <sysBgTint>222E4C</sysBgTint>
+                 this tint runs darker to land in the same deep-navy zone.
+                 v18.4.0: one notch deeper (222E4C -> 1D2947) so the new
+                 large console hero logo pops against the collage, which
+                 now reads purely as background. -->
+            <sysBgTint>1D2947</sysBgTint>
             <heroWashTint>33456E</heroWashTint>
             <planeTint>2A3A5E</planeTint>
             <!-- hero glow: a touch more presence against the dark stage -->
