@@ -89,8 +89,11 @@
                  this tint runs darker to land in the same deep-navy zone.
                  v18.4.0: one notch deeper (222E4C -> 1D2947) so the new
                  large console hero logo pops against the collage, which
-                 now reads purely as background. -->
-            <sysBgTint>1D2947</sysBgTint>
+                 now reads purely as background.
+                 v18.4.2: one more small notch (1D2947 -> 171F3D) at the
+                 user's request — the bigger, tilted logo needs a touch
+                 more separation. -->
+            <sysBgTint>171F3D</sysBgTint>
             <heroWashTint>33456E</heroWashTint>
             <planeTint>2A3A5E</planeTint>
             <!-- hero glow: a touch more presence against the dark stage -->

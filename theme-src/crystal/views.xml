@@ -36,14 +36,30 @@
              unchanged: the tallest logo (0.40/2.8 = 0.143 high) spans y
              0.214..0.356, well above the carousel zone (0.640). z30 above
              the background, below all live text (z50).
+             v18.4.2: bigger (maxSize 0.48 0.24, +20%), ~7 degree tilt and
+             a small optical nudge (pos 0.64 0.30). The tilt matches the
+             collage energy: the baked brush titles (gba, nds, ...) rise
+             to the right (right side up). ES-DE rotation is in degrees,
+             positive = visually clockwise (y-down screen space, same as
+             CSS/canvas convention), so rotation -7 gives the right-side-up
+             lean. rotationOrigin pinned at center (0.5 0.5) for a
+             deterministic pivot. Tilted bbox math (7 deg): tallest logo
+             (gba, 2.795:1) renders 0.1717 high -> rotated bbox
+             0.497 x 0.229, spanning x 0.3915..0.8885 (141px clear of the
+             panel, 142px inside the screen edge) and y 0.1855..0.4145
+             (well above the glow top 0.5725 and carousel 0.640).
+             y 0.285 -> 0.30 recenters the larger logo optically in the
+             stage between the screen top and the carousel zone.
              The 5 systems with no logo asset (nes, psp, steam, windows,
              xbox360) resolve to a missing file and paint nothing - the
              same mechanism as the gamelist's missing-marquee case. No
              invented art. -->
         <image name="sysHeroLogo">
-            <pos>0.64 0.285</pos>
-            <maxSize>0.40 0.20</maxSize>
+            <pos>0.64 0.30</pos>
+            <maxSize>0.48 0.24</maxSize>
             <origin>0.5 0.5</origin>
+            <rotation>-7</rotation>
+            <rotationOrigin>0.5 0.5</rotationOrigin>
             <path>./art/console_logos/${system.name}.png</path>
             <zIndex>30</zIndex>
         </image>

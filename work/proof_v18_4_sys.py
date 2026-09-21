@@ -6,8 +6,9 @@ now including the v18.4.0 sysHeroLogo element (parsed from views.xml:
 pos/maxSize/origin), per-system text overrides, tinted background,
 badge, carousel strip (real card art, XML dimming), help line.
 
-Systems: nds (user's Nova case), psx, gb, snes, n64 (varied collage
-styles), nes (no logo asset -> proves the clean paint-nothing case).
+Systems: gba (the user's Nova photo case, v18.4.2), nds (earlier Nova
+case), psx, gb, snes, n64 (varied collage styles), nes (no logo asset
+-> proves the clean paint-nothing case).
 Side-by-side composites are the audit gate.
 """
 import os, re, sys
@@ -24,8 +25,9 @@ W, H = 1280, 960
 FB = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 FR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 
-SYSTEMS = ("nds", "psx", "gb", "snes", "n64", "nes")
+SYSTEMS = ("gba", "nds", "psx", "gb", "snes", "n64", "nes")
 NEIGHBORS = {
+    "gba": ["gb", "gbc", "nds", "gba", "snes", "n64", "psx"],
     "nds": ["gb", "gba", "gbc", "nds", "n3ds", "snes", "n64"],
     "psx": ["ps2", "n64", "snes", "psx", "gc", "gba", "wii"],
     "gb": ["gbc", "gba", "n64", "gb", "snes", "psx", "nes"],
@@ -33,7 +35,7 @@ NEIGHBORS = {
     "n64": ["snes", "gc", "psx", "n64", "ps2", "gba", "nds"],
     "nes": ["snes", "gb", "gbc", "nes", "psx", "gba", "n64"],
 }
-COUNTS = {"nds": "13 GAMES", "psx": "128 GAMES", "gb": "96 GAMES",
+COUNTS = {"gba": "25 GAMES", "nds": "13 GAMES", "psx": "128 GAMES", "gb": "96 GAMES",
           "snes": "42 GAMES", "n64": "35 GAMES", "nes": "58 GAMES"}
 
 TEXT_ELEMS = ["mfrBadge", "sysName", "sysName1", "sysName2",
@@ -70,16 +72,27 @@ def render_sys(system, scheme):
     bg = Image.open(os.path.join(CRYS, "backgrounds", f"{system}.webp")).convert("RGBA")
     bg = tint(bg, pal["sysBgTint"]).resize((W, H))
 
-    # v18.4.0 hero logo, parsed from the real XML element
+    # v18.4.0 hero logo, parsed from the real XML element.
+    # v18.4.2: also parses rotation/rotationOrigin. ES-DE rotation is in
+    # degrees, positive = visually clockwise (y-down screen space, the
+    # CSS/canvas convention); PIL's rotate() is counter-clockwise for
+    # positive angles, so the harness negates the XML value to show what
+    # the engine will actually render.
     lg = el_box(view, 'image name="sysHeroLogo"')
     lx, ly = [float(v) for v in el_val(lg, "pos").split()]
     lmw, lmh = [float(v) for v in el_val(lg, "maxSize").split()]
+    try:
+        xml_rot = float(el_val(lg, "rotation"))
+    except ValueError:
+        xml_rot = 0.0
     logo_path = os.path.join(CRYS, "art/console_logos", f"{system}.png")
     if os.path.isfile(logo_path):
         logo = Image.open(logo_path).convert("RGBA")
         lw, lh = logo.size
         s = min(lmw * W / lw, lmh * H / lh)
         logo = logo.resize((max(1, int(lw * s)), max(1, int(lh * s))), Image.LANCZOS)
+        if xml_rot:
+            logo = logo.rotate(-xml_rot, expand=True, resample=Image.BICUBIC)
         bg.alpha_composite(logo, (int(lx * W - logo.size[0] / 2),
                                   int(ly * H - logo.size[1] / 2)))
 
