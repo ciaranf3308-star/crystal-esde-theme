@@ -214,37 +214,50 @@
     </view>
 
         <view name="gamelist">
-        <!-- v17.4.0 (2026-09-21): EDITORIAL SHELL pass. MACRO LAYOUT
-             LOCKED (panel 6,10 470x940; spine 486,24 60x912; hero 540px
-             at 900,430; rule Y716 / title Y736 / meta Y757; screenshot
-             42,700 396x210; footer y915). Element positions/sizes are
-             byte-identical to v17.3.0; what changes is the finish and
-             the product concept: the shell is designed around REAL
-             scraped artwork (98% of the library), and fallback hero art
-             is deliberately plain.
-               - MARQUEE: the navy card/frame is GONE (per user order:
-                 "STOP PUTTING IT IN A GIANT BLUE BOX"). The marquee zone
-                 is open white with generous negative space; the real
-                 scraped marquee mounts directly on the page. No platform
-                 tier - the spine already says the platform.
-               - LEFT COLUMN: one editorial surface. Kickers optically
-                 aligned to the value boxes, quieter slate; the single
-                 description/facts hairline is the only structural rule.
-               - SCREENSHOT: no "SCREENSHOT BOX" - bottom-edge hairline,
-                 subtle depth, one yellow registration-mark corner.
-               - SPINE: dot texture cut ~55%, halftone halved, connector
-                 ticks removed (one continuous yellow line + top tab),
-                 logo mounting plate given real breathing room.
-               - TITLE: 0.0375 -> 0.040 (known-shipped v17.2 size) so the
-                 display title stands up to the enormous media above it.
-               - FALLBACKS: media_fallbacks rebuilt as flat muted
-                 blue-grey silhouettes, one per media class - competent,
-                 not spectacular, by design.
-             Verified against ES-DE 3.4.1. No theme keyframes or idle
-             animation exist or are claimed; carousel itemTransitions
-             (animate) is the engine's only element motion and is engaged.
-             The transition audit (esde_theme_tables.json) found no other
-             supported motion property for text/image/datetime/rating. -->
+        <!-- v17.5.0 (2026-09-21): UI-SHELL FINISH pass. MACRO GEOMETRY
+             LOCKED - every gamelist element position/size is byte-
+             identical to v17.4.0 (panel 6,10 470x940; spine 486,24
+             60x912; hero 540px at 900,430; rule Y716 / title Y736 / meta
+             Y757; screenshot 42,700 396x210; footer y915). What changes
+             is finish only:
+               - MARQUEE MASTHEAD: the open-white zone gains a designed
+                 masthead anchor - a whisper royal hairline below the zone
+                 with a yellow registration square (no box, no platform
+                 tier). The real scraped marquee mounts on the page.
+               - TYPESET: baked kickers smaller, wider-tracked, quieter
+                 slate; the description/facts hairline stays the only rule.
+               - SCREENSHOT: the registration-mark corner now crosses the
+                 screenshot's top-right corner; the intrusion's yellow
+                 leading edge extends down to meet it.
+               - SPINE: halftone mid-band removed, dotgrid sparser still,
+                 deeper royal foundation, ONE continuous yellow line + tab,
+                 logo plate breathing room kept.
+               - TITLE PEDESTAL: the rule is now ONE clean yellow
+                 registration rule (no white hairline).
+               - MEASURED BUG FIX (the one geometric exception to the
+                 v17.4.0 lock): the meta rail moved 757.5 -> 767.5
+                 (0.7890625 -> 0.7994792, 7 elements). Re-measured with
+                 the real fonts, the v17.4 title (PermanentMarker 51px,
+                 centered 736: glyph rows 718-756) and the meta rail
+                 (DejaVuSans-Bold 18px, centered 757.5: glyph rows
+                 750-762) OVERLAPPED by 6px - white on white. The v17.4
+                 "0.5px gap" note was a bad measurement. Title stays at
+                 736 / 0.040 and the rule at 716; the 10px rail nudge is
+                 the minimum for glyph clearance (title bottom 756, meta
+                 top 760) and serves the v17.5 "breathing room" brief.
+                 Everything else in the gamelist view is byte-identical
+                 to v17.4.0.
+             PHYSICAL MEDIA AND FALLBACK ART ARE OUT OF SCOPE: the hero,
+             marquee and screenshot are immutable live asset slots; all
+             media_fallbacks/* PNGs and hero-treatment assets are
+             byte-identical to v17.4.0.
+             ES-DE 3.4.1 motion (re-audited against the pinned
+             esde_theme_tables.json AND the official theme docs): carousel
+             itemTransitions (animate) is the engine's only element motion
+             and is engaged on the carousel. No keyframes, fades,
+             per-element animation, or idle float exist or are claimed.
+             (Letter-spacing is not a theme property in 3.4.1, so the
+             display title's letterspacing lives in the proof mock only.) -->
 
 
         <!-- 1. Supplied universal Nova library background, full-bleed. -->
@@ -531,7 +544,7 @@
             <zIndex>60</zIndex>
         </text>
         <text name="libMetaGenre">
-            <pos>0.575 0.7890625</pos>
+            <pos>0.575 0.7994792</pos>
             <size>0.1171875 0.02</size>
             <origin>0.5 0.5</origin>
             <metadata>genre</metadata>
@@ -543,7 +556,7 @@
             <zIndex>60</zIndex>
         </text>
         <text name="libMetaSep1">
-            <pos>0.6398438 0.7890625</pos>
+            <pos>0.6398438 0.7994792</pos>
             <size>0.0125 0.02</size>
             <origin>0.5 0.5</origin>
             <text>&#8226;</text>
@@ -554,7 +567,7 @@
             <zIndex>60</zIndex>
         </text>
         <datetime name="libMetaYear">
-            <pos>0.6734375 0.7890625</pos>
+            <pos>0.6734375 0.7994792</pos>
             <size>0.0546875 0.02</size>
             <origin>0.5 0.5</origin>
             <metadata>releasedate</metadata>
@@ -566,7 +579,7 @@
             <zIndex>60</zIndex>
         </datetime>
         <text name="libMetaSep2">
-            <pos>0.7070313 0.7890625</pos>
+            <pos>0.7070313 0.7994792</pos>
             <size>0.0125 0.02</size>
             <origin>0.5 0.5</origin>
             <text>&#8226;</text>
@@ -577,7 +590,7 @@
             <zIndex>60</zIndex>
         </text>
         <text name="libMetaDev">
-            <pos>0.7601563 0.7890625</pos>
+            <pos>0.7601563 0.7994792</pos>
             <size>0.09375 0.02</size>
             <origin>0.5 0.5</origin>
             <metadata>developer</metadata>
@@ -589,7 +602,7 @@
             <zIndex>60</zIndex>
         </text>
         <text name="libMetaSep3">
-            <pos>0.8132813 0.7890625</pos>
+            <pos>0.8132813 0.7994792</pos>
             <size>0.0125 0.02</size>
             <origin>0.5 0.5</origin>
             <text>&#8226;</text>
@@ -600,7 +613,7 @@
             <zIndex>60</zIndex>
         </text>
         <text name="libMetaPlayers">
-            <pos>0.8546875 0.7890625</pos>
+            <pos>0.8546875 0.7994792</pos>
             <size>0.0703125 0.02</size>
             <origin>0.5 0.5</origin>
             <metadata>players</metadata>
