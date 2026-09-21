@@ -15,11 +15,14 @@
             <text>Wii U</text>
         </text>
         <text name="sysDesc">
+            <pos>0.030 0.356</pos>
             <text>The GamePad experiment. Hidden gems await.</text>
         </text>
         <text name="countNum">
+            <pos>0.030 0.520</pos>
         </text>
         <text name="factsLine">
+            <pos>0.030 0.603</pos>
             <text>2012</text>
         </text>
     </view>

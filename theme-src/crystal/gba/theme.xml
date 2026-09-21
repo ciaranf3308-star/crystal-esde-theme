@@ -15,11 +15,14 @@
             <text>Game Boy Advance</text>
         </text>
         <text name="sysDesc">
+            <pos>0.030 0.356</pos>
             <text>Nintendo's 32-bit handheld. A massive 2D library.</text>
         </text>
         <text name="countNum">
+            <pos>0.030 0.520</pos>
         </text>
         <text name="factsLine">
+            <pos>0.030 0.603</pos>
             <text>32-BIT • HANDHELD • 2001</text>
         </text>
     </view>

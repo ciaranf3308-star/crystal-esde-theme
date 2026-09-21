@@ -15,12 +15,15 @@
             <text>Game Boy Color</text>
         </text>
         <text name="sysDesc">
-            <!-- panel threading: sits between this background's ruled lines -->
+            <pos>0.030 0.312</pos>
+            <!-- v6.0.3: threaded between this background's white divider lines (measured from the baked art) -->
             <text>Color came to the brick. A pocket rainbow of classics.</text>
         </text>
         <text name="countNum">
+            <pos>0.030 0.444</pos>
         </text>
         <text name="factsLine">
+            <pos>0.030 0.527</pos>
             <text>8-BIT • HANDHELD • 1998</text>
         </text>
     </view>

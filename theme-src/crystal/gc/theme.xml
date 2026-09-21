@@ -15,12 +15,15 @@
             <text>GameCube</text>
         </text>
         <text name="sysDesc">
-            <!-- panel threading: sits between this background's ruled lines -->
+            <pos>0.030 0.356</pos>
+            <!-- v6.0.3: threaded between this background's white divider lines (measured from the baked art) -->
             <text>Nintendo's cube of joy. Smash and Sunshine.</text>
         </text>
         <text name="countNum">
+            <pos>0.030 0.520</pos>
         </text>
         <text name="factsLine">
+            <pos>0.030 0.603</pos>
             <text>128-BIT • 2001</text>
         </text>
         <!-- v4.4.0 "Select": the selected carousel card shows this

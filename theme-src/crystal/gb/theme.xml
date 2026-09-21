@@ -20,9 +20,6 @@
         <text name="factsLine">
             <text>8-BIT • HANDHELD • 1989</text>
         </text>
-        <text name="sysDesc">
-            <size>0.228 0.140</size>
-        </text>
         <text name="countNum">
         </text>
     </view>

@@ -15,11 +15,14 @@
             <text>Wii</text>
         </text>
         <text name="sysDesc">
+            <pos>0.030 0.356</pos>
             <text>Motion gaming for all. Wii Bowling nights.</text>
         </text>
         <text name="countNum">
+            <pos>0.030 0.520</pos>
         </text>
         <text name="factsLine">
+            <pos>0.030 0.603</pos>
             <text>2006</text>
         </text>
     </view>

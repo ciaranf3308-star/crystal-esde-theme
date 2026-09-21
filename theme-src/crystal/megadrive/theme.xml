@@ -15,11 +15,14 @@
             <text>Mega Drive</text>
         </text>
         <text name="sysDesc">
+            <pos>0.030 0.356</pos>
             <text>Europe's name for Sega's 16-bit speed machine.</text>
         </text>
         <text name="countNum">
+            <pos>0.030 0.520</pos>
         </text>
         <text name="factsLine">
+            <pos>0.030 0.603</pos>
             <text>16-BIT • 1990</text>
         </text>
         <!-- v4.4.0 "Select": the selected carousel card shows this

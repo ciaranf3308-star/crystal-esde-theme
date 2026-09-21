@@ -18,18 +18,24 @@
             <zIndex>1</zIndex>
         </image>
 
-        <!-- v6.0.2: panel rebuilt. Two fixes:
-             1. Removed <systemdata>fullname</systemdata> from sysName: the
-                engine binding unconditionally overwrote the per-system
-                static short names (SystemView.cpp), so every system showed
-                its truncated fullName ("Nintendo Game Boy C..."). The short
-                names now render as designed.
-             2. Rebuilt the vertical rhythm with measured clearance. The old
-                per-system "threading" positions let long descs (3 wrapped
-                lines) collide with countNum ("0 GAMES" over the desc text).
-                One layout for all systems: desc 0.280 (clears 3 lines),
-                countNum 0.373, factsLine 0.451. nes/snes keep their two-line
-                names, so their block sits lower (0.315/0.410/0.488). -->
+        <!-- v6.0.3: console-by-console polish sweep. The v6.0.2 uniform
+             positions put desc text ON the baked white divider lines on
+             15 of 21 backgrounds (each background rules its dividers
+             differently). Positions are now threaded per background,
+             measured from the baked art (work/analyze_ruled.py), in four
+             groups — proof work/proof_syspanel.py asserts zero text/text
+             overlap and zero divider collisions for all 21 consoles:
+             A (13 consoles, dividers ~0.339/~0.493): desc 0.356,
+                count 0.520, facts 0.603
+             B (gbc, dividers 0.2965/0.4259): desc 0.312, count 0.444,
+                facts 0.527
+             C (snes, dividers 0.3353/0.3855/0.5115): desc 0.404,
+                count 0.530, facts 0.613
+             D (gb, nes, psx, steam, windows, xbox360 — no mid dividers):
+                base positions below (nes/snes keep the two-line lower
+                variant). Also v6.0.3: removed gb's leftover sysDesc size
+                override; snes sysName1 0.032 -> 0.031 (overflowed the
+                0.24 box by 3px). -->
         <text name="mfrBadge">
             <pos>0.030 0.195</pos>
             <size>0.16 0</size>

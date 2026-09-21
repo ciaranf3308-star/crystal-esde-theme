@@ -14,7 +14,7 @@
             <!-- two-line name mirrors the baked graffiti title -->
             <pos>0.030 0.226</pos>
             <size>0.24 0.05</size>
-            <fontSize>0.032</fontSize>
+            <fontSize>0.031</fontSize> <!-- v6.0.3: 0.032 overflowed the 0.24 box (310px) -->
             <color>${crystalText}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <zIndex>50</zIndex>
@@ -30,15 +30,15 @@
             <text>ENTERTAINMENT SYSTEM</text>
         </text>
         <text name="sysDesc">
-            <pos>0.030 0.315</pos>
-            <!-- panel threading: sits between this background's ruled lines -->
+            <pos>0.030 0.404</pos>
+            <!-- v6.0.3: threaded between this background's white divider lines (measured from the baked art) -->
             <text>The 16-bit golden age. Mode 7 magic.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.410</pos>
+            <pos>0.030 0.530</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.488</pos>
+            <pos>0.030 0.613</pos>
             <text>16-BIT • 1991</text>
         </text>
     </view>

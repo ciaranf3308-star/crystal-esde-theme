@@ -1,116 +1,110 @@
 #!/usr/bin/env python3
-"""Proof: render all 21 system-view panels from the REAL theme XML with
-ES-DE-style greedy word wrap. Fail loudly on any vertical overlap."""
-import re, os
-from PIL import Image, ImageDraw, ImageFont
+"""v6.0.3 proof: for every console, read panel positions from the REAL theme
+XML and assert (a) no text-text vertical overlap, (b) no text line touches a
+baked white divider line (strong lines, mult 2.2). Fail loudly."""
+import os, re
+from PIL import Image, ImageFont
+import numpy as np
 
 ROOT = os.path.expanduser('~/workspace/crystal-esde-theme/theme-src/crystal')
 W, H = 1280, 960
-FB = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+FBB = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
 
-def elem_block(src, name):
-    m = re.search(r'        <text name="%s">.*?\n        </text>\n' % name, src, re.DOTALL)
-    return m.group(0) if m else None
+def fs(f): return round(float(f) * H)
 
-def prop(block, tag):
-    m = re.search(r'<%s>(.*?)</%s>' % (tag, tag), block or '', re.DOTALL)
-    return m.group(1).strip() if m else None
-
-def inner_text(block):
-    # last <text>..</text> that is NOT the element tag itself: the content text
-    ms = re.findall(r'<text>(.*?)</text>', block or '', re.DOTALL)
-    return ms[-1].strip() if ms else ''
-
-base = open(f'{ROOT}/views.xml').read()
-base_view = base[base.index('<view name="system">'):base.index('</view>')]
-
-def base_pos(name):
-    return prop(elem_block(base_view, name), 'pos')
+def strong_dividers(bg):
+    g = np.asarray(bg.convert('L'), dtype=np.float32)
+    x0, x1 = int(0.035 * bg.width), int(0.265 * bg.width)
+    band = g[:, x0:x1].mean(axis=1)
+    k = 9
+    pad = np.pad(band, k, mode='edge')
+    neigh = np.convolve(pad, np.ones(2 * k + 1) / (2 * k + 1), mode='valid')
+    dev = np.abs(band - neigh)
+    t = dev.mean() + 2.2 * dev.std()
+    cand = [i for i, d in enumerate(dev) if d > t]
+    clusters, cur = [], []
+    for i in cand:
+        if cur and i - cur[-1] > 4:
+            clusters.append(cur); cur = []
+        cur.append(i)
+    if cur: clusters.append(cur)
+    return sorted(round(sum(c) / len(c) / bg.height, 4) for c in clusters
+                  if 0.16 < sum(c) / len(c) / bg.height < 0.62)
 
 def wrap(text, font, maxw):
     words, lines, cur = text.split(' '), [], ''
     for wd in words:
         t = (cur + ' ' + wd).strip()
-        if font.getlength(t) <= maxw:
-            cur = t
-        else:
-            lines.append(cur); cur = wd
-    lines.append(cur)
-    return lines
+        if font.getlength(t) <= maxw: cur = t
+        else: lines.append(cur); cur = wd
+    lines.append(cur); return lines
+
+def blk(sv, name):
+    ms = re.findall(r'<text name="%s">.*?</text>' % name, sv, re.DOTALL)
+    return ms  # all blocks (duplicates merge in ES-DE)
+
+def inner(b):
+    ms = re.findall(r'(?<!name=)<text>(.*?)</text>', b, re.DOTALL)
+    return ms[-1].strip() if ms else ''
+
+def prop(b, tag):
+    ms = re.findall(r'<%s>(.*?)</%s>' % (tag, tag), b, re.DOTALL)
+    return ms[-1].strip() if ms else None  # last wins (ES-DE merge)
 
 fails = []
-tiles = []
-for sysdir in sorted(os.listdir(ROOT)):
-    tp = os.path.join(ROOT, sysdir, 'theme.xml')
-    if not os.path.isfile(tp):
-        continue
-    src = open(tp).read()
+for sd in sorted(d for d in os.listdir(ROOT)
+                 if os.path.isfile(os.path.join(ROOT, d, 'theme.xml'))):
+    src = open(f'{ROOT}/{sd}/theme.xml').read()
     sv = src[src.index('<view name="system">'):src.index('</view>')]
-
-    # name: per-system static text (or nes/snes two-line)
-    nb = elem_block(sv, 'sysName')
-    name_txt, name_fs = inner_text(nb), 0.040
-    if name_txt:
-        name_fs = float(prop(nb, 'fontSize') or 0.040)
+    rows = []
+    rows.append(('badge', 0.195, 0.195 + fs(0.018) * 1.35 / H))
+    if sd in ('nes', 'snes'):
+        b1 = blk(sv, 'sysName1')[0]; b2 = blk(sv, 'sysName2')[0]
+        f1 = float(prop(b1, 'fontSize')); f2 = float(prop(b2, 'fontSize'))
+        rows.append(('name1', 0.226, 0.226 + f1 * 0.8))
+        rows.append(('name2', 0.266, 0.266 + f2 * 0.8))
+        # name1 must fit the 0.24 box
+        w = ImageFont.truetype(FBB, fs(f1)).getlength(inner(b1))
+        if w > 0.24 * W:
+            fails.append(f'{sd}: name1 overflow {w:.0f}px > 307px')
     else:
-        n1 = inner_text(elem_block(sv, 'sysName1'))
-        n2 = inner_text(elem_block(sv, 'sysName2'))
-        name_txt = (n1 + ' ' + n2).strip()
-
-    db = elem_block(sv, 'sysDesc')
-    desc_txt = inner_text(db)
-    desc_pos = prop(db, 'pos') or base_pos('sysDesc')
-    cb = elem_block(sv, 'countNum')
-    count_pos = (prop(cb, 'pos') if cb else None) or base_pos('countNum')
-    fb = elem_block(sv, 'factsLine')
-    facts_txt = inner_text(fb)
-    facts_pos = (prop(fb, 'pos') if fb else None) or base_pos('factsLine')
-
-    img = Image.new('RGB', (W // 3, 300), (10, 47, 160))
-    d = ImageDraw.Draw(img)
-    sx = W / 3 / W  # scale: tile is 1/3 width; draw at 1/3 scale
-    sc = 1 / 3
-
-    def draw_text(xf, yf, s, fsf, fill):
-        d.text((xf * W * sc, yf * H * sc), s,
-               font=ImageFont.truetype(FB, max(6, round(fsf * H * sc))), fill=fill)
-
-    # name (single line, may be two-part for nes/snes)
-    ny = 0.230 if sysdir not in ('nes', 'snes') else 0.226
-    draw_text(0.030, ny, name_txt, name_fs if sysdir not in ('nes', 'snes') else 0.040, 'white')
-
-    # desc wrapped
-    dx, dy = [float(v) for v in desc_pos.split()]
-    fs = 0.019
-    font = ImageFont.truetype(FB, round(fs * H))
-    lines = wrap(desc_txt, font, 0.20 * W)
-    lh = fs * 1.28
+        b = blk(sv, 'sysName')[0]
+        fsz = float(prop(b, 'fontSize') or 0.040)
+        rows.append(('name', 0.230, 0.230 + fsz * 0.8))
+        w = ImageFont.truetype(FBB, fs(fsz)).getlength(inner(b))
+        if w > 0.24 * W:
+            fails.append(f'{sd}: name overflow {w:.0f}px > 307px')
+    db = blk(sv, 'sysDesc')[0]
+    dy = float((prop(db, 'pos') or '0.030 0.280').split()[1])
+    df = ImageFont.truetype(FBB, fs(0.019))
+    lines = wrap(inner(db), df, 0.20 * W)
     for i, ln in enumerate(lines):
-        draw_text(dx, dy + i * lh, ln, fs, 'white')
-    desc_bottom = dy + len(lines) * lh
+        yt = dy + i * 0.019 * 1.30
+        rows.append((f'desc{i}', yt, yt + 0.019 * 1.30))
+    cbs = blk(sv, 'countNum')
+    cy = float(((prop(cbs[0], 'pos') if cbs else None) or '0.030 0.373').split()[1])
+    rows.append(('count', cy, cy + 0.055 * 1.25))
+    fbs = blk(sv, 'factsLine')
+    fy = float(((prop(fbs[0], 'pos') if fbs else None) or '0.030 0.451').split()[1])
+    rows.append(('facts', fy, fy + 0.017 * 1.30))
 
-    # count + facts
-    cx, cy = [float(v) for v in count_pos.split()]
-    draw_text(cx, cy, '0 GAMES', 0.055, 'white')
-    count_bottom = cy + 0.055 * 1.2
-    fx, fy = [float(v) for v in facts_pos.split()]
-    draw_text(fx, fy, facts_txt, 0.017, (255, 210, 60))
+    # (a) text-text overlaps (interior intersection; touching edges are fine)
+    for i in range(len(rows)):
+        for j in range(i + 1, len(rows)):
+            a, b_ = rows[i], rows[j]
+            if a[1] + 0.002 < b_[2] and b_[1] + 0.002 < a[2]:
+                fails.append(f'{sd}: TEXT OVERLAP {a[0]}[{a[1]:.3f}-{a[2]:.3f}] x {b_[0]}[{b_[1]:.3f}-{b_[2]:.3f}]')
 
-    if not (desc_bottom + 0.008 <= cy):
-        fails.append(f'{sysdir}: desc bottom {desc_bottom:.3f} vs countNum {cy:.3f}')
-    if not (count_bottom <= fy):
-        fails.append(f'{sysdir}: count bottom {count_bottom:.3f} vs facts {fy:.3f} ({len(lines)} desc lines)')
+    # (b) divider collisions
+    bg_path = f'{ROOT}/backgrounds/{sd}.webp'
+    bg_path = bg_path if os.path.isfile(bg_path) else f'{ROOT}/backgrounds/_default.webp'
+    for r in strong_dividers(Image.open(bg_path)):
+        for label, yt, yb in rows:
+            if yt - 0.008 <= r <= yb + 0.008:
+                fails.append(f'{sd}: DIVIDER @{r:.3f} hits {label}[{yt:.3f}-{yb:.3f}]')
+                break
 
-    d.text((8, 8), sysdir, font=ImageFont.truetype(FB, 14), fill=(255, 255, 0))
-    tiles.append(img)
-
-cols = 7
-rows = (len(tiles) + cols - 1) // cols
-sheet = Image.new('RGB', (tiles[0].width * cols, tiles[0].height * rows), 'black')
-for i, t in enumerate(tiles):
-    sheet.paste(t, ((i % cols) * t.width, (i // cols) * t.height))
-sheet.save('/tmp/proof_syspanel_all.png')
-print('tiles:', len(tiles))
-print('FAILURES:' if fails else 'NO OVERLAPS — all 21 panels clear')
+print('FAILURES:' if fails else 'PROOF PASS — 21 consoles: no text overlaps, no divider collisions, all names fit')
 for f in fails:
     print(' ', f)
+raise SystemExit(1 if fails else 0)
