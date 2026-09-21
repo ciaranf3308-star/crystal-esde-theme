@@ -119,8 +119,15 @@
              n64, gc. Selected = full-color 2x card in the glow; every
              other card is massively dulled toward dark navy
              (unfocusedItemDimming 0.70, unfocusedItemSaturation 0.50) —
-             the user's explicit order. The 12 poster-less systems keep
+             the user's explicit order. The 4 poster-less systems keep
              the black marquee trading cards (fully dimmed like the rest).
+             v17.1.0 (2026-09-21): supplied Game Boy Color and PSP posters
+             baked into cards/gbc.png and cards/psp.png (240x320, distortion-
+             free 3:4 resize from the 1086x1448 sources), replacing their
+             black marquee trading cards. 17 poster cards total; the last
+             4 card-less systems are nes, steam, windows, xbox360. No live
+             selectedPoster elements remain anywhere (verified). Gamelist
+             v17 section untouched.
              The v4.4.0 per-system selectedPoster overlay survives only
              for the 5 poster-less systems that still have old supplied
              posters (dreamcast, genesis, megadrive, ps2, psx); it was
