@@ -214,71 +214,39 @@
     </view>
 
         <view name="gamelist">
-        <!-- v17.9.0 (2026-09-21): FULL CONVERGENCE PASS on the locked
-             gamelist macro geometry. No style redesign, no fallback
-             changes, no new components. Three parallel reviews
-             (typography/responsive, composition/spacing,
-             ES-DE-constraints) were merged into ONE implementation.
-             Every fix below is measured against real DejaVuSans
-             metrics at the 1280x960 4:3 target:
-               - TITLE: fontSize 0.0295 -> 0.0260. The named failure
-                 case "THE LEGEND OF ZELDA: OCARINA OF TIME 3D" is
-                 640.8px inside the 742px (0.58) hero identity box -
-                 50.8px margins/side, one line, never clips, never
-                 exceeds the box, never touches prev/next media.
-                 DOOM (88.1px) and GRAN TURISMO 4 (244.8px) stay
-                 centred and confident. ES-DE 3.4.1 has no auto-shrink
-                 and no dynamic sizing; two-line wrap IS native but
-                 the pedestal has no room (37px available, 75 needed
-                 for 2 lines at this size) and a second line would
-                 paint the next-media region - the fixed one-line size
-                 is the production answer. Legibility beats maximum
-                 size.
-               - META RAIL: DEVELOPER DROPPED PERMANENTLY. The 7-slot
-                 rail already failed on real inputs: "FIRST-PERSON
-                 SHOOTER" (173.5px) overflows the 151px genre slot and
-                 "NINTENDO ENTERTAINMENT ANALYSIS AND DEVELOPMENT"
-                 (411.1px) overflows the 398px dev slot. ES-DE 3.4.1
-                 cannot conditionally omit fields (no conditional
-                 visibility/layout - verified against the pinned 3.4.1
-                 tables), so the requested "drop DEVELOPER when too
-                 wide" is impossible. The fixed 5-slot rail
-                 GENRE . YEAR . PLAYERS is the robust substitute:
-                 contiguous, centred at x=900, genre slot widened
-                 151 -> 180px, worst-case content group 314.1px inside
-                 the 347px slot span. Developer already lives in the
-                 left-column micro-grid (two-line wrap) - no
-                 information is lost.
-               - LEFT COLUMN: libRating y 470 -> 481 (+11px) centres
-                 the stars on the year digit caps; libDesc 0.0175 ->
-                 0.0145 gives 54/50/40-char lines (avg 48, inside the
-                 45-70 target). Kickers are baked art - value positions
-                 stay glued to them.
-               - SCREENSHOT: y 724 -> 732 (+8px); the baked frame,
-                 shadow, hairline and registration corner follow in
-                 lib_panel_main.png. Height stays 170px.
-               - NEXT SHARD: REGENERATED as a 450x150 diagonal wedge
-                 (alpha 0 at top-left corner -> peak ~65 at
-                 bottom-right, all four edges feathered - no panel, no
-                 hard edges) and moved (780,790) -> (830,810). The next
-                 item's visible mass sits outside the wedge's diagonal
-                 cut, entering from the lower-right corner shadow. 42px
-                 of air between the meta rail and the shard top.
-               - HERO SHADOW: narrowed 640 -> 480px (the hero's own
-                 footprint) and softened 0.9 -> 0.7 - a grounding
-                 shadow, not a caption backing bar. The pedestal zone
-                 now contains exactly: rule + title + rail.
-               - PANEL: one whisper added - a 2px #0A2FA0 diagonal
-                 hairline at alpha 8, local (294,0)->(470,180),
-                 echoing the background's diagonal geometry.
-               - MARQUEE: binding unchanged (native maxSize fit is
-                 already the efficient mechanism: 4:1 fills 100% of
-                 the width, 1:1.5 uses the full height, never
-                 cropped). SPINE: unchanged (44x680 logo reads
-                 authoritative; 48px/a2 dotgrid does not compete).
-               - MOTION: carousel itemTransitions=animate stays
-                 engaged (the accepted engine ceiling for 3.4.1). No
-                 fake motion.
+        <!-- v18.0.0 (2026-09-21): ART-DIRECTION PASS on the locked gamelist
+             macro geometry. v17.9's review screens rendered EMPTY asset
+             slots, so no real visual review was possible; this pass was
+             judged against a VM-ONLY proof harness (work/proof_assets/,
+             never shipped) compositing abstract proxies for marquee /
+             screenshot / disc / cartridge / DS-card into the real XML
+             geometry. Visible changes, not micro-numbers:
+               - HERO STAGE: lib_plane_hero.png regenerated as a 900x900
+                 fully-feathered radial wash (centre alpha 26 -> 0, no
+                 edges). The old 420x360 asset read as a pale rectangle
+                 behind the hero; the hero now reads suspended over the
+                 Nova environment with subtle local contrast. Element
+                 re-centred: pos 0.703125 0.4479167, origin 0.5 0.5,
+                 size 0.703125 0.9375, z44.
+               - CAROUSEL PATH: size 0.5 1.6 -> 0.5 1.53125, pos y
+                 0.4479167 -> 0.453125. Previous peeks ~65px in from the
+                 top edge (upper-right, partially off-screen) instead of
+                 hiding entirely; next sits at y=925 - 30px clear of the
+                 metadata rail, ~85px cropped by the screen edge -
+                 entering from the lower-right corner shadow.
+                 itemTransitions=animate stays engaged (engine ceiling).
+               - YEAR: libYear fontSize 0.050 -> 0.044 - the display year
+                 no longer competes with the screenshot.
+               - GROUNDING: libSelectedShadow opacity 0.7 -> 0.8.
+               - SPINE: rails regenerated - 6px feathered left/right
+                 edges (the bar melts into panel and stage, binding the
+                 page instead of splitting it), dotgrid 48px/a2 ->
+                 64px/a1, logo caps 44x680 -> 48x720 (6px optical lift
+                 kept), the 1px yellow structural line x=4 -> x=8 so it
+                 stays crisp outside the feather zone.
+             ES-DE 3.4.1 limits still stand (no dynamic sizing, no
+             conditional visibility/layout) - the worst-case fixed
+             geometry from v17.8/v17.9 is unchanged.
              PHYSICAL MEDIA AND FALLBACK ART ARE OUT OF SCOPE: all
              media_fallbacks/* PNGs remain byte-identical to the frozen
              v17.4 baseline; hero/marquee/screenshot are immutable live
@@ -396,7 +364,7 @@
             <metadata>releasedate</metadata>
             <format>%Y</format>
             <fontPath>./fonts/DejaVuSans-Bold.ttf</fontPath>
-            <fontSize>0.050</fontSize>
+            <fontSize>0.044</fontSize>
             <color>${crystalDeep}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>top</verticalAlignment>
@@ -469,9 +437,9 @@
              it); two subtle foreground shards crop the prev/next items
              at the upper-right and lower-right edges. -->
         <image name="libPlaneHero">
-            <pos>0.6875 0.5625</pos>
-            <size>0.328125 0.375</size>
-            <origin>0 0</origin>
+            <pos>0.703125 0.4479167</pos>
+            <size>0.703125 0.9375</size>
+            <origin>0.5 0.5</origin>
             <path>./art/lib_plane_hero.png</path>
             <zIndex>44</zIndex>
         </image>
@@ -514,7 +482,7 @@
             <size>0.375 0.075</size>
             <origin>0.5 0.5</origin>
             <path>./art/lib_shadow_soft.png</path>
-            <opacity>0.7</opacity>
+            <opacity>0.8</opacity>
             <zIndex>49</zIndex>
         </image>
 
@@ -531,8 +499,8 @@
         <carousel name="gameCarousel">
             <type>vertical</type>
             <color>00000000</color>
-            <pos>0.703125 0.4479167</pos>
-            <size>0.5 1.6</size>
+            <pos>0.703125 0.453125</pos>
+            <size>0.5 1.53125</size>
             <origin>0.5 0.5</origin>
             <imageType>physicalmedia 3dbox</imageType>
             <defaultImage>./media_fallbacks/${system.name}.png</defaultImage>
