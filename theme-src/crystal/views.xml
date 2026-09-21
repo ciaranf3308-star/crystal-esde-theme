@@ -193,24 +193,29 @@
     </view>
 
     <view name="gamelist">
-        <!-- v6.0.0 production redesign: premium physical-media browser.
-             Verified against ES-DE v3.4.1 source (CarouselComponent.h,
-             HelpComponent.cpp, ThemeData.cpp element tables).
+        <!-- v7.0.0 flagship pass: the gamelist as a composed interface,
+             not media on a background. Verified against ES-DE v3.4.1
+             source (CarouselComponent.h, HelpComponent.cpp,
+             ThemeData.cpp element tables).
 
-             Composition (1280x960):
-               marquee ghost upper-left / metadata upper-right (no panel)
-               selected media 1.5x, lifted 19px, glow + contact shadow
-               neighbours 67% at 320px spacing, ±2 peeking at edges
-               game name + one-line summary under the media
-               system logo lower-centre, single helpsystem footer row.
+             Composition (1280x960), visual order:
+               1. selected physical media — 1.6x, lifted, glow + shadow
+               2. marquee hero layer — large, tilted, screen-printed
+               3. editorial title block — rule, title, kicker line
+               4. neighbour media — 62%, dimmed, edge peeks continue
+               5. editorial metadata block — YEAR leads, weight descends
+               6. system logo anchor
+               7. quiet single footer row
 
-             Native-only: no keyframe/idle animation exists in the
-             theme engine (the <animation> element only plays animated
-             image files), so the float is scale + lift + shadow + glow.
-             selectedItemOffset lifts ONLY the selected item (verified
-             lines 943-946: offset scales with 1-|distance|). -->
+             Motion: the engine animates carousel selection changes
+             (itemTransitions=animate); there is no keyframe/idle
+             animation in the theme engine, so the "float" is scale +
+             lift + shadow + glow, and the settle is the native easing. -->
 
-        <!-- 1. Supplied universal Nova library background, full-bleed. -->
+        <!-- 1. Supplied universal Nova library background, full-bleed.
+             Never covered with opaque panels: the pale negative centre
+             carries the marquee and the media, the deep-blue lower
+             third carries the title block. -->
         <image name="libBackground">
             <pos>0 0</pos>
             <size>1 1</size>
@@ -219,98 +224,92 @@
             <zIndex>1</zIndex>
         </image>
 
-        <!-- 2. Marquee fallback: the game title. Visible only when no
-             marquee art is scraped — libMarquee (z20) covers it. -->
+        <!-- 2. MARQUEE HERO LAYER. The scraped marquee as a major
+             atmospheric graphic: dramatically scaled, tilted -8deg,
+             ~32% opacity, desaturated toward royal blue/white so it
+             reads screen-printed into the Nova artwork. Bleeds off the
+             left edge; sits behind carousel and metadata. -->
         <text name="libMarqueeTitle">
-            <pos>0.06 0.10</pos>
-            <size>0.36 0.18</size>
+            <pos>0.03 0.10</pos>
+            <size>0.50 0.26</size>
             <origin>0 0</origin>
             <metadata>name</metadata>
-            <fontSize>0.040</fontSize>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.054</fontSize>
             <color>${crystalDeep}</color>
-            <opacity>0.55</opacity>
+            <opacity>0.45</opacity>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>19</zIndex>
         </text>
-
-        <!-- 3. Marquee: scraped art, atmospheric. Large, gently tilted,
-             low opacity, blue/white filtered — print in the poster,
-             never competing with the physical media. -->
         <image name="libMarquee">
-            <pos>0.23 0.15</pos>
-            <maxSize>0.40 0.26</maxSize>
+            <pos>0.24 0.235</pos>
+            <maxSize>0.50 0.34</maxSize>
             <origin>0.5 0.5</origin>
-            <rotation>-12</rotation>
+            <rotation>-6</rotation>
             <rotationOrigin>0.5 0.5</rotationOrigin>
             <imageType>marquee</imageType>
-            <opacity>0.38</opacity>
-            <saturation>0.15</saturation>
-            <color>B9C9FF</color>
+            <opacity>0.32</opacity>
+            <saturation>0.12</saturation>
+            <color>9DB4FF</color>
             <zIndex>20</zIndex>
         </image>
 
-        <!-- 4. Metadata, upper-right. Values only: no labels, no panel.
-             Empty fields render empty and collapse cleanly; rating
-             hides entirely when unrated (hideIfZero). -->
-        <text name="libDesc">
-            <pos>0.66 0.07</pos>
-            <size>0.31 0.125</size>
+        <!-- 3. EDITORIAL METADATA BLOCK, upper-right. Magazine
+             information hierarchy with descending visual weight:
+             YEAR leads large, then GENRE, PLAYERS, DEVELOPER, the
+             rating, and the description as quiet supporting text.
+             No labels, no panel. -->
+        <datetime name="libYear">
+            <pos>0.665 0.060</pos>
+            <size>0.29 0.055</size>
             <origin>0 0</origin>
-            <metadata>description</metadata>
+            <metadata>releasedate</metadata>
+            <format>%Y</format>
+            <fontSize>0.038</fontSize>
+            <color>${crystalDeep}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>top</verticalAlignment>
+            <zIndex>60</zIndex>
+        </datetime>
+        <text name="libGenre">
+            <pos>0.665 0.122</pos>
+            <size>0.29 0.038</size>
+            <origin>0 0</origin>
+            <metadata>genre</metadata>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.024</fontSize>
+            <color>${crystalDeep}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>top</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="libPlayers">
+            <pos>0.665 0.166</pos>
+            <size>0.29 0.032</size>
+            <origin>0 0</origin>
+            <metadata>players</metadata>
+            <letterCase>uppercase</letterCase>
             <fontSize>0.020</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>top</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
-        <text name="libGenre">
-            <pos>0.66 0.212</pos>
-            <size>0.17 0.032</size>
-            <origin>0 0.5</origin>
-            <metadata>genre</metadata>
-            <fontSize>0.022</fontSize>
-            <color>${crystalDeep}</color>
-            <horizontalAlignment>left</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <datetime name="libYear">
-            <pos>0.845 0.212</pos>
-            <size>0.125 0.032</size>
-            <origin>0 0.5</origin>
-            <metadata>releasedate</metadata>
-            <format>%Y</format>
-            <fontSize>0.022</fontSize>
-            <color>${crystalDeep}</color>
-            <horizontalAlignment>right</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </datetime>
         <text name="libDev">
-            <pos>0.66 0.248</pos>
-            <size>0.17 0.032</size>
-            <origin>0 0.5</origin>
+            <pos>0.665 0.198</pos>
+            <size>0.29 0.032</size>
+            <origin>0 0</origin>
             <metadata>developer</metadata>
-            <fontSize>0.022</fontSize>
-            <color>${crystalDeep}</color>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.020</fontSize>
+            <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>60</zIndex>
-        </text>
-        <text name="libPlayers">
-            <pos>0.845 0.248</pos>
-            <size>0.125 0.032</size>
-            <origin>0 0.5</origin>
-            <metadata>players</metadata>
-            <fontSize>0.022</fontSize>
-            <color>${crystalDeep}</color>
-            <horizontalAlignment>right</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
+            <verticalAlignment>top</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <rating name="libRating">
-            <pos>0.66 0.290</pos>
+            <pos>0.665 0.242</pos>
             <size>0.15 0.032</size>
             <origin>0 0.5</origin>
             <filledPath>./art/star_filled.png</filledPath>
@@ -318,110 +317,165 @@
             <hideIfZero>true</hideIfZero>
             <zIndex>60</zIndex>
         </rating>
+        <text name="libDesc">
+            <pos>0.665 0.276</pos>
+            <size>0.29 0.165</size>
+            <origin>0 0</origin>
+            <metadata>description</metadata>
+            <fontSize>0.0175</fontSize>
+            <color>${crystalInkDim}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>top</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
 
-        <!-- 5. Selected-media atmosphere: restrained yellow glow plus a
-             soft dark contact shadow. Static — the selected slot is
-             always centred, so they never move. -->
+        <!-- 4. SELECTED-MEDIA ATMOSPHERE. Wide faint blue secondary
+             glow, tighter soft yellow core glow, and a soft contact
+             shadow grounding the lift. Static — the selected slot is
+             always centred, so these never move. -->
+        <image name="libSelectedGlowBlue">
+            <pos>0.5 0.50</pos>
+            <size>0.36 0.46</size>
+            <origin>0.5 0.5</origin>
+            <path>./art/lib_glow_blue.png</path>
+            <opacity>0.55</opacity>
+            <zIndex>47</zIndex>
+        </image>
         <image name="libSelectedGlow">
-            <pos>0.5 0.53</pos>
-            <size>0.31 0.413</size>
+            <pos>0.5 0.525</pos>
+            <size>0.34 0.43</size>
             <origin>0.5 0.5</origin>
             <path>./art/lib_glow_yellow.png</path>
+            <opacity>0.50</opacity>
             <zIndex>48</zIndex>
         </image>
         <image name="libSelectedShadow">
-            <pos>0.5 0.708</pos>
-            <size>0.27 0.055</size>
+            <pos>0.5 0.698</pos>
+            <size>0.30 0.055</size>
             <origin>0.5 0.5</origin>
             <path>./art/lib_shadow_soft.png</path>
-            <opacity>0.55</opacity>
+            <opacity>0.60</opacity>
             <zIndex>49</zIndex>
         </image>
 
-        <!-- 6. The media row. type=horizontal: straight line, equal
-             spacing from maxItemCount. itemVerticalAlignment=bottom
-             glues every item's bottom to the box bottom; itemScale 1.5
-             grows the selected item UP from there. selectedItemOffset
-             lifts only the selected item 19px above the neighbour
-             baseline. spacing = 320px: centres 0.25/0.50/0.75, the
-             ±2 items sit exactly at the screen edges, peeking. -->
+        <!-- 5. THE MEDIA ROW. type=horizontal with maxItemCount 4:
+             selected centred, immediate neighbours at 0.25/0.75, the
+             +/-2 items half off-screen so the collection reads as
+             continuing past the display. itemVerticalAlignment=bottom
+             glues every item's bottom to the box; itemScale 1.6 grows
+             the selected UP from there (neighbours read at 62%).
+             selectedItemOffset lifts only the selected item above the
+             neighbour baseline. Unfocused items drop in opacity,
+             saturation and brightness for real depth steps. -->
         <carousel name="gameCarousel">
             <type>horizontal</type>
             <color>00000000</color>
-            <pos>0.5 0.495</pos>
+            <pos>0.5 0.485</pos>
             <size>1 0.44</size>
             <origin>0.5 0.5</origin>
             <imageType>physicalmedia 3dbox</imageType>
             <defaultImage>./media_fallbacks/${system.name}.png</defaultImage>
-            <itemSize>0.166 0.222</itemSize>
-            <itemScale>1.5</itemScale>
+            <itemSize>0.16 0.2133</itemSize>
+            <itemScale>1.6</itemScale>
             <maxItemCount>4.0</maxItemCount>
             <itemVerticalAlignment>bottom</itemVerticalAlignment>
-            <selectedItemOffset>0 -0.015</selectedItemOffset>
+            <selectedItemOffset>0 -0.02</selectedItemOffset>
             <reflections>false</reflections>
-            <unfocusedItemOpacity>0.75</unfocusedItemOpacity>
-            <unfocusedItemSaturation>0.8</unfocusedItemSaturation>
-            <unfocusedItemDimming>0.25</unfocusedItemDimming>
+            <unfocusedItemOpacity>0.68</unfocusedItemOpacity>
+            <unfocusedItemSaturation>0.7</unfocusedItemSaturation>
+            <unfocusedItemDimming>0.30</unfocusedItemDimming>
             <imageInterpolation>linear</imageInterpolation>
             <itemTransitions>animate</itemTransitions>
             <fastScrolling>true</fastScrolling>
             <zIndex>50</zIndex>
         </carousel>
 
-        <!-- 7. Game identity beneath the media: prominent name plus a
-             one-line summary (genre / year / players). No static
-             separators — empty fields collapse cleanly. -->
+        <!-- 6. TITLE BLOCK. Yellow editorial rule, the game name set
+             large in uppercase, and a single kicker line beneath:
+             GENRE • YEAR • PLAYERS with yellow separators. -->
+        <image name="libTitleRule">
+            <pos>0.5 0.726</pos>
+            <size>0.075 0.008</size>
+            <origin>0.5 0.5</origin>
+            <path>./art/lib_rule_yellow.png</path>
+            <zIndex>60</zIndex>
+        </image>
         <text name="libGameName">
-            <pos>0.5 0.762</pos>
-            <size>0.74 0.08</size>
+            <pos>0.5 0.764</pos>
+            <size>0.78 0.075</size>
             <origin>0.5 0.5</origin>
             <metadata>name</metadata>
-            <fontSize>0.032</fontSize>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.042</fontSize>
             <color>FFFFFF</color>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
         <text name="libSubGenre">
-            <pos>0.40 0.822</pos>
-            <size>0.15 0.03</size>
+            <pos>0.37 0.814</pos>
+            <size>0.14 0.03</size>
             <origin>0.5 0.5</origin>
             <metadata>genre</metadata>
-            <fontSize>0.019</fontSize>
-            <color>BFD4FF</color>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.018</fontSize>
+            <color>${crystalDim}</color>
             <horizontalAlignment>right</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
+        <text name="libSep1">
+            <pos>0.462 0.814</pos>
+            <size>0.03 0.03</size>
+            <origin>0.5 0.5</origin>
+            <text>•</text>
+            <fontSize>0.018</fontSize>
+            <color>${crystalAccent}</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
         <datetime name="libSubYear">
-            <pos>0.5 0.822</pos>
+            <pos>0.5 0.814</pos>
             <size>0.06 0.03</size>
             <origin>0.5 0.5</origin>
             <metadata>releasedate</metadata>
             <format>%Y</format>
-            <fontSize>0.019</fontSize>
-            <color>BFD4FF</color>
+            <fontSize>0.018</fontSize>
+            <color>${crystalDim}</color>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </datetime>
+        <text name="libSep2">
+            <pos>0.538 0.814</pos>
+            <size>0.03 0.03</size>
+            <origin>0.5 0.5</origin>
+            <text>•</text>
+            <fontSize>0.018</fontSize>
+            <color>${crystalAccent}</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
         <text name="libSubPlayers">
-            <pos>0.60 0.822</pos>
-            <size>0.15 0.03</size>
+            <pos>0.63 0.814</pos>
+            <size>0.14 0.03</size>
             <origin>0.5 0.5</origin>
             <metadata>players</metadata>
-            <fontSize>0.019</fontSize>
-            <color>BFD4FF</color>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.018</fontSize>
+            <color>${crystalDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
 
-        <!-- 8. System logo, lower-centre, restrained. Per-system
-             overrides supply the artwork (16 systems) or the text name
-             (nes, psp, xbox360, steam, windows). -->
+        <!-- 7. SYSTEM LOGO anchor, lower-centre with breathing room.
+             Per-system overrides supply the artwork (16 systems) or
+             the text name (nes, psp, xbox360, steam, windows). -->
         <text name="libConsoleName">
-            <pos>0.5 0.878</pos>
+            <pos>0.5 0.880</pos>
             <size>0.70 0.055</size>
             <origin>0.5 0.5</origin>
             <fontSize>0.032</fontSize>
@@ -431,17 +485,17 @@
             <zIndex>60</zIndex>
         </text>
 
-        <!-- 9. THE footer row: one styled helpsystem, centred. Its
-             presence replaces the engine's default help row at
-             (0.012, 0.9515) — no duplicates, no overlap. -->
+        <!-- 8. THE footer row: one compact helpsystem, quiet. Present
+             for discoverability, absent from the composition. -->
         <helpsystem name="libHelp">
-            <pos>0.5 0.955</pos>
+            <pos>0.5 0.952</pos>
             <origin>0.5 0.5</origin>
-            <fontSize>0.019</fontSize>
-            <textColor>FFFFFFFF</textColor>
-            <iconColor>FFFFFFFF</iconColor>
-            <entrySpacing>0.02</entrySpacing>
+            <fontSize>0.016</fontSize>
+            <textColor>A6FFFFFF</textColor>
+            <iconColor>A6FFFFFF</iconColor>
+            <entrySpacing>0.025</entrySpacing>
         </helpsystem>
 
     </view>
+
 </theme>
