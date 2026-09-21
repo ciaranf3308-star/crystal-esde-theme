@@ -387,49 +387,17 @@
 
         <!-- 5. MARQUEE, the visual headline of the page: an INVISIBLE
              responsive region (24,44 424x252). Open whitespace - no mat,
-             no frame, no blue rectangle, no fade. When the game HAS
-             marquee art, the libMarquee image (z20) paints over this
-             fallback completely: the fallback title sits at z19 with an
-             opaque white background, LEFT-ALIGNED at the art's own left
-             edge (x=24, the engine left-aligns maxSize art via origin
-             0 0.5) and only 272px wide - the footprint of a 1:1 logo,
-             so any art at least that wide covers text+backing and no
-             ghost text shows through. When marquee art is MISSING, the
-             image paints nothing and this element becomes the
-             intentional mock masthead: the game title set in Anton
-             (blocky display), left-aligned exactly where the art would
-             sit, wrapping to two lines for long titles. ES-DE 3.4.1
-             has no conditional visibility, so this deterministic
-             layering is the mechanism. Residual edge: art NARROWER than
-             272px (taller than 1:1) with a very long title can show a
-             text tail beside the art - accepted, vanishingly rare for
-             scraper wheel art. -->
-        <text name="libMarqueeTitle">
-            <pos>0.01875 0.1375</pos>
-            <size>0.2125 0.0583333</size>
-            <origin>0 0</origin>
-            <metadata>name</metadata>
-            <letterCase>uppercase</letterCase>
-            <fontPath>./fonts/Anton-Regular.ttf</fontPath>
-            <fontSize>0.0275</fontSize>
-            <lineSpacing>1.0</lineSpacing>
-            <color>${mockInk}</color>
-            <backgroundColor>${mockBg}</backgroundColor>
-            <horizontalAlignment>left</horizontalAlignment>
-            <verticalAlignment>center</verticalAlignment>
-            <zIndex>19</zIndex>
-        </text>
-        <!-- 5. MARQUEE, the visual headline of the page: an INVISIBLE
-             responsive region (24,44 424x252). The real scraped marquee
-             binds with maxSize (native aspect preserved, scaled as
-             large as possible within the width, never stretched, never
-             cropped) and is VERTICALLY CENTRED in the masthead zone
-             (origin 0 0.5 at the zone centre y): wide logos get strong
-             horizontal presence, tall logos use the full height without
-             going tiny. No visible container around the marquee itself.
-             The art paints over the z19 fallback title + its opaque
-             white backing, so no ghost text shows behind real marquee
-             art (see libMarqueeTitle). -->
+             no frame, no blue rectangle, no fade, and NO fallback text:
+             v18.4.4 removed the libMarqueeTitle ghost-text layer outright
+             (the user fills marquee metadata for every game, so art
+             always renders). When marquee art is MISSING the image
+             paints nothing and the zone stays clean empty whitespace.
+             ES-DE 3.4.1 has no conditional visibility, so there is no
+             text fallback - by explicit user directive. The real scraped
+             marquee binds with maxSize (native aspect preserved, never
+             stretched, never cropped), VERTICALLY CENTRED in the zone
+             (origin 0 0.5): wide logos get strong horizontal presence,
+             tall logos use the full height without going tiny. -->
         <image name="libMarquee">
             <pos>0.01875 0.1666667</pos>
             <maxSize>0.3375 0.2833333</maxSize>
@@ -445,8 +413,9 @@
              the description and the facts; PLAYERS and DEVELOPER share a
              baseline. Labels are tiny baked kickers; the values carry the
              weight. -->
+        <!-- v18.4.4: 0.325 -> 0.2941, uniform 0.02 rhythm for the 4:3 media stage -->
         <text name="libDesc">
-            <pos>0.0375 0.325</pos>
+            <pos>0.0375 0.2941</pos>
             <size>0.2984375 0.1125</size>
             <origin>0 0</origin>
             <metadata>description</metadata>
@@ -458,8 +427,9 @@
             <verticalAlignment>top</verticalAlignment>
             <zIndex>20</zIndex>
         </text>
+        <!-- v18.4.4: 0.4875 -> 0.4266, uniform 0.02 rhythm for the 4:3 media stage -->
         <datetime name="libYear">
-            <pos>0.0375 0.4875</pos>
+            <pos>0.0375 0.4266</pos>
             <size>0.1796875 0.075</size>
             <origin>0 0</origin>
             <metadata>releasedate</metadata>
@@ -471,8 +441,9 @@
             <verticalAlignment>top</verticalAlignment>
             <zIndex>20</zIndex>
         </datetime>
+        <!-- v18.4.4: 0.5011 -> 0.4406, tracks libYear (+0.0136) -->
         <rating name="libRating">
-            <pos>0.23125 0.5011</pos>
+            <pos>0.23125 0.4402</pos>
             <size>0.109375 0.0291667</size>
             <origin>0 0</origin>
             <filledPath>./art/star_filled.png</filledPath>
@@ -480,8 +451,9 @@
             <hideIfZero>true</hideIfZero>
             <zIndex>20</zIndex>
         </rating>
+        <!-- v18.4.4: 0.5979167 -> 0.522, uniform 0.02 rhythm for the 4:3 media stage -->
         <text name="libGenre">
-            <pos>0.0375 0.5979167</pos>
+            <pos>0.0375 0.5216</pos>
             <size>0.2984375 0.0291667</size>
             <origin>0 0</origin>
             <metadata>genre</metadata>
@@ -493,8 +465,9 @@
             <verticalAlignment>top</verticalAlignment>
             <zIndex>20</zIndex>
         </text>
+        <!-- v18.4.4: 0.6645833 -> 0.571, uniform 0.02 rhythm for the 4:3 media stage -->
         <text name="libPlayers">
-            <pos>0.0375 0.6645833</pos>
+            <pos>0.0375 0.5708</pos>
             <size>0.140625 0.0270833</size>
             <origin>0 0</origin>
             <metadata>players</metadata>
@@ -506,8 +479,9 @@
             <verticalAlignment>top</verticalAlignment>
             <zIndex>20</zIndex>
         </text>
+        <!-- v18.4.4: 0.6645833 -> 0.571, uniform 0.02 rhythm for the 4:3 media stage -->
         <text name="libDev">
-            <pos>0.1875 0.6645833</pos>
+            <pos>0.1875 0.5708</pos>
             <size>0.1640625 0.0541667</size>
             <origin>0 0</origin>
             <metadata>developer</metadata>
@@ -520,18 +494,42 @@
             <zIndex>20</zIndex>
         </text>
 
-        <!-- 7. SCREENSHOT, an editorial image on the page (48,732
-             396x170): aligned exactly with the text column (moved +8px
-             down in v17.9 so the column above breathes). ONE clean
-             royal hairline frame with a subtle depth shadow, ONE tiny
-             yellow corner accent. No nested outlines. -->
+        <!-- 7. SCREENSHOT / VIDEO STAGE, a true 4:3 editorial media
+             block (48,619 371x278): left-aligned with the text column.
+             v18.4.4 rebuilt this from the old 396x170 strip - the user's
+             library is mostly 4:3, and the old <size> box was stretching
+             art to 2.33:1. maxSize (never <size>) so every asset keeps
+             its native aspect, never stretched, never cropped; origin
+             0 0.5 about the region centre so narrower art (e.g. 16:9)
+             sits optically centred, not top-crammed. On the 4:3 frame
+             a 4:3 box means equal normalized axes: 0.29 x 0.29. Plain
+             and quiet - no frame, no mat, no corner accent
+             (locked-shell restraint). The metadata stack above now runs
+             on a uniform 0.02 rhythm to make room. -->
         <image name="libScreenshot">
-            <pos>0.0375 0.7625</pos>
-            <size>0.309375 0.1770833</size>
-            <origin>0 0</origin>
+            <pos>0.0375 0.79</pos>
+            <maxSize>0.29 0.29</maxSize>
+            <origin>0 0.5</origin>
             <imageType>image</imageType>
             <zIndex>20</zIndex>
         </image>
+        <!-- 7b. VIDEO: the same 4:3 stage, one layer above. No <path>
+             means the engine binds the SELECTED GAME's video (ES-DE
+             3.4.1 gamelist video binding). <delay>5</delay> holds the
+             screenshot (imageType image) for five seconds before the
+             video fades in - exactly the user's "image first, video
+             after ~5s" ask. No <audio> tag: the user's global ES-DE
+             video-audio setting governs. Games with no video keep the
+             libScreenshot art underneath, always. -->
+        <video name="libVideo">
+            <pos>0.0375 0.79</pos>
+            <maxSize>0.29 0.29</maxSize>
+            <imageMaxSize>0.29 0.29</imageMaxSize>
+            <origin>0 0.5</origin>
+            <imageType>image</imageType>
+            <delay>5</delay>
+            <zIndex>21</zIndex>
+        </video>
 
         <!-- 8. LAYERED GRAPHIC PLANES (controlled overlap). One soft
              plane sits behind the hero's lower-right (the disc overlaps
