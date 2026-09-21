@@ -25,17 +25,23 @@
              collage, which now reads as the background: the collage is
              darkened per scheme (sysBgTint) so the crisp logo is the
              undisputed hero. maxSize preserves each logo's native aspect
-             (they range ~2.8:1 to ~5.3:1); origin 0.5 0.5 centers it in
-             the hero zone: left edge clears the info text column
-             (x 0.285 > 0.27 box edge), bottom clears the carousel
-             (above y 0.64), z30 above the background but below all live
-             text (z50).
+             (they range ~2.8:1 to ~5.3:1).
+             v18.4.1: recentered. v18.4.0's pos x 0.485 sat the logo on the
+             seam between the baked info panel (x 0.013..0.28) and the
+             collage (confirmed on the user's Nova photo). The logo is now
+             centered in the free region right of the panel: panel right
+             edge 0.28 -> screen edge 1.0, center (0.28+1.0)/2 = 0.64.
+             With maxSize 0.40 the logo spans x 0.44..0.84, clearing the
+             panel by ~205px and the screen edge by ~205px. y 0.285
+             unchanged: the tallest logo (0.40/2.8 = 0.143 high) spans y
+             0.214..0.356, well above the carousel zone (0.640). z30 above
+             the background, below all live text (z50).
              The 5 systems with no logo asset (nes, psp, steam, windows,
              xbox360) resolve to a missing file and paint nothing - the
              same mechanism as the gamelist's missing-marquee case. No
              invented art. -->
         <image name="sysHeroLogo">
-            <pos>0.485 0.285</pos>
+            <pos>0.64 0.285</pos>
             <maxSize>0.40 0.20</maxSize>
             <origin>0.5 0.5</origin>
             <path>./art/console_logos/${system.name}.png</path>
