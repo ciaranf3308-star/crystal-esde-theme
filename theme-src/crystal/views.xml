@@ -207,47 +207,43 @@
     </view>
 
         <view name="gamelist">
-        <!-- v15.0.0 (2026-09-21): VISUAL MATURITY pass on the approved
+        <!-- v17.0.0 (2026-09-21): DETAIL-RESOLUTION pass on the approved
              skeleton. MACRO LAYOUT LOCKED: left column (6,10 470x940),
              console spine (486,24, 60px wide), hero 540px at (900,430),
              prev (900,10) / next (900,850), pitch 420, title beneath hero
              (rule Y716 / title Y736 / meta line Y757), screenshot
              lower-left (42,700 396x210), footer. What changed is the
-             finish:
-               - hero: the concentric-ring / turntable decoration is GONE
-                 (lib_hero_aura + lib_hero_ring retired). Depth comes only
-                 from scale, a soft contact shadow detached for slight
-                 elevation, a restrained atmospheric blue glow pooled
-                 beneath the disc, and ONE very thin selective yellow rim
-                 highlight (partial top arc, faded ends - not a circle).
-                 The v10 halo stays retired.
-               - left column: same footprint, now ONE editorial
-                 composition. The big royal header band is gone; NOW
-                 SHOWING is a tiny kicker and the marquee sits on open
-                 whitespace with a single hairline rule beneath it. No
-                 mats, no L-frames, no nested boxes: typography,
-                 whitespace and a few graphic rules separate content.
-               - metadata: oversized year anchor (marker face), strong
-                 genre value, quiet players/developer, rating adjacent;
-                 labels are tiny and quiet, values carry the weight.
-               - screenshot: single royal hairline frame on the white
-                 page (no mat), one yellow corner tick, one accent that
-                 breaks the frame upward into the panel.
-               - spine: refined 60px magazine spine - ONE thin yellow
-                 line with small connector ticks reaching into adjacent
-                 surfaces, subtle halftone, supplied logos rotated 90deg
-                 CCW; nes/psp/steam/windows/xbox360 keep clean text
-                 fallbacks. Bound per-system via ${system.name}.
-               - title zone rebuilt: bolder marker title, redesigned rule
-                 (white hairline + SHORT yellow bar with a sweep head),
-                 composite secondary line
-                 (GENRE . YEAR . DEV . PLAYERS) from inline elements.
-               - carousel depth: neighbours smaller relative to the hero
-                 and dimmed harder (0.45/0.55/0.5); two subtle foreground
-                 shards crop the prev/next items at the upper-right and
-                 lower-right edges so they read as entering the frame;
-                 one soft graphic plane behind the hero's lower-right is
-                 overlapped BY the disc (controlled overlap).
+             finish, per the user's 10-point detail brief:
+               - lower-right rebuilt: the title band keeps its approved
+                 position with clean air around it; the NEXT item is
+                 repositioned VISUALLY (redesigned foreground shard at
+                 900,795 380x165, below the title band) so it enters from
+                 the bottom edge, partially cropped - a distinct visual
+                 space from the title. No placeholder rects anywhere.
+               - hero: unchanged treatment (scale, crisp edges, detached
+                 contact shadow, restrained blue atmosphere, ONE thin
+                 selective yellow rim arc). No concentric decoration.
+               - marquee zone substantially larger (24,44 424x252, +31%
+                 area): open whitespace, no blue rectangle, no fade; NOW
+                 SHOWING stays a tiny kicker.
+               - left column: no boxes back. Restrained craftsmanship only:
+                 tiny halftone transitions, ONE subtle blueprint fragment,
+                 ONE clipped blue geometric intrusion, sparse yellow
+                 micro-accents; ~85% stays clean white.
+               - typography spacing pass: more air between description and
+                 facts, labels quieter, PLAYERS/DEVELOPER baselines
+                 standardised, rating with the release-year row.
+               - screenshot: ONE clean hairline frame + subtle depth
+                 shadow + ONE tiny yellow corner accent. No nested frames.
+               - spine: tonal variation within the royal blue, controlled
+                 grid texture, ONE continuous thin yellow structural line,
+                 supplied logos deliberately MOUNTED on a mounting plate.
+               - prev/next: real media, smaller, dimmer, edge-cropped and
+                 shard-cropped - a real navigation path, hero dominant.
+               - overlap: marquee breaks over its rule, disc overlaps the
+                 hero plane, shards crop the neighbours, spine ticks reach
+                 into adjacent surfaces.
+               - footer quieter still (0.0135, 80FFFFFF).
              Verified against ES-DE 3.4.1: vertical carousel pitch =
              element height / maxItemCount = 1260/3 = 420px; scissor clips
              the partially off-screen neighbours. Motion: native eased
@@ -274,8 +270,11 @@
 
         <!-- 3. LEFT COLUMN: one editorial page (6,10 470x940). Open
              whitespace, typography and a few graphic rules - no mats, no
-             frames, no nested boxes. The marquee and screenshot art land
-             on the white page via the elements below. -->
+             frames, no nested boxes. Restrained craftsmanship only: tiny
+             halftone transitions, one subtle blueprint fragment, one
+             clipped blue geometric intrusion, sparse yellow micro-accents.
+             The marquee and screenshot art land on the white page via the
+             elements below. -->
         <image name="libPanelMain">
             <pos>0.0046875 0.0104167</pos>
             <size>0.3671875 0.9791667</size>
@@ -287,9 +286,11 @@
         <!-- 4. CONSOLE SPINE: 486,24 60x912. Per-system art via
              ${system.name} (every system theme includes ../views.xml, so
              the binding is always the ACTUAL current system): royal
-             gradient band, one thin yellow separator line with small
-             connector ticks, subtle halftone, supplied logo rotated
-             90deg CCW. -->
+             gradient with subtle tonal variation, controlled grid
+             texture, ONE continuous thin yellow structural line with
+             small connector ticks, subtle halftone, supplied logo
+             rotated 90deg CCW and deliberately MOUNTED on a mounting
+             plate. -->
         <image name="libRail">
             <pos>0.3796875 0.025</pos>
             <size>0.046875 0.95</size>
@@ -298,12 +299,13 @@
             <zIndex>10</zIndex>
         </image>
 
-        <!-- 5. MARQUEE, the visual headline of the page (32,68 408x200).
-             Open whitespace - no mat, no frame. The fallback title shows
-             only when the scraped marquee art is missing. -->
+        <!-- 5. MARQUEE, the visual headline of the page (24,44 424x252,
+             +31% area over v15). Open whitespace - no mat, no frame, no
+             blue rectangle, no fade. The fallback title shows only when
+             the scraped marquee art is missing. -->
         <text name="libMarqueeTitle">
-            <pos>0.025 0.0708333</pos>
-            <size>0.31875 0.21875</size>
+            <pos>0.01875 0.0458333</pos>
+            <size>0.33125 0.2625</size>
             <origin>0 0</origin>
             <metadata>name</metadata>
             <letterCase>uppercase</letterCase>
@@ -316,8 +318,8 @@
             <zIndex>19</zIndex>
         </text>
         <image name="libMarquee">
-            <pos>0.025 0.0708333</pos>
-            <maxSize>0.31875 0.21875</maxSize>
+            <pos>0.01875 0.0458333</pos>
+            <maxSize>0.33125 0.2625</maxSize>
             <origin>0 0</origin>
             <imageType>marquee</imageType>
             <opacity>1.0</opacity>
@@ -326,8 +328,10 @@
 
         <!-- 6. METADATA: editorial hierarchy - description first, one
              large anchor stat (year, marker face), strong genre value,
-             quiet players/developer, rating adjacent. Labels are tiny
-             baked kickers; the values carry the weight. -->
+             quiet players/developer, rating adjacent. Generous air between
+             the description and the facts; PLAYERS and DEVELOPER share a
+             baseline. Labels are tiny baked kickers; the values carry the
+             weight. -->
         <text name="libDesc">
             <pos>0.0421875 0.325</pos>
             <size>0.2984375 0.1125</size>
@@ -340,7 +344,7 @@
             <zIndex>20</zIndex>
         </text>
         <datetime name="libYear">
-            <pos>0.0421875 0.48125</pos>
+            <pos>0.0421875 0.4875</pos>
             <size>0.1796875 0.075</size>
             <origin>0 0</origin>
             <metadata>releasedate</metadata>
@@ -353,7 +357,7 @@
             <zIndex>20</zIndex>
         </datetime>
         <rating name="libRating">
-            <pos>0.23125 0.4833333</pos>
+            <pos>0.23125 0.4895833</pos>
             <size>0.109375 0.0291667</size>
             <origin>0 0</origin>
             <filledPath>./art/star_filled.png</filledPath>
@@ -399,8 +403,8 @@
         </text>
 
         <!-- 7. SCREENSHOT, an editorial image on the page (42,700
-             396x210): single royal hairline frame, one yellow corner
-             tick, one accent breaking the frame upward. -->
+             396x210): ONE clean royal hairline frame with a subtle depth
+             shadow, ONE tiny yellow corner accent. No nested outlines. -->
         <image name="libScreenshot">
             <pos>0.0328125 0.7291667</pos>
             <size>0.309375 0.21875</size>
@@ -481,7 +485,11 @@
         </carousel>
 
         <!-- 11. FOREGROUND SHARDS: crop the prev/next items at the
-             upper-right / lower-right edges (zIndex above the carousel). -->
+             upper-right / lower-right edges (zIndex above the carousel).
+             The next-item shard was repositioned to (900,795 380x165),
+             fully below the title band, so the NEXT media visibly enters
+             from the bottom edge, partially cropped - a distinct visual
+             space from the selected game's title. -->
         <image name="libShardPrev">
             <pos>0.71875 0.0</pos>
             <size>0.28125 0.1875</size>
@@ -490,17 +498,19 @@
             <zIndex>52</zIndex>
         </image>
         <image name="libShardNext">
-            <pos>0.71875 0.7708333</pos>
-            <size>0.28125 0.2291667</size>
+            <pos>0.703125 0.828125</pos>
+            <size>0.296875 0.171875</size>
             <origin>0 0</origin>
             <path>./art/lib_shard_next.png</path>
             <zIndex>52</zIndex>
         </image>
 
-        <!-- 12. TITLE beneath the hero: redesigned rule at 716 (white
-             hairline + SHORT yellow bar with a sweep head), bolder marker
-             display title in white at 736, composite secondary line at
-             757: GENRE . YEAR . DEVELOPER . PLAYERS. -->
+        <!-- 12. TITLE beneath the hero: generous clean air around the
+             identity block. Redesigned rule at 716 (white hairline +
+             SHORT yellow bar with a sweep head), bolder marker display
+             title in white at 736, composite secondary line at 757:
+             GENRE . YEAR . DEVELOPER . PLAYERS. Nothing competes with it:
+             the next item enters from the bottom edge, cropped. -->
         <image name="libTitleRule">
             <pos>0.703125 0.7458333</pos>
             <size>0.234375 0.0104167</size>
@@ -611,14 +621,15 @@
             <origin>0.5 0.5</origin>
             <text>A PLAY &#8226; B BACK</text>
             <letterCase>uppercase</letterCase>
-            <fontSize>0.016</fontSize>
-            <color>A6FFFFFF</color>
+            <fontSize>0.0135</fontSize>
+            <color>80FFFFFF</color>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
             <zIndex>60</zIndex>
         </text>
 
         </view>
+
 
 
 
