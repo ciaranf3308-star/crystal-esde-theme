@@ -1,0 +1,275 @@
+{
+ "dreamcast": {
+  "logo": [
+   44,
+   179
+  ],
+  "plate": [
+   88,
+   223
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "gb": {
+  "logo": [
+   44,
+   152
+  ],
+  "plate": [
+   88,
+   196
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "gba": {
+  "logo": [
+   44,
+   122
+  ],
+  "plate": [
+   88,
+   166
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "gbc": {
+  "logo": [
+   44,
+   121
+  ],
+  "plate": [
+   88,
+   165
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "gc": {
+  "logo": [
+   44,
+   165
+  ],
+  "plate": [
+   88,
+   209
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "genesis": {
+  "logo": [
+   44,
+   170
+  ],
+  "plate": [
+   88,
+   214
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "megadrive": {
+  "logo": [
+   44,
+   173
+  ],
+  "plate": [
+   88,
+   217
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "n3ds": {
+  "logo": [
+   44,
+   188
+  ],
+  "plate": [
+   88,
+   232
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "n64": {
+  "logo": [
+   44,
+   153
+  ],
+  "plate": [
+   88,
+   197
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "nds": {
+  "logo": [
+   44,
+   131
+  ],
+  "plate": [
+   88,
+   175
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "nes": {
+  "logo": [
+   51,
+   101
+  ],
+  "plate": [
+   95,
+   145
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "TEXT-FALLBACK"
+ },
+ "ps2": {
+  "logo": [
+   44,
+   147
+  ],
+  "plate": [
+   88,
+   191
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "psp": {
+  "logo": [
+   51,
+   98
+  ],
+  "plate": [
+   95,
+   142
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "TEXT-FALLBACK"
+ },
+ "psx": {
+  "logo": [
+   44,
+   231
+  ],
+  "plate": [
+   88,
+   275
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "snes": {
+  "logo": [
+   44,
+   140
+  ],
+  "plate": [
+   88,
+   184
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "steam": {
+  "logo": [
+   51,
+   176
+  ],
+  "plate": [
+   95,
+   220
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "TEXT-FALLBACK"
+ },
+ "wii": {
+  "logo": [
+   44,
+   144
+  ],
+  "plate": [
+   88,
+   188
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "wiiu": {
+  "logo": [
+   44,
+   185
+  ],
+  "plate": [
+   88,
+   229
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "windows": {
+  "logo": [
+   51,
+   262
+  ],
+  "plate": [
+   95,
+   306
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "TEXT-FALLBACK"
+ },
+ "xbox": {
+  "logo": [
+   44,
+   140
+  ],
+  "plate": [
+   88,
+   184
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "logo"
+ },
+ "xbox360": {
+  "logo": [
+   51,
+   262
+  ],
+  "plate": [
+   95,
+   306
+  ],
+  "pad": 22,
+  "optical_lift": 6,
+  "kind": "TEXT-FALLBACK"
+ }
+}
