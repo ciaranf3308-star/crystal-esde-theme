@@ -27,20 +27,4 @@
             <text>HANDHELD • 2011</text>
         </text>
     </view>
-    <view name="gamelist">
-        <!-- v5.3.0: supplied per-console logo replaces the temporary
-             text label. The base text element is hidden; the logo is
-             a separate image element so no element-type merge
-             semantics are relied upon. -->
-        <text name="libConsoleName">
-            <visible>false</visible>
-        </text>
-        <image name="libConsoleLogo">
-            <pos>0.5 0.880208</pos>
-            <maxSize>0.21 0.105</maxSize>
-            <origin>0.5 0.5</origin>
-            <path>./../art/console_logos/n3ds.png</path>
-            <zIndex>60</zIndex>
-        </image>
-    </view>
 </theme>
