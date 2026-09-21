@@ -113,6 +113,18 @@
                on/off language, done per-frame); the other 14 keep the
                v3.6.0 trading cards. The animated GIFs stay parked in
                cards_anim/ for a future <animation>-element showcase.
+             v14.0.0 "Poster integration": 9 systems now have real supplied
+             posters baked straight into the carousel cards
+             (cards/<system>.png): n3ds, gba, gb, nds, snes, wii, wiiu,
+             n64, gc. Selected = full-color 2x card in the glow; every
+             other card is massively dulled toward dark navy
+             (unfocusedItemDimming 0.70, unfocusedItemSaturation 0.50) —
+             the user's explicit order. The 12 poster-less systems keep
+             the black marquee trading cards (fully dimmed like the rest).
+             The v4.4.0 per-system selectedPoster overlay survives only
+             for the 5 poster-less systems that still have old supplied
+             posters (dreamcast, genesis, megadrive, ps2, psx); it was
+             retired for n64/gc, where the new card art supersedes it.
              v4.3.0 "Spotlight": the cards are now black marquee boxes with
              the console name in hero-style white text (the user's art lives
              on as a faint dark texture inside the box). The selected item
@@ -141,14 +153,14 @@
             <path>./art/carousel_glow.png</path>
             <zIndex>40</zIndex>
         </image>
-        <!-- v4.4.0 "Select": the 7 systems with user-supplied posters
-             (genesis, ps2, dreamcast, psx, megadrive, n64, gc) show the
-             vivid supplied poster on the SELECTED card via a per-system
-             <image name="selectedPoster"> overlay (z55, pixel-aligned to
-             the 2x selected slot at 0.5 0.812). ES-DE 3.4.1 renders one
-             texture per carousel entry, so selected-state art cannot live
-             in the carousel itself. Unselected entries keep the generic
-             black marquee cards below. -->
+        <!-- v14.0.0: the v4.4.0 selectedPoster overlay survives only for
+             the 5 poster-less systems with old supplied posters
+             (dreamcast, genesis, megadrive, ps2, psx). ES-DE 3.4.1
+             renders one texture per carousel entry, so selected-state
+             art for those systems lives here as a per-system
+             <image name="selectedPoster"> (z55, pixel-aligned to the 2x
+             selected slot at 0.5 0.812). For the 9 poster systems the
+             card PNG itself IS the poster, so no overlay is needed. -->
         <carousel name="sysCarousel">
             <type>horizontal</type>
             <pos>0 0.640</pos>
@@ -171,12 +183,14 @@
             <selectedItemMargins>0.010 0.010</selectedItemMargins>
             <reflections>false</reflections>
             <imageCornerRadius>0.008</imageCornerRadius>
-            <!-- v4.3.0: gentle recession — the black boxes stay black and
-                 their names stay readable; the 2x scale + glow + full
-                 brightness carry the selection, not heavy dimming. -->
+            <!-- v14.0.0: MASSIVE unfocused dimming (user's order) —
+                 non-selected cards fall to near-dark-navy while the 2x
+                 selected card keeps full color. The poster art is
+                 blue-dominant, so heavy dimming reads as dark navy.
+                 Dimming 0.70 = brightness x0.30, saturation 0.50. -->
             <unfocusedItemOpacity>0.92</unfocusedItemOpacity>
-            <unfocusedItemSaturation>0.85</unfocusedItemSaturation>
-            <unfocusedItemDimming>0.22</unfocusedItemDimming>
+            <unfocusedItemSaturation>0.50</unfocusedItemSaturation>
+            <unfocusedItemDimming>0.70</unfocusedItemDimming>
             <imageInterpolation>linear</imageInterpolation>
             <itemTransitions>animate</itemTransitions>
             <fastScrolling>true</fastScrolling>
