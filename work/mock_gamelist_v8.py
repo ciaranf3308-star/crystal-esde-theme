@@ -137,7 +137,7 @@ META = dict(year="2002", genre="Fighting", players="1\u20134",
 
 def _place(im2, x, y):
     layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    layer.paste(im2, (int(x), int(y)), im2)
+    layer.alpha_composite(im2, (int(x), int(y)))
     return layer
 
 def compose(with_marquee=True):
@@ -315,26 +315,26 @@ def validate(geo):
     items = {it["dist"]: it for it in geo["items"]}
     sel, prev, nxt = items[0], items[-1], items[1]
     ratio = sel["w"] / prev["w"]
-    check("selected >=1.6x neighbours", ratio >= 1.6,
+    check("selected >=2.8x neighbours", ratio >= 2.8,
           "selected %dx%d vs neighbour %dx%d, ratio %.2f" % (sel["w"], sel["h"], prev["w"], prev["h"], ratio))
     gap_l = (sel["cx"] - sel["w"] / 2) - (prev["cx"] + prev["w"] / 2)
     gap_r = (nxt["cx"] - nxt["w"] / 2) - (sel["cx"] + sel["w"] / 2)
-    check("neighbours clear of selected", gap_l > 0 and gap_r > 0,
-          "gaps L=%.0fpx R=%.0fpx" % (gap_l, gap_r))
-    check("neighbour centres at spec", abs(prev["cx"] - 285) < 2 and abs(nxt["cx"] - 995) < 2
+    check("neighbours clear with big gaps", gap_l >= 45 and gap_r >= 45,
+          "gaps L=%.0fpx R=%.0fpx (spec >=45)" % (gap_l, gap_r))
+    check("neighbour centres at spec", abs(prev["cx"] - 290) < 2 and abs(nxt["cx"] - 990) < 2
           and abs(sel["cx"] - 640) < 2,
-          "prev %.0f next %.0f sel %.0f (spec 285/640/995)" % (prev["cx"], nxt["cx"], sel["cx"]))
-    check("selected/neighbour Y at spec", abs(sel["cy"] - 485) < 2 and abs(prev["cy"] - 500) < 2,
-          "sel y %.0f (spec 485), neighbour y %.0f (spec 500)" % (sel["cy"], prev["cy"]))
+          "prev %.0f next %.0f sel %.0f (spec 290/640/990)" % (prev["cx"], nxt["cx"], sel["cx"]))
+    check("selected/neighbour Y at spec", abs(sel["cy"] - 465) < 2 and abs(prev["cy"] - 480) < 2,
+          "sel y %.0f (spec 465), neighbour y %.0f (spec 480)" % (sel["cy"], prev["cy"]))
     p2, n2 = items[-2], items[2]
-    check("edge peeks partial", p2["cx"] < 0 and n2["cx"] > W,
-          "-2 cx %.0f, +2 cx %.0f" % (p2["cx"], n2["cx"]))
+    check("edge peeks only slivers", -150 < p2["cx"] < 0 and W < n2["cx"] < W + 150,
+          "-2 cx %.0f, +2 cx %.0f (spec slivers at edges)" % (p2["cx"], n2["cx"]))
 
     mx, my, mw, mh = geo["marquee_box"]
     rw, rh = geo["marquee_rendered"]
-    check("marquee geometry", abs(mx - 55) < 2 and abs(my - 70) < 2 and mw <= 431 and mh <= 176,
+    check("marquee geometry", abs(mx - 55) < 2 and abs(my - 70) < 2 and mw <= 561 and mh <= 231,
           "box (%.0f,%.0f) %.0fx%.0f rendered %dx%d" % (mx, my, mw, mh, rw, rh))
-    check("marquee plainly visible", geo["marquee_opacity"] >= 0.5 and rw >= 300,
+    check("marquee strongly visible", geo["marquee_opacity"] >= 0.75 and rw >= 400,
           "opacity %.2f, rendered width %dpx" % (geo["marquee_opacity"], rw))
 
     nlevels = len(geo["meta_fonts"])
@@ -350,7 +350,7 @@ def validate(geo):
 
     lw, lh = geo["logo_rendered"]; lcx, lcy = geo["logo_center"]
     check("logo larger than v7", lh > 59.5 * 1.25,
-          "rendered %dx%d (v7 was ~166x60), centre y %.0f (spec 790), width %d in 230-280" % (lw, lh, lcy, lw))
+          "rendered %dx%d (v7 was ~166x60), centre y %.0f (spec 845), width %d in 230-280" % (lw, lh, lcy, lw))
     check("logo width in spec", 230 <= lw <= 280, "width %dpx" % lw)
 
     # status safe area: extreme top-right (Android wifi/battery/time)
