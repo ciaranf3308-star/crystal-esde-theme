@@ -193,7 +193,12 @@
     </view>
 
         <view name="gamelist">
-        <!-- v9.0.0: full layout rebuild from the user's wireframe direction
+        <!-- v9.0.1 (2026-09-21): console branding rail now uses the user's
+             supplied graffiti console logos (art/console_logos/*.png) rotated
+             90 deg CCW, replacing the generated tracked-text marks. Systems
+             with no supplied logo (nes, psp, steam, windows, xbox360) keep a
+             text fallback until their marks arrive.
+             v9.0.0: full layout rebuild from the user's wireframe direction
              (2026-09-21). The v8 horizontal media row is rejected; the new
              composition is:
                - large left information panel (white, rounded, soft shadow):
