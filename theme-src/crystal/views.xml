@@ -308,20 +308,36 @@
 
         <!-- 5. MARQUEE, the visual headline of the page: an INVISIBLE
              responsive region (24,44 424x252). Open whitespace - no mat,
-             no frame, no blue rectangle, no fade. The fallback title shows only when
-             the scraped marquee art is missing. -->
+             no frame, no blue rectangle, no fade. When the game HAS
+             marquee art, the libMarquee image (z20) paints over this
+             fallback completely: the fallback title sits at z19 with an
+             opaque white background, LEFT-ALIGNED at the art's own left
+             edge (x=24, the engine left-aligns maxSize art via origin
+             0 0.5) and only 272px wide - the footprint of a 1:1 logo,
+             so any art at least that wide covers text+backing and no
+             ghost text shows through. When marquee art is MISSING, the
+             image paints nothing and this element becomes the
+             intentional mock masthead: the game title set in Anton
+             (blocky display), left-aligned exactly where the art would
+             sit, wrapping to two lines for long titles. ES-DE 3.4.1
+             has no conditional visibility, so this deterministic
+             layering is the mechanism. Residual edge: art NARROWER than
+             272px (taller than 1:1) with a very long title can show a
+             text tail beside the art - accepted, vanishingly rare for
+             scraper wheel art. -->
         <text name="libMarqueeTitle">
-            <pos>0.01875 0.0458333</pos>
-            <size>0.33125 0.10</size>
+            <pos>0.01875 0.1375</pos>
+            <size>0.2125 0.0583333</size>
             <origin>0 0</origin>
             <metadata>name</metadata>
             <letterCase>uppercase</letterCase>
-            <fontPath>./fonts/DejaVuSans-Bold.ttf</fontPath>
-            <fontSize>0.034</fontSize>
+            <fontPath>./fonts/Anton-Regular.ttf</fontPath>
+            <fontSize>0.0275</fontSize>
+            <lineSpacing>1.0</lineSpacing>
             <color>${crystalDeep}</color>
-            <opacity>0.85</opacity>
-            <horizontalAlignment>center</horizontalAlignment>
-            <verticalAlignment>top</verticalAlignment>
+            <backgroundColor>FFFFFFFF</backgroundColor>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
             <zIndex>19</zIndex>
         </text>
         <!-- 5. MARQUEE, the visual headline of the page: an INVISIBLE
@@ -332,8 +348,9 @@
              (origin 0 0.5 at the zone centre y): wide logos get strong
              horizontal presence, tall logos use the full height without
              going tiny. No visible container around the marquee itself.
-             The fallback title shows only when the scraped marquee art
-             is missing. -->
+             The art paints over the z19 fallback title + its opaque
+             white backing, so no ghost text shows behind real marquee
+             art (see libMarqueeTitle). -->
         <image name="libMarquee">
             <pos>0.01875 0.1666667</pos>
             <maxSize>0.3375 0.2833333</maxSize>
@@ -354,8 +371,8 @@
             <size>0.2984375 0.1125</size>
             <origin>0 0</origin>
             <metadata>description</metadata>
-            <fontPath>./fonts/DejaVuSans.ttf</fontPath>
-            <fontSize>0.0145</fontSize>
+            <fontPath>./fonts/Inter-Medium.ttf</fontPath>
+            <fontSize>0.0140</fontSize>
             <lineSpacing>1.32</lineSpacing>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
@@ -403,8 +420,8 @@
             <origin>0 0</origin>
             <metadata>players</metadata>
             <letterCase>uppercase</letterCase>
-            <fontPath>./fonts/DejaVuSans.ttf</fontPath>
-            <fontSize>0.015</fontSize>
+            <fontPath>./fonts/Inter-Medium.ttf</fontPath>
+            <fontSize>0.0145</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>top</verticalAlignment>
@@ -416,8 +433,8 @@
             <origin>0 0</origin>
             <metadata>developer</metadata>
             <letterCase>uppercase</letterCase>
-            <fontPath>./fonts/DejaVuSans.ttf</fontPath>
-            <fontSize>0.015</fontSize>
+            <fontPath>./fonts/Inter-Medium.ttf</fontPath>
+            <fontSize>0.0145</fontSize>
             <color>${crystalInkDim}</color>
             <horizontalAlignment>left</horizontalAlignment>
             <verticalAlignment>top</verticalAlignment>

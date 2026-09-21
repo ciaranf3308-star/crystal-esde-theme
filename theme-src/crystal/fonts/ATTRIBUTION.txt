@@ -9,3 +9,20 @@ DejaVuSans-Bold.ttf / DejaVuSans.ttf
   v17.6.0: PermanentMarker-Regular.ttf was removed; all gamelist
   typography is DejaVu Sans (Bold for display/anchors, Regular for
   body/micro) for a disciplined premium-editorial shell.
+
+Anton-Regular.ttf
+  "Anton" by Vernon Adams (design), expanded by the Google Fonts team.
+  Source: https://github.com/google/fonts (ofl/anton)
+  License: SIL Open Font License 1.1
+  Used for the no-marquee mock masthead (libMarqueeTitle fallback):
+  a blocky condensed display masthead when scraped marquee art is
+  missing. Never for body copy.
+
+Inter-Medium.ttf
+  "Inter" by Rasmus Andersson.
+  Source: https://github.com/google/fonts (ofl/inter), wght=500
+  static instance generated from the variable font via fonttools.
+  License: SIL Open Font License 1.1
+  Used for left-column body copy and metadata values (libDesc,
+  libPlayers, libDev): one weight step up from DejaVu Sans Regular
+  for on-device legibility, at a slightly smaller size.
