@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view name="gamelist">
+        <!-- v17.5.0 (2026-09-21): UI-SHELL FINISH pass. MACRO GEOMETRY
+             LOCKED - every gamelist element position/size is byte-
+             identical to v17.4.0 (panel 6,10 470x940; spine 486,24
+             60x912; hero 540px at 900,430; rule Y716 / title Y736 / meta
+             Y757; screenshot 42,700 396x210; footer y915). What changes
+             is finish only:
+               - MARQUEE MASTHEAD: the open-white zone gains a designed
+                 masthead anchor - a whisper royal hairline below the zone
+                 with a yellow registration square (no box, no platform
+                 tier). The real scraped marquee mounts on the page.
+               - TYPESET: baked kickers smaller, wider-tracked, quieter
+                 slate; the description/facts hairline stays the only rule.
+               - SCREENSHOT: the registration-mark corner now crosses the
+                 screenshot's top-right corner; the intrusion's yellow
+                 leading edge extends down to meet it.
+               - SPINE: halftone mid-band removed, dotgrid sparser still,
+                 deeper royal foundation, ONE continuous yellow line + tab,
+                 logo plate breathing room kept.
+               - TITLE PEDESTAL: the rule is now ONE clean yellow
+                 registration rule (no white hairline).
+               - MEASURED BUG FIX (the one geometric exception to the
+                 v17.4.0 lock): the meta rail moved 757.5 -> 767.5
+                 (0.7890625 -> 0.7994792, 7 elements). Re-measured with
+                 the real fonts, the v17.4 title (PermanentMarker 51px,
+                 centered 736: glyph rows 718-756) and the meta rail
+                 (DejaVuSans-Bold 18px, centered 757.5: glyph rows
+                 750-762) OVERLAPPED by 6px - white on white. The v17.4
+                 "0.5px gap" note was a bad measurement. Title stays at
+                 736 / 0.040 and the rule at 716; the 10px rail nudge is
+                 the minimum for glyph clearance (title bottom 756, meta
+                 top 760) and serves the v17.5 "breathing room" brief.
+                 Everything else in the gamelist view is byte-identical
+                 to v17.4.0.
+             PHYSICAL MEDIA AND FALLBACK ART ARE OUT OF SCOPE: the hero,
+             marquee and screenshot are immutable live asset slots; all
+             media_fallbacks/* PNGs and hero-treatment assets are
+             byte-identical to v17.4.0.
+             ES-DE 3.4.1 motion (re-audited against the pinned
+             esde_theme_tables.json AND the official theme docs): carousel
+             itemTransitions (animate) is the engine's only element motion
+             and is engaged on the carousel. No keyframes, fades,
+             per-element animation, or idle float exist or are claimed.
+             (Letter-spacing is not a theme property in 3.4.1, so the
+             display title's letterspacing lives in the proof mock only.) -->
+
+
+        <!-- 1. Supplied universal Nova library background, full-bleed. -->
+        <image name="libBackground">
+            <pos>0 0</pos>
+            <size>1 1</size>
+            <origin>0 0</origin>
+            <path>./art/gamelist_generic_bg.png</path>
+            <zIndex>1</zIndex>
+        </image>
+
+        <!-- 2. Bottom contrast: transparent -> navy, local. -->
+        <image name="libBottomGradient">
+            <pos>0 0.71875</pos>
+            <size>1 0.28125</size>
+            <origin>0 0</origin>
+            <path>./art/lib_bottom_gradient.png</path>
+            <zIndex>2</zIndex>
+        </image>
+
+        <!-- 3. LEFT COLUMN: one editorial page (6,10 470x940). Open
+             whitespace, typography and a few graphic rules - no mats, no
+             frames, no nested boxes. Restrained craftsmanship only: tiny
+             halftone transitions, one subtle blueprint fragment, one
+             clipped blue geometric intrusion, sparse yellow micro-accents.
+             The marquee and screenshot art land on the white page via the
+             elements below. -->
+        <image name="libPanelMain">
+            <pos>0.0046875 0.0104167</pos>
+            <size>0.3671875 0.9791667</size>
+            <origin>0 0</origin>
+            <path>./art/lib_panel_main.png</path>
+            <zIndex>10</zIndex>
+        </image>
+
+        <!-- 4. CONSOLE SPINE: 486,24 60x912. Per-system art via
+             ${system.name} (every system theme includes ../views.xml, so
+             the binding is always the ACTUAL current system): royal
+             gradient with subtle tonal variation, controlled grid
+             texture, ONE continuous thin yellow structural line with
+             small connector ticks, subtle halftone, supplied logo
+             rotated 90deg CCW and deliberately MOUNTED on a mounting
+             plate. -->
+        <image name="libRail">
+            <pos>0.3796875 0.025</pos>
+            <size>0.046875 0.95</size>
+            <origin>0 0</origin>
+            <path>./art/rails/${system.name}.png</path>
+            <zIndex>10</zIndex>
+        </image>
+
+        <!-- 5. MARQUEE, the visual headline of the page (24,44 424x252,
+             +31% area over v15). Open whitespace - no mat, no frame, no
+             blue rectangle, no fade. The fallback title shows only when
+             the scraped marquee art is missing. -->
+        <text name="libMarqueeTitle">
+            <pos>0.01875 0.0458333</pos>
+            <size>0.33125 0.2625</size>
+            <origin>0 0</origin>
+            <metadata>name</metadata>
+            <letterCase>uppercase</letterCase>
+            <fontPath>./fonts/PermanentMarker-Regular.ttf</fontPath>
+            <fontSize>0.04</fontSize>
+            <color>${crystalDeep}</color>
+            <opacity>0.85</opacity>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>19</zIndex>
+        </text>
+        <image name="libMarquee">
+            <pos>0.01875 0.0458333</pos>
+            <maxSize>0.33125 0.2625</maxSize>
+            <origin>0 0</origin>
+            <imageType>marquee</imageType>
+            <opacity>1.0</opacity>
+            <zIndex>20</zIndex>
+        </image>
+
+        <!-- 6. METADATA: editorial hierarchy - description first, one
+             large anchor stat (year, marker face), strong genre value,
+             quiet players/developer, rating adjacent. Generous air between
+             the description and the facts; PLAYERS and DEVELOPER share a
+             baseline. Labels are tiny baked kickers; the values carry the
+             weight. -->
+        <text name="libDesc">
+            <pos>0.0375 0.325</pos>
+            <size>0.2984375 0.1125</size>
+            <origin>0 0</origin>
+            <metadata>description</metadata>
+            <fontSize>0.0175</fontSize>
+            <color>${crystalInkDim}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>top</verticalAlignment>
+            <zIndex>20</zIndex>
+        </text>
+        <datetime name="libYear">
+            <pos>0.0375 0.4875</pos>
+            <size>0.1796875 0.075</size>
+            <origin>0 0</origin>
+            <metadata>releasedate</metadata>
+            <format>%Y</format>
+            <fontPath>./fonts/PermanentMarker-Regular.ttf</fontPath>
+            <fontSize>0.06</fontSize>
+            <color>${crystalDeep}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>top</verticalAlignment>
+            <zIndex>20</zIndex>
+        </datetime>
+        <rating name="libRating">
+            <pos>0.23125 0.4895833</pos>
+            <size>0.109375 0.0291667</size>
+            <origin>0 0</origin>
+            <filledPath>./art/star_filled.png</filledPath>
+            <unfilledPath>./art/star_unfilled.png</unfilledPath>
+            <hideIfZero>true</hideIfZero>
+            <zIndex>20</zIndex>
+        </rating>
+        <text name="libGenre">
+            <pos>0.0375 0.5895833</pos>
+            <size>0.2984375 0.0291667</size>
+            <origin>0 0</origin>
+            <metadata>genre</metadata>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.024</fontSize>
+            <color>${crystalDeep}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>top</verticalAlignment>
+            <zIndex>20</zIndex>
+        </text>
+        <text name="libPlayers">
+            <pos>0.0375 0.6520833</pos>
+            <size>0.140625 0.0270833</size>
+            <origin>0 0</origin>
+            <metadata>players</metadata>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.015</fontSize>
+            <color>${crystalInkDim}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>top</verticalAlignment>
+            <zIndex>20</zIndex>
+        </text>
+        <text name="libDev">
+            <pos>0.1875 0.6520833</pos>
+            <size>0.153125 0.0270833</size>
+            <origin>0 0</origin>
+            <metadata>developer</metadata>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.015</fontSize>
+            <color>${crystalInkDim}</color>
+            <horizontalAlignment>left</horizontalAlignment>
+            <verticalAlignment>top</verticalAlignment>
+            <zIndex>20</zIndex>
+        </text>
+
+        <!-- 7. SCREENSHOT, an editorial image on the page (42,700
+             396x210): ONE clean royal hairline frame with a subtle depth
+             shadow, ONE tiny yellow corner accent. No nested outlines. -->
+        <image name="libScreenshot">
+            <pos>0.0328125 0.7291667</pos>
+            <size>0.309375 0.21875</size>
+            <origin>0 0</origin>
+            <imageType>image</imageType>
+            <zIndex>20</zIndex>
+        </image>
+
+        <!-- 8. LAYERED GRAPHIC PLANES (controlled overlap). One soft
+             plane sits behind the hero's lower-right (the disc overlaps
+             it); two subtle foreground shards crop the prev/next items
+             at the upper-right and lower-right edges. -->
+        <image name="libPlaneHero">
+            <pos>0.6875 0.5625</pos>
+            <size>0.328125 0.375</size>
+            <origin>0 0</origin>
+            <path>./art/lib_plane_hero.png</path>
+            <zIndex>44</zIndex>
+        </image>
+
+        <!-- 9. HERO ELEVATION at the selected slot (900,430), static and
+             SHAPE-AGNOSTIC. Restrained atmospheric blue glow pooled
+             beneath the media, detached soft contact shadow (slight
+             elevation, strengthened). No rim, no rings, no circular
+             frame: the real scraped physicalmedia keeps its native
+             silhouette (cartridge, game card, UMD, disc) and the small
+             compositional yellow tick lives on the hero plane behind
+             it - never a fixed circle around the asset. -->
+        <image name="libSelectedGlowBlue">
+            <pos>0.703125 0.4697917</pos>
+            <size>0.4375 0.5208333</size>
+            <origin>0.5 0.5</origin>
+            <path>./art/lib_glow_blue.png</path>
+            <opacity>0.4</opacity>
+            <zIndex>47</zIndex>
+        </image>
+        <image name="libSelectedShadow">
+            <pos>0.703125 0.7708333</pos>
+            <size>0.5 0.075</size>
+            <origin>0.5 0.5</origin>
+            <path>./art/lib_shadow_soft.png</path>
+            <opacity>0.9</opacity>
+            <zIndex>49</zIndex>
+        </image>
+
+        <!-- 10. THE MEDIA COLUMN. Vertical carousel, element 640x1440
+             centred at (900,430), maxItemCount 3 -> 480px pitch: previous
+             at (900,-50), 71% cropped off the top edge; selected 540px
+             at (900,430) (240px * 2.25, the hero pulled forward); next
+             at (900,910), 29% cropped off the bottom edge, pushed toward
+             the lower-right corner and clear of the title zone. The
+             real scraped physicalmedia keeps its native silhouette at
+             every slot - no shape is forced into a disc treatment.
+             Neighbours dimmed hard so they read as items in motion,
+             subordinate to the hero. -->
+        <carousel name="gameCarousel">
+            <type>vertical</type>
+            <color>00000000</color>
+            <pos>0.703125 0.4479167</pos>
+            <size>0.5 1.5</size>
+            <origin>0.5 0.5</origin>
+            <imageType>physicalmedia 3dbox</imageType>
+            <defaultImage>./media_fallbacks/${system.name}.png</defaultImage>
+            <itemSize>0.1875 0.25</itemSize>
+            <itemScale>2.25</itemScale>
+            <maxItemCount>3.0</maxItemCount>
+            <itemsBeforeCenter>1</itemsBeforeCenter>
+            <itemsAfterCenter>1</itemsAfterCenter>
+            <itemHorizontalAlignment>center</itemHorizontalAlignment>
+            <reflections>false</reflections>
+            <unfocusedItemOpacity>0.45</unfocusedItemOpacity>
+            <unfocusedItemSaturation>0.5</unfocusedItemSaturation>
+            <unfocusedItemDimming>0.55</unfocusedItemDimming>
+            <imageInterpolation>linear</imageInterpolation>
+            <itemTransitions>animate</itemTransitions>
+            <fastScrolling>true</fastScrolling>
+            <zIndex>50</zIndex>
+        </carousel>
+
+        <!-- 11. FOREGROUND SHARDS: crop the prev/next items at the
+             upper-right / lower-right edges (zIndex above the carousel).
+             The next-item shard was redesigned for the re-pitched
+             carousel: (780,790 500x170), occluding the next item's
+             upper-left along a diagonal, so its visible mass enters
+             from the bottom-right corner, partially cropped - a
+             distinct visual space from the selected game's title, which
+             keeps clean air. -->
+        <image name="libShardPrev">
+            <pos>0.71875 0.0</pos>
+            <size>0.28125 0.1666667</size>
+            <origin>0 0</origin>
+            <path>./art/lib_shard_prev.png</path>
+            <zIndex>52</zIndex>
+        </image>
+        <image name="libShardNext">
+            <pos>0.609375 0.8229167</pos>
+            <size>0.390625 0.1770833</size>
+            <origin>0 0</origin>
+            <path>./art/lib_shard_next.png</path>
+            <zIndex>52</zIndex>
+        </image>
+
+        <!-- 12. TITLE beneath the hero: generous clean air around the
+             identity block. Redesigned rule at 716 (white hairline +
+             SHORT yellow bar with a sweep head), bolder marker display
+             title in white at 736, composite secondary line at 757:
+             GENRE . YEAR . DEVELOPER . PLAYERS. Nothing competes with it:
+             the next item enters from the bottom edge, cropped. -->
+        <image name="libTitleRule">
+            <pos>0.703125 0.7458333</pos>
+            <size>0.234375 0.0104167</size>
+            <origin>0.5 0.5</origin>
+            <path>./art/lib_title_rule.png</path>
+            <zIndex>59</zIndex>
+        </image>
+        <text name="libGameName">
+            <pos>0.703125 0.7666667</pos>
+            <size>0.5 0.0375</size>
+            <origin>0.5 0.5</origin>
+            <metadata>name</metadata>
+            <letterCase>uppercase</letterCase>
+            <fontPath>./fonts/PermanentMarker-Regular.ttf</fontPath>
+            <fontSize>0.040</fontSize>
+            <color>FFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="libMetaGenre">
+            <pos>0.575 0.7994792</pos>
+            <size>0.1171875 0.02</size>
+            <origin>0.5 0.5</origin>
+            <metadata>genre</metadata>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.0145</fontSize>
+            <color>8CFFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="libMetaSep1">
+            <pos>0.6398438 0.7994792</pos>
+            <size>0.0125 0.02</size>
+            <origin>0.5 0.5</origin>
+            <text>&#8226;</text>
+            <fontSize>0.0145</fontSize>
+            <color>8CFFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <datetime name="libMetaYear">
+            <pos>0.6734375 0.7994792</pos>
+            <size>0.0546875 0.02</size>
+            <origin>0.5 0.5</origin>
+            <metadata>releasedate</metadata>
+            <format>%Y</format>
+            <fontSize>0.0145</fontSize>
+            <color>8CFFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </datetime>
+        <text name="libMetaSep2">
+            <pos>0.7070313 0.7994792</pos>
+            <size>0.0125 0.02</size>
+            <origin>0.5 0.5</origin>
+            <text>&#8226;</text>
+            <fontSize>0.0145</fontSize>
+            <color>8CFFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="libMetaDev">
+            <pos>0.7601563 0.7994792</pos>
+            <size>0.09375 0.02</size>
+            <origin>0.5 0.5</origin>
+            <metadata>developer</metadata>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.0145</fontSize>
+            <color>8CFFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="libMetaSep3">
+            <pos>0.8132813 0.7994792</pos>
+            <size>0.0125 0.02</size>
+            <origin>0.5 0.5</origin>
+            <text>&#8226;</text>
+            <fontSize>0.0145</fontSize>
+            <color>8CFFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+        <text name="libMetaPlayers">
+            <pos>0.8546875 0.7994792</pos>
+            <size>0.0703125 0.02</size>
+            <origin>0.5 0.5</origin>
+            <metadata>players</metadata>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.0145</fontSize>
+            <color>8CFFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+
+        <!-- 13. The footer row: one static line, the two genuinely useful
+             actions, subdued. -->
+        <text name="libFooter">
+            <pos>0.5 0.953125</pos>
+            <size>0.6 0.03</size>
+            <origin>0.5 0.5</origin>
+            <text>A PLAY &#8226; B BACK</text>
+            <letterCase>uppercase</letterCase>
+            <fontSize>0.0135</fontSize>
+            <color>80FFFFFF</color>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <zIndex>60</zIndex>
+        </text>
+
+        </view>

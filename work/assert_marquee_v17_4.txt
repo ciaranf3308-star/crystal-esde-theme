@@ -1,0 +1,56 @@
+# --- v17.4 brief point 2: the marquee mounts on open white ---
+# The navy card/frame is GONE from the panel art. The marquee zone (local
+# 18,34-442,286) is open white - every opaque pixel near-white.
+panel = Image.open(os.path.join(ROOT, "art/lib_panel_main.png")).convert("RGBA")
+zone_bad = 0
+for ly in range(40, 280, 4):
+    for lx in range(34, 440, 4):
+        p = panel.getpixel((lx, ly))
+        if p[3] > 128 and min(p[:3]) < 225:
+            zone_bad += 1
+check(zone_bad == 0, f"marquee zone open white, no navy card ({zone_bad} dark samples)")
+# the rendered zone: light (no band dragging the mean down), bold (the
+# wordmark gives real contrast), and no large dark mass (a navy band
+# would cover ~85% of the zone in dark pixels).
+crop = rgb.crop((int(mx), int(my), int(mx + mw), int(my + mh)))
+_lums = [0.299 * p[0] + 0.587 * p[1] + 0.114 * p[2] for p in crop.getdata()]
+_mean = sum(_lums) / len(_lums)
+_dark_frac = sum(1 for v in _lums if v < 80) / len(_lums)
+check(_mean > 195, f"marquee zone light, no dark card (mean luminance {_mean:.0f})")
+check(_dark_frac < 0.30, f"no navy band: dark fraction {_dark_frac:.1%}")
+import statistics
+_sd = statistics.pstdev(crop.convert("L").getdata())
+check(_sd > 40, f"marquee bold and high-contrast, not washed out (std {_sd:.0f})")
+# no platform tier in the marquee zone: the XML has no system/platform
+# element inside the marquee band, and the mock draws none.
+_marquee_names = [el.get("name") for el in gamelist.iter() if el.get("name")]
+check(not any("platform" in (n or "").lower() or "systemname" in (n or "").lower()
+              for n in _marquee_names if "marquee" in (n or "").lower()),
+      "no platform tier in the marquee zone (the spine says the platform)")
+# the left column reads as ONE editorial surface: no large dark blob
+# anywhere on the page (the 1px hairline is ~400px, not a box).
+from collections import deque as _dq
+_pw, _ph = panel.size
+_ppx = panel.convert("RGB")
+_dark = bytearray(_pw * _ph)
+for _y in range(_ph):
+    for _x in range(_pw):
+        _p = panel.getpixel((_x, _y))
+        if _p[3] > 128 and 0.299 * _p[0] + 0.587 * _p[1] + 0.114 * _p[2] < 60:
+            _dark[_y * _pw + _x] = 1
+_seen = bytearray(_pw * _ph)
+_largest = 0
+for _i in range(_pw * _ph):
+    if _dark[_i] and not _seen[_i]:
+        _q = _dq([_i]); _seen[_i] = 1; _n = 0
+        while _q:
+            _j = _q.popleft(); _n += 1
+            _x, _y = _j % _pw, _j // _pw
+            for _dx, _dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                _nx, _ny = _x + _dx, _y + _dy
+                if 0 <= _nx < _pw and 0 <= _ny < _ph:
+                    _k = _ny * _pw + _nx
+                    if _dark[_k] and not _seen[_k]:
+                        _seen[_k] = 1; _q.append(_k)
+        _largest = max(_largest, _n)
+check(_largest < 1500, f"one editorial surface: no large dark blob ({_largest}px max)")

@@ -1,0 +1,43 @@
+# --- v17.4 brief point 5: spine simplified, still dynamic ---
+import json, subprocess
+check("${system.name}" in get("image", "libRail").findtext("path"),
+      "spine art bound to ${system.name} (actual current system)")
+rails = glob.glob(os.path.join(ROOT, "art/rails/*.png"))
+check(len(rails) == 21, f"21 spine PNGs ({len(rails)})")
+rail = Image.open(os.path.join(ROOT, "art/rails/%s.png" % G["system"])).convert("RGB")
+def _is_yellow(p):
+    return abs(p[0] - 255) < 20 and abs(p[1] - 214) < 30 and abs(p[2] - 10) < 30
+yell = sum(1 for y in range(48, 885, 8) if _is_yellow(rail.getpixel((4, y))))
+check(yell > 90, f"ONE continuous thin yellow structural line ({yell} samples)")
+# the connector ticks are gone (they were decorative noise): no yellow at
+# x=8 on the old tick rows (the line itself lives at x3-5)
+for _ty in (300, 456, 612):
+    check(not _is_yellow(rail.getpixel((8, _ty))),
+          f"connector tick removed at y={_ty} {rail.getpixel((8, _ty))}")
+# dot texture cut 40-60% vs v17.3: count light dots in a quiet window of
+# the old (git HEAD) and new rail.
+_old_rail_raw = subprocess.run(
+    ["git", "-C", os.path.expanduser("~/workspace/crystal-esde-theme"),
+     "show", "HEAD:theme-src/crystal/art/rails/%s.png" % G["system"]],
+    capture_output=True).stdout
+open("/tmp/_old_rail.png", "wb").write(_old_rail_raw)
+_old_rail = Image.open("/tmp/_old_rail.png").convert("RGB")
+def _dots(im):
+    return sum(1 for _y in range(100, 250) for _x in range(20, 50)
+               if 0.299 * im.getpixel((_x, _y))[0] + 0.587 * im.getpixel((_x, _y))[1]
+               + 0.114 * im.getpixel((_x, _y))[2] > 160)
+_do, _dn = _dots(_old_rail), _dots(rail)
+_red = 1 - _dn / max(1, _do)
+check(0.40 <= _red <= 0.60,
+      f"dot texture cut 40-60% ({_do} -> {_dn} dots, {_red:.0%} reduction)")
+# logo breathing room: the generation sidecar records plate vs logo size.
+_params = json.load(open(os.path.expanduser(
+    "~/workspace/crystal-esde-theme/work/rail_params_v17_4.json")))
+for _sys, _pr in _params.items():
+    _lw, _lh = _pr["logo"]; _pw2, _ph2 = _pr["plate"]
+    if not (_pr["pad"] >= 20 and _pw2 == _lw + 2 * _pr["pad"]
+            and _ph2 == _lh + 2 * _pr["pad"]):
+        break
+else:
+    _sys = None
+check(_sys is None, f"logo plate has real breathing room (pad>=20 all 21 systems)")

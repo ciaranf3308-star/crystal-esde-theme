@@ -1,0 +1,27 @@
+# v17.4: the flat fallback silhouettes - native shape, plain by design.
+# (alpha/bbox/cov were computed from SHAPE_FULL above.)
+if VARIANT == "cartridge":
+    check(0.80 <= bw / bh <= 0.95,
+          f"cartridge reads tall, not circular (bbox aspect {bw/bh:.2f})")
+    check(cov > 0.90, f"cartridge silhouette fills its bbox (coverage {cov:.2f})")
+elif VARIANT == "gamecard":
+    check(alpha.getpixel((274, 87)) < 40,
+          "game-card notch is truly cut out (transparent edge preserved)")
+    check(0.60 <= bw / bh <= 0.78,
+          f"game-card bbox aspect {bw/bh:.2f} (small card, not a disc)")
+    check(cov > 0.90, f"game-card silhouette fills its bbox (coverage {cov:.2f})")
+elif VARIANT == "disc":
+    check(abs(bw - bh) <= 4, f"disc silhouette is circular (bbox {bw}x{bh})")
+    check(0.70 <= cov <= 0.80, f"disc coverage {cov:.2f} (a circle, not a rounded box)")
+# the fallbacks are DELIBERATELY FLAT: one muted blue-grey tone, a handful
+# of quantized colours at most - competent, not spectacular, by design.
+fb_im = Image.open(os.path.join(ROOT, "media_fallbacks/%s.png" % FALLBACK_SYSTEM)).convert("RGBA")
+_fa = fb_im.split()[3]
+_opq = [(p[0], p[1], p[2]) for p, a in zip(fb_im.convert("RGB").getdata(), _fa.getdata()) if a > 128]
+_quant = {(p[0] >> 5, p[1] >> 5, p[2] >> 5) for p in _opq}
+check(len(_quant) <= 4, f"fallback deliberately flat ({len(_quant)} quantized colours, no art)")
+_mr = sum(p[0] for p in _opq) / len(_opq)
+_mg = sum(p[1] for p in _opq) / len(_opq)
+_mb = sum(p[2] for p in _opq) / len(_opq)
+check(abs(_mr - 107) < 25 and abs(_mg - 127) < 25 and abs(_mb - 160) < 25,
+      f"fallback muted blue-grey (mean {(_mr, _mg, _mb)})")

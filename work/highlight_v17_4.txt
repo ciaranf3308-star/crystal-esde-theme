@@ -1,0 +1,37 @@
+def yellow_highlight(shape):
+    """ONE thin restrained yellow highlight on part of the silhouette
+    (mock art-direction intent; the real theme carries the selective
+    yellow accent on the hero plane, since ES-DE has no per-silhouette
+    highlight mechanism). Follows the actual alpha bbox so it lands on
+    the real shape, whatever it is."""
+    w, h = shape.size
+    alpha = shape.split()[3]
+    bx0, by0, bx1, by1 = alpha.getbbox()
+    bw, bh = bx1 - bx0, by1 - by0
+    ov = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(ov, "RGBA")
+    if VARIANT == "disc":
+        r = min(bw, bh) / 2 - 6
+        cx0, cy0 = bx0 + bw / 2, by0 + bh / 2
+        a0, a1 = 200.0, 252.0
+        a = a0
+        while a < a1:
+            t = (a - a0) / (a1 - a0)
+            edge = min(1.0, t / 0.25, (1.0 - t) / 0.25)
+            al = int(230 * max(0.0, min(1.0, edge)))
+            if al > 2:
+                d.arc([cx0 - r, cy0 - r, cx0 + r, cy0 + r],
+                      start=a, end=a + 1.3, fill=YELLOW + (al,), width=4)
+            a += 1.0
+    else:
+        # a short faded tick along the top edge of the silhouette
+        x0, x1 = int(bx0 + bw * 0.18), int(bx0 + bw * 0.52)
+        y = by0 + 7
+        for x in range(x0, x1):
+            t = (x - x0) / (x1 - x0)
+            edge = min(1.0, t / 0.25, (1.0 - t) / 0.25)
+            al = int(230 * max(0.0, min(1.0, edge)))
+            d.line([(x, y), (x, y + 4)], fill=YELLOW + (al,))
+    # keep the highlight inside the silhouette
+    ov.putalpha(ImageChops.multiply(ov.split()[3], shape.split()[3]))
+    return ov

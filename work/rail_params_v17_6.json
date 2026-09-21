@@ -1,0 +1,254 @@
+{
+ "dreamcast": {
+  "logo": [
+   36,
+   147
+  ],
+  "plate": [
+   80,
+   191
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "gb": {
+  "logo": [
+   36,
+   125
+  ],
+  "plate": [
+   80,
+   169
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "gba": {
+  "logo": [
+   36,
+   100
+  ],
+  "plate": [
+   80,
+   144
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "gbc": {
+  "logo": [
+   36,
+   99
+  ],
+  "plate": [
+   80,
+   143
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "gc": {
+  "logo": [
+   36,
+   135
+  ],
+  "plate": [
+   80,
+   179
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "genesis": {
+  "logo": [
+   36,
+   139
+  ],
+  "plate": [
+   80,
+   183
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "megadrive": {
+  "logo": [
+   36,
+   142
+  ],
+  "plate": [
+   80,
+   186
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "n3ds": {
+  "logo": [
+   36,
+   154
+  ],
+  "plate": [
+   80,
+   198
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "n64": {
+  "logo": [
+   36,
+   125
+  ],
+  "plate": [
+   80,
+   169
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "nds": {
+  "logo": [
+   36,
+   107
+  ],
+  "plate": [
+   80,
+   151
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "nes": {
+  "logo": [
+   51,
+   101
+  ],
+  "plate": [
+   95,
+   145
+  ],
+  "pad": 22,
+  "kind": "TEXT-FALLBACK"
+ },
+ "ps2": {
+  "logo": [
+   36,
+   120
+  ],
+  "plate": [
+   80,
+   164
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "psp": {
+  "logo": [
+   51,
+   98
+  ],
+  "plate": [
+   95,
+   142
+  ],
+  "pad": 22,
+  "kind": "TEXT-FALLBACK"
+ },
+ "psx": {
+  "logo": [
+   36,
+   189
+  ],
+  "plate": [
+   80,
+   233
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "snes": {
+  "logo": [
+   36,
+   114
+  ],
+  "plate": [
+   80,
+   158
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "steam": {
+  "logo": [
+   51,
+   176
+  ],
+  "plate": [
+   95,
+   220
+  ],
+  "pad": 22,
+  "kind": "TEXT-FALLBACK"
+ },
+ "wii": {
+  "logo": [
+   36,
+   118
+  ],
+  "plate": [
+   80,
+   162
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "wiiu": {
+  "logo": [
+   36,
+   151
+  ],
+  "plate": [
+   80,
+   195
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "windows": {
+  "logo": [
+   51,
+   262
+  ],
+  "plate": [
+   95,
+   306
+  ],
+  "pad": 22,
+  "kind": "TEXT-FALLBACK"
+ },
+ "xbox": {
+  "logo": [
+   36,
+   114
+  ],
+  "plate": [
+   80,
+   158
+  ],
+  "pad": 22,
+  "kind": "logo"
+ },
+ "xbox360": {
+  "logo": [
+   51,
+   262
+  ],
+  "plate": [
+   95,
+   306
+  ],
+  "pad": 22,
+  "kind": "TEXT-FALLBACK"
+ }
+}

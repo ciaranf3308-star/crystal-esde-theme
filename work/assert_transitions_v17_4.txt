@@ -1,0 +1,25 @@
+# --- v17.4 brief point 9: the ES-DE transition audit ---
+# Re-verified against esde_theme_tables.json (pinned to ES-DE 3.4.1):
+# carousel itemTransitions (animate) is the engine's ONLY element motion.
+# No keyframes, no fades, no per-element animation exist for
+# text/image/datetime/rating. The theme engages the one native mechanism
+# and invents nothing else.
+car2 = get("carousel", "gameCarousel")
+check(car2.findtext("itemTransitions") == "animate",
+      "carousel itemTransitions=animate: the native flow motion (neighbour -> hero -> neighbour)")
+check(car2.findtext("fastScrolling") == "true",
+      "fastScrolling engaged (the carousel stays responsive at speed)")
+_banned = ("keyframe", "tween", "spin", "bounce", "animatein", "animateout",
+           "transitionin", "transitionout", "fadein", "fadeout")
+_bad = []
+for _el in gamelist.iter():
+    for _ch in _el:
+        if _ch.tag in _banned or any(b in _ch.tag.lower() for b in ("keyframe", "tween")):
+            _bad.append((_el.get("name"), _ch.tag))
+check(not _bad, f"no faked animation properties anywhere ({_bad or 'none found'})")
+_videos = [el.get("name") for el in gamelist.iter("video")]
+check(not _videos, "no video elements (no fake video fade-ins)")
+# itemRotation would be a gimmick - confirm it is unset everywhere
+_rots = [(el.get("name"), el.findtext("itemRotation")) for el in gamelist.iter("carousel")
+         if el.findtext("itemRotation") is not None]
+check(not _rots, f"no carousel item rotation (no gimmicks): {_rots or 'unset'}")

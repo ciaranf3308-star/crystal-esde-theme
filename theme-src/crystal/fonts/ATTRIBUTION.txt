@@ -1,10 +1,11 @@
 Fonts bundled with the Crystal ES-DE theme
 ==========================================
 
-PermanentMarker-Regular.ttf
-  "Permanent Marker" by Font Diner, Inc.
-  Copyright (c) 2010 by Font Diner, Inc. All rights reserved.
-  Source: Google Fonts (https://fonts.google.com/specimen/Permanent+Marker)
-  License: SIL Open Font License, Version 1.1
-  (https://scripts.sil.org/OFL)
-  Used for the game-library hero title.
+DejaVuSans-Bold.ttf / DejaVuSans.ttf
+  "DejaVu Sans" by the DejaVu project (derived from Bitstream Vera).
+  Source: system DejaVu fonts (https://dejavu-fonts.github.io/)
+  License: permissive free license (see DejaVu LICENSE)
+  Used for the game-library display type (Bold) and body copy (Regular).
+  v17.6.0: PermanentMarker-Regular.ttf was removed; all gamelist
+  typography is DejaVu Sans (Bold for display/anchors, Regular for
+  body/micro) for a disciplined premium-editorial shell.

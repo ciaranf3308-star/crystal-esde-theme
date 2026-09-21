@@ -1,0 +1,20 @@
+# --------------------------------------- marquee: mounted on the page ---
+# The real theme binds the ACTUAL scraped marquee asset here
+# (imageType=marquee) on OPEN WHITE - no navy card, no frame, no platform
+# tier (the spine already says the platform). The mock draws a BOLD
+# neutral wordmark stand-in the way a real scraped logo reads: deep-navy
+# display type mounted on the page with one short yellow swoosh. The
+# marquee's silhouette and colour provide the personality - no bespoke
+# burst artwork, no game-specific decoration.
+mx, my, mw, mh = max_box(get("image", "libMarquee"))
+_fm = ImageFont.truetype(marker, 64)
+_bb = _fm.getbbox(G["title"])
+while _bb[2] - _bb[0] > mw - 40 and _fm.size > 14:
+    _fm = ImageFont.truetype(marker, _fm.size - 2)
+    _bb = _fm.getbbox(G["title"])
+d.text((mx + mw / 2, my + mh * 0.40), G["title"], font=_fm,
+       fill=(10, 47, 160, 255), anchor="mm")
+_sw0, _sw1, _swy = mx + mw * 0.32, mx + mw * 0.68, my + mh * 0.60
+d.polygon([(_sw0, _swy), (_sw1, _swy), (_sw1 - 14, _swy + 10),
+           (_sw0 + 14, _swy + 10)], fill=YELLOW + (255,))
+d = ImageDraw.Draw(base)

@@ -1,0 +1,13 @@
+# ------------------------------------------------------- shape renderers ---
+# v17.4: the mock loads the REAL fallback assets the theme ships
+# (media_fallbacks/<system>.png) - flat muted blue-grey silhouettes,
+# deliberately plain. No bespoke hero artwork in the mock: on device,
+# 98% of games show their real scraped physicalmedia here.
+
+FALLBACK_SYSTEM = {"cartridge": "n64", "gamecard": "n3ds", "disc": "ps2"}[VARIANT]
+
+def _shape_from_fallback():
+    """The actual fallback PNG the theme uses - native silhouette with
+    true transparent edges. Nothing is forced into a circle, square, card
+    or common container; the silhouette IS the hero."""
+    return Image.open(os.path.join(ROOT, "media_fallbacks/%s.png" % FALLBACK_SYSTEM)).convert("RGBA")

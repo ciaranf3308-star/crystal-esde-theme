@@ -1,0 +1,15 @@
+# --- v17.4: the disc's yellow arc stays selective, not a full circle ---
+if VARIANT == "disc":
+    # the arc lives at r~194 around the hero center (900,430); measure
+    # yellow in its own annulus: present (>2%) but selective (<25%).
+    _ay, _an = 0, 0
+    for _yy in range(215, 645):
+        for _xx in range(685, 1115):
+            _rr = math.hypot(_xx - 900, _yy - 430)
+            if 185 <= _rr <= 210 and 0 <= _xx < W and 0 <= _yy < H:
+                _an += 1
+                if _yellowish(rgb.getpixel((_xx, _yy))):
+                    _ay += 1
+    _af = _ay / max(1, _an)
+    check(0.02 < _af < 0.25,
+          f"disc arc selective: present but not a full circle ({_af:.1%} of its annulus)")

@@ -1,0 +1,42 @@
+"""PIL mock of the Crystal v17.4.0 gamelist EDITORIAL SHELL pass, parsed
+from the real theme XML. Mock only - not an ES-DE screenshot.
+
+Usage: mock_gamelist_v17_4.py [cartridge|gamecard|disc]
+  cartridge -> n64 / SUPER MARIO 64
+  gamecard  -> n3ds / OCARINA OF TIME 3D
+  disc      -> ps2 / SAN ANDREAS
+
+The macro layout is LOCKED (left column 6,10 470x940; spine 486,24
+60x912; hero 540px at 900,430; title rule Y716 / title Y736 / meta Y757;
+screenshot 42,700 396x210; footer y915). Element positions/sizes are
+byte-identical to v17.3.0. This pass is the EDITORIAL SHELL per the user's
+10-point brief - the product concept pivots: 98% of games have real scraped
+physicalmedia, so the SHELL is the design target and fallback hero art is
+deliberately plain:
+
+1. LEFT COLUMN = ONE EDITORIAL PAGE: the navy marquee card/frame is GONE
+   ("STOP PUTTING IT IN A GIANT BLUE BOX"). The marquee zone is open
+   white; the marquee mounts directly on the page.
+2. MARQUEE: bold neutral wordmark stand-in on white, no platform tier
+   (the spine says the platform), NOW SHOWING a tiny kicker.
+3. TYPESET: kickers aligned to value boxes, quieter slate; one hairline
+   between description and facts; players/developer two-column grid.
+4. SCREENSHOT: no "SCREENSHOT BOX" - bottom-edge hairline, subtle depth,
+   one yellow registration-mark corner.
+5. SPINE: dot texture cut ~55%, halftone halved, connector ticks removed,
+   logo plate given real breathing room (sidecar-verified).
+6. HERO: the REAL fallback assets (flat muted silhouettes) at hero scale -
+   no bespoke hero artwork anywhere in the mock.
+7. TITLE: 0.0375 -> 0.040 so the display title stands up to the media.
+8. Prev/next: same flat silhouettes, 44%/45%, edge-cropped, shard-veiled.
+9. TRANSITIONS: audited against esde_theme_tables.json - carousel
+   itemTransitions (animate) is the engine's ONLY element motion; no
+   keyframes, no fades, no per-element animation exist. Nothing added.
+10. FALLBACKS: flat muted blue-grey, one per media class - competent,
+    not spectacular, by design.
+
+ES-DE 3.4.1 has no theme keyframes or idle animation, and none is
+claimed. The mock's silhouette shadow / rim light / yellow tick are
+art-direction intent for elevation; the real theme carries the generic
+shadow asset and the selective yellow accent on the hero plane.
+"""
