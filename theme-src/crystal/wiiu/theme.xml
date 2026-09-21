@@ -14,15 +14,16 @@
             <fontSize>0.0400</fontSize>
             <text>Wii U</text>
         </text>
+                    <!-- v6.0.4: per-console polish — divider lines measured 0.338/0.493 from this background; desc 0.360 / count 0.521 / facts 0.604 -->
         <text name="sysDesc">
-            <pos>0.030 0.356</pos>
+            <pos>0.030 0.360</pos>
             <text>The GamePad experiment. Hidden gems await.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.520</pos>
+            <pos>0.030 0.521</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.603</pos>
+            <pos>0.030 0.604</pos>
             <text>2012</text>
         </text>
     </view>

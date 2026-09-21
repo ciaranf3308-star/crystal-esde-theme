@@ -14,15 +14,16 @@
             <fontSize>0.0288</fontSize>
             <text>Game Boy Advance</text>
         </text>
+                    <!-- v6.0.4: per-console polish — divider lines measured 0.339/0.493 from this background; desc 0.361 / count 0.521 / facts 0.604 -->
         <text name="sysDesc">
-            <pos>0.030 0.356</pos>
+            <pos>0.030 0.361</pos>
             <text>Nintendo's 32-bit handheld. A massive 2D library.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.520</pos>
+            <pos>0.030 0.521</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.603</pos>
+            <pos>0.030 0.604</pos>
             <text>32-BIT • HANDHELD • 2001</text>
         </text>
     </view>

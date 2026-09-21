@@ -16,14 +16,14 @@
         </text>
         <text name="sysDesc">
             <pos>0.030 0.356</pos>
-            <!-- v6.0.3: threaded between this background's white divider lines (measured from the baked art) -->
+            <!-- v6.0.4: per-console polish — divider lines measured 0.334/0.510 from this background; desc 0.356 / count 0.538 / facts 0.621 -->
             <text>Nintendo's cube of joy. Smash and Sunshine.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.520</pos>
+            <pos>0.030 0.538</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.603</pos>
+            <pos>0.030 0.621</pos>
             <text>128-BIT • 2001</text>
         </text>
         <!-- v4.4.0 "Select": the selected carousel card shows this

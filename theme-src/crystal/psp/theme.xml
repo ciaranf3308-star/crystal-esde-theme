@@ -14,15 +14,16 @@
             <fontSize>0.0400</fontSize>
             <text>PSP</text>
         </text>
+                    <!-- v6.0.4: per-console polish — divider lines measured 0.339/0.493 from this background; desc 0.361 / count 0.521 / facts 0.604 -->
         <text name="sysDesc">
-            <pos>0.030 0.356</pos>
+            <pos>0.030 0.361</pos>
             <text>Console power in your pocket. UMD adventures.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.520</pos>
+            <pos>0.030 0.521</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.603</pos>
+            <pos>0.030 0.604</pos>
             <text>HANDHELD • 2005</text>
         </text>
     </view>

@@ -30,15 +30,15 @@
             <text>ENTERTAINMENT SYSTEM</text>
         </text>
         <text name="sysDesc">
-            <pos>0.030 0.404</pos>
-            <!-- v6.0.3: threaded between this background's white divider lines (measured from the baked art) -->
+            <pos>0.030 0.408</pos>
+            <!-- v6.0.4: per-console polish — divider lines measured 0.386/0.511 from this background; desc 0.408 / count 0.539 / facts 0.622 -->
             <text>The 16-bit golden age. Mode 7 magic.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.530</pos>
+            <pos>0.030 0.539</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.613</pos>
+            <pos>0.030 0.622</pos>
             <text>16-BIT • 1991</text>
         </text>
     </view>

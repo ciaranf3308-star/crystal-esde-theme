@@ -4,6 +4,7 @@ baked background (1448x1086 webp -> 1280x960 frame) with the live text
 elements at their theme positions. Inspect for text-vs-art collisions."""
 import os, re
 from PIL import Image, ImageDraw, ImageFont
+import xml.etree.ElementTree as ET
 
 ROOT = os.path.expanduser('~/workspace/crystal-esde-theme/theme-src/crystal')
 W, H = 1280, 960
@@ -27,44 +28,56 @@ def wrap(text, font, maxw):
 def txt(d, xf, yf, s, sizef, fill, font=FBB):
     d.text((xf * W, yf * H), s, font=ImageFont.truetype(font, fs(sizef)), fill=fill)
 
-# per-console parsed data
+# per-console parsed data (real XML parse; base views.xml provides fallback pos)
+def parse_with_base(sd):
+    # merge order: views.xml base, then per-system overrides (last wins)
+    merged = {}
+    for path in (f'{ROOT}/views.xml', f'{ROOT}/{sd}/theme.xml'):
+        try:
+            root = ET.parse(path).getroot()
+        except ET.ParseError:
+            continue
+        for view in root.iter('view'):
+            if view.get('name') != 'system':
+                continue
+            for el in view:
+                nm = el.get('name')
+                if el.tag != 'text' or not nm:
+                    continue
+                props = merged.setdefault(nm, {})
+                for child in el:
+                    if child.tag in ('pos', 'fontSize'):
+                        props[child.tag] = (child.text or '').strip()
+                    elif child.tag == 'text' and not child.get('name'):
+                        t = (child.text or '').strip()
+                        if t:
+                            props['text'] = t
+    return merged
+
 sysdirs = sorted(d for d in os.listdir(ROOT)
                  if os.path.isfile(os.path.join(ROOT, d, 'theme.xml')))
 panels = []
 for sd in sysdirs:
-    src = open(f'{ROOT}/{sd}/theme.xml').read()
-    sv = src[src.index('<view name="system">'):src.index('</view>')]
-    def blk(name):
-        m = re.search(r'<text name="%s">.*?</text>\s*(?=<text|</view>)' % name, sv, re.DOTALL)
-        if not m:
-            m = re.search(r'<text name="%s">.*?</text>' % name, sv, re.DOTALL)
-        return m.group(0) if m else ''
-    def inner(b):
-        ms = re.findall(r'(?<!name=)<text>(.*?)</text>', b, re.DOTALL)
-        return ms[-1].strip() if ms else ''
-    def prop(b, tag):
-        m = re.search(r'<%s>(.*?)</%s>' % (tag, tag), b, re.DOTALL)
-        return m.group(1).strip() if m else None
+    E = parse_with_base(sd)
     if sd in ('nes', 'snes'):
-        name = (inner(blk('sysName1')), inner(blk('sysName2')))
-        desc_pos, count_pos, facts_pos = (0.030, 0.315), (0.030, 0.410), (0.030, 0.488)
+        name = (E.get('sysName1', {}).get('text', ''),
+                E.get('sysName2', {}).get('text', ''))
+        name_fs = None
     else:
-        nb = blk('sysName')
-        name = inner(nb)
-        name_fs = float(prop(nb, 'fontSize') or 0.040)
-        desc_pos = tuple(float(v) for v in (prop(blk('sysDesc'), 'pos') or '0.030 0.280').split())
-        count_pos = tuple(float(v) for v in (prop(blk('countNum'), 'pos') or '0.030 0.373').split())
-        facts_pos = tuple(float(v) for v in (prop(blk('factsLine'), 'pos') or '0.030 0.451').split())
+        name = E.get('sysName', {}).get('text', '')
+        name_fs = float(E.get('sysName', {}).get('fontSize') or 0.040)
+    def pos(nm, default):
+        return tuple(float(v) for v in E.get(nm, {}).get('pos', default).split())
     panels.append(dict(
         sd=sd,
-        badge=inner(blk('mfrBadge')),
+        badge=E.get('mfrBadge', {}).get('text', ''),
         name=name,
-        name_fs=None if sd in ('nes', 'snes') else name_fs,
-        desc=inner(blk('sysDesc')),
-        desc_pos=desc_pos,
-        facts=inner(blk('factsLine')),
-        count_pos=count_pos,
-        facts_pos=facts_pos,
+        name_fs=name_fs,
+        desc=E.get('sysDesc', {}).get('text', ''),
+        desc_pos=pos('sysDesc', '0.030 0.280'),
+        facts=E.get('factsLine', {}).get('text', ''),
+        count_pos=pos('countNum', '0.030 0.373'),
+        facts_pos=pos('factsLine', '0.030 0.451'),
     ))
 
 tiles = []

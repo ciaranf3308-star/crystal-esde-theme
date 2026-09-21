@@ -15,15 +15,15 @@
             <text>Nintendo DS</text>
         </text>
         <text name="sysDesc">
-            <pos>0.030 0.356</pos>
-            <!-- v6.0.3: threaded between this background's white divider lines (measured from the baked art) -->
+            <pos>0.030 0.351</pos>
+            <!-- v6.0.4: per-console polish — divider lines measured 0.329/0.480 from this background; desc 0.351 / count 0.508 / facts 0.591 -->
             <text>Two screens, one stylus, endless experiments.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.520</pos>
+            <pos>0.030 0.508</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.603</pos>
+            <pos>0.030 0.591</pos>
             <text>HANDHELD • 2004</text>
         </text>
     </view>

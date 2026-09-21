@@ -16,14 +16,14 @@
         </text>
         <text name="sysDesc">
             <pos>0.030 0.356</pos>
-            <!-- v6.0.3: threaded between this background's white divider lines (measured from the baked art) -->
+            <!-- v6.0.4: per-console polish — divider lines measured 0.334/0.495 from this background; desc 0.356 / count 0.523 / facts 0.606 -->
             <text>Sega's 128-bit swan song. Arcade soul, VMU dreams.</text>
         </text>
         <text name="countNum">
-            <pos>0.030 0.520</pos>
+            <pos>0.030 0.523</pos>
         </text>
         <text name="factsLine">
-            <pos>0.030 0.603</pos>
+            <pos>0.030 0.606</pos>
             <text>128-BIT • 1999</text>
         </text>
         <!-- v4.4.0 "Select": the selected carousel card shows this
