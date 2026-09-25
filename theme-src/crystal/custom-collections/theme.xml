@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v18.5.0: custom collections support. ES-DE's
+    <!-- Crystal v18.5.1: custom collections support. ES-DE's
          CollectionSystemsManager maps every custom collection system
          (created on the Nova via Main Menu > Game Collection Settings)
          to this folder's theme.xml, so one module styles every
@@ -35,7 +35,23 @@
              the supplied background is a complete composition with the
              "Collections / ALL YOUR WORLDS" lockup already baked in as
              the centerpiece - layering the logo asset on top would
-             double-render the title. The baked lockup IS the hero. -->
+             double-render the title (proven in v18.5.0 QA). The baked
+             lockup IS the hero. (The inherited sysHeroLogo binds
+             art/console_logos/${system.name}.png, which resolves to a
+             missing file for a user-named collection and paints
+             nothing - the same mechanism as the 5 logo-less consoles.) -->
+        <!-- v18.5.1: carousel card. The shared carousel binds
+             cards/${system.name}.png, which cannot resolve for a
+             user-named collection (falls back to cards/_default.png, so
+             v18.5.0 showed the generic card in the strip). Fixed path
+             so every custom collection shows the supplied framed card
+             in the strip - with the "Collections / ALL YOUR WORLDS"
+             lockup baked into its top, the card IS the carousel logo.
+             Only this property is overridden; all carousel geometry,
+             dimming and transitions stay inherited from views.xml. -->
+        <carousel name="sysCarousel">
+            <staticImage>./../cards/custom-collections.png</staticImage>
+        </carousel>
         <text name="mfrBadge">
             <text>NOVA</text>
         </text>
