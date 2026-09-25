@@ -66,6 +66,13 @@ def per_system_overrides(system):
         out[elem] = props
     return out
 
+    # v18.5.2: per-system hero logo path override (theme-relative path).
+    # The custom-collections module pins a fixed logo file instead of the
+    # art/console_logos/${system.name}.png convention (a user-named
+    # collection has no baked art); the proof must resolve the same file
+    # the real engine loads via the module's <path> override.
+    HERO_PATH_OVERRIDE = {}
+
 def render_sys(system, scheme):
     pal = palette(scheme)
     view = parse_view(open(VIEWS, encoding="utf-8").read(), "system")
@@ -86,7 +93,9 @@ def render_sys(system, scheme):
         xml_rot = float(el_val(lg, "rotation"))
     except ValueError:
         xml_rot = 0.0
-    logo_path = os.path.join(CRYS, "art/console_logos", f"{system}.png")
+    ov_logo = HERO_PATH_OVERRIDE.get(system)
+    logo_path = os.path.join(CRYS, ov_logo) if ov_logo \
+        else os.path.join(CRYS, "art/console_logos", f"{system}.png")
     if os.path.isfile(logo_path):
         logo = Image.open(logo_path).convert("RGBA")
         lw, lh = logo.size

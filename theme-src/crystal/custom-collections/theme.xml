@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-    <!-- Crystal v18.5.1: custom collections support. ES-DE's
+    <!-- Crystal v18.5.2: custom collections support. ES-DE's
          CollectionSystemsManager maps every custom collection system
          (created on the Nova via Main Menu > Game Collection Settings)
          to this folder's theme.xml, so one module styles every
@@ -20,8 +20,17 @@
     <view name="system">
         <!-- Supplied "Collections - All Your Worlds" scene (1448x1086,
              native 4:3, same geometry as the 14 standard backgrounds).
-             Fixed path: ${system.name} would resolve to the collection's
-             name, which has no baked art. Scheme tint inherited. -->
+             v18.5.2: the baked "Collections / ALL YOUR WORLDS" title was
+             removed from the scene (sky-white halftone wash painted over
+             the title zone, feathered into the artwork) because the lockup
+             PNG is now the hero logo (sysHeroLogo below) - keeping the
+             baked title would double-render. The small "SORTED BY
+             SERIES" tagline was covered by the same edit: it sat inside
+             the hero's footprint and would have collided with the logo.
+             All other art (NOVA logo, taglines, game folders, baked info
+             panel) untouched. Fixed path: ${system.name} would resolve
+             to the collection's name, which has no baked art. Scheme
+             tint inherited. -->
         <image name="sysBackground">
             <pos>0 0</pos>
             <size>1 1</size>
@@ -31,15 +40,23 @@
             <color>${sysBgTint}</color>
             <zIndex>1</zIndex>
         </image>
-        <!-- No sysHeroLogo override: unlike the 21 console collages,
-             the supplied background is a complete composition with the
-             "Collections / ALL YOUR WORLDS" lockup already baked in as
-             the centerpiece - layering the logo asset on top would
-             double-render the title (proven in v18.5.0 QA). The baked
-             lockup IS the hero. (The inherited sysHeroLogo binds
-             art/console_logos/${system.name}.png, which resolves to a
-             missing file for a user-named collection and paints
-             nothing - the same mechanism as the 5 logo-less consoles.) -->
+        <!-- v18.5.2: sysHeroLogo - the supplied "Collections / ALL YOUR
+             WORLDS" lockup as the big main hero, PS1-spec geometry
+             mirrored exactly from views.xml (pos 0.64 0.39, maxSize
+             0.58 0.29, origin 0.5 0.5, rotation -28, z30). The
+             background's baked title was removed for this (see below);
+             the lockup PNG is now the undisputed hero. Fixed path:
+             ${system.name} would resolve to the collection's name,
+             which has no baked art. -->
+        <image name="sysHeroLogo">
+            <pos>0.64 0.39</pos>
+            <maxSize>0.58 0.29</maxSize>
+            <origin>0.5 0.5</origin>
+            <rotation>-28</rotation>
+            <rotationOrigin>0.5 0.5</rotationOrigin>
+            <path>./../art/console_logos/custom-collections.png</path>
+            <zIndex>30</zIndex>
+        </image>
         <!-- v18.5.1: carousel card. The shared carousel binds
              cards/${system.name}.png, which cannot resolve for a
              user-named collection (falls back to cards/_default.png, so
